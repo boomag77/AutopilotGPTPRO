@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E122BB643AC00EB5311 /* AppDelegate.swift */; };
 		A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */; };
-		A53E7E172BB643AC00EB5311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E162BB643AC00EB5311 /* ViewController.swift */; };
 		A53E7E1A2BB643AC00EB5311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A53E7E182BB643AC00EB5311 /* Main.storyboard */; };
 		A53E7E1C2BB643AF00EB5311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53E7E1B2BB643AF00EB5311 /* Assets.xcassets */; };
 		A53E7E1F2BB643AF00EB5311 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A53E7E1D2BB643AF00EB5311 /* LaunchScreen.storyboard */; };
+		A53E7E282BB6470300EB5311 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E272BB6470300EB5311 /* StartViewController.swift */; };
+		A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2A2BB64C3400EB5311 /* DataModels.swift */; };
+		A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2C2BB64D8900EB5311 /* DataManager.swift */; };
+		A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */; };
+		A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */; };
+		A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutopilotGPTPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A53E7E122BB643AC00EB5311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A53E7E162BB643AC00EB5311 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A53E7E192BB643AC00EB5311 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A53E7E1B2BB643AF00EB5311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A53E7E1E2BB643AF00EB5311 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A53E7E202BB643AF00EB5311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A53E7E272BB6470300EB5311 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		A53E7E2A2BB64C3400EB5311 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		A53E7E2C2BB64D8900EB5311 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
+		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +66,36 @@
 		A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */ = {
 			isa = PBXGroup;
 			children = (
+				A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */,
+				A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */,
+				A53E7E292BB64BEC00EB5311 /* Model */,
+				A53E7E262BB646DA00EB5311 /* Controller */,
 				A53E7E122BB643AC00EB5311 /* AppDelegate.swift */,
 				A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */,
-				A53E7E162BB643AC00EB5311 /* ViewController.swift */,
 				A53E7E182BB643AC00EB5311 /* Main.storyboard */,
 				A53E7E1B2BB643AF00EB5311 /* Assets.xcassets */,
 				A53E7E1D2BB643AF00EB5311 /* LaunchScreen.storyboard */,
 				A53E7E202BB643AF00EB5311 /* Info.plist */,
+				A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */,
 			);
 			path = AutopilotGPTPRO;
+			sourceTree = "<group>";
+		};
+		A53E7E262BB646DA00EB5311 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A53E7E272BB6470300EB5311 /* StartViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A53E7E292BB64BEC00EB5311 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A53E7E2A2BB64C3400EB5311 /* DataModels.swift */,
+				A53E7E2C2BB64D8900EB5311 /* DataManager.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +169,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A53E7E172BB643AC00EB5311 /* ViewController.swift in Sources */,
+				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
+				A53E7E282BB6470300EB5311 /* StartViewController.swift in Sources */,
+				A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */,
+				A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */,
+				A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */,
+				A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */,
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
 			);
@@ -218,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -275,7 +311,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -298,7 +334,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,6 +344,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = S.Burdakov.AutopilotGPTPRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,7 +367,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -333,6 +377,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = S.Burdakov.AutopilotGPTPRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -361,6 +409,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */,
+			);
+			currentVersion = A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */;
+			path = Storage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A53E7E072BB643AC00EB5311 /* Project object */;
 }
