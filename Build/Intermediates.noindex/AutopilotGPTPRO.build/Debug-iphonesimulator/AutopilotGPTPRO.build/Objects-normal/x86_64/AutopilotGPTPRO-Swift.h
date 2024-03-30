@@ -276,6 +276,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
 @import CoreData;
+@import CoreFoundation;
 @import Foundation;
 @import UIKit;
 #endif
@@ -327,6 +328,17 @@ SWIFT_CLASS_NAMED("Instruction")
 @property (nonatomic, copy) NSString * _Nonnull text;
 @end
 
+@class NSBundle;
+@class NSCoder;
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
+@interface InstructionsViewController : UIViewController
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class UIWindow;
 @class UIScene;
 
@@ -342,14 +354,42 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO13SceneDelegate")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class NSBundle;
-@class NSCoder;
 
-SWIFT_CLASS("_TtC15AutopilotGPTPRO19StartViewController")
-@interface StartViewController : UIViewController
+SWIFT_CLASS("_TtC15AutopilotGPTPRO16ScreenTitleLabel")
+@interface ScreenTitleLabel : UILabel
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO22SessionsViewController")
+@interface SessionsViewController : UIViewController
 - (void)viewDidLoad;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO22SettingsViewController")
+@interface SettingsViewController : UIViewController
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO16TabBarController")
+@interface TabBarController : UITabBarController
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface TabBarController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITabBarControllerDelegate>
+- (void)tabBarController:(UITabBarController * _Nonnull)tabBarController didSelectViewController:(UIViewController * _Nonnull)viewController;
 @end
 
 
