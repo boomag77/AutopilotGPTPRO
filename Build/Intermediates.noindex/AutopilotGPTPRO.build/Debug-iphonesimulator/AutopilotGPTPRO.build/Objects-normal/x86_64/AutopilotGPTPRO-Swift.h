@@ -334,10 +334,20 @@ SWIFT_CLASS_NAMED("Instruction")
 SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 @interface InstructionsViewController : UIViewController
 - (void)viewDidLoad;
+- (void)viewWillAppear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+
+@class UITableView;
+@class NSIndexPath;
+@class UITableViewCell;
+
+@interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
 
 @class UIWindow;
 @class UIScene;

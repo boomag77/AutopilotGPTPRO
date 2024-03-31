@@ -7,7 +7,8 @@ protocol TabBarDelegate: UIViewController {
 }
 
 class TabBarController: UITabBarController {
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -15,7 +16,8 @@ class TabBarController: UITabBarController {
     }
     
     private func setup() {
-        view.backgroundColor = .systemBackground
+        
+        tabBar.backgroundColor = .systemBackground
         
         let instructionsVC = InstructionsViewController()
         instructionsVC.tabBarItem = UITabBarItem(title: "Instructions",

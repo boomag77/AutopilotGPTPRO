@@ -15,6 +15,7 @@ class SettingsViewController: UIViewController {
     }
     
     private func setup() {
+        
         view.backgroundColor = .systemBackground
         let screenTitle = ScreenTitleLabel(withText: "Settings")
         

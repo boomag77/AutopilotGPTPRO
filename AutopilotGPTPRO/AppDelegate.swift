@@ -11,19 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    static let shared = UIApplication.shared.delegate as! AppDelegate
-        
-    var container: NSPersistentContainer!
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Storage")
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Unable to load persistent store: \(error)")
-            }
-        }
-        return container
-    }()
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -46,17 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: CoreData
     
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Error while saving context to container \(error)")
-            }
-        }
-    }
+    
 
 }
 
