@@ -314,6 +314,18 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO11AppDelegate")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class NSString;
+@class NSBundle;
+@class NSCoder;
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
+@interface CurrentSessionViewController : UIViewController
+- (void)viewDidLoad;
+- (void)viewWillDisappear:(BOOL)animated;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class NSEntityDescription;
 @class NSManagedObjectContext;
 
@@ -323,15 +335,12 @@ SWIFT_CLASS_NAMED("Instruction")
 @end
 
 
-@class NSString;
 
 @interface Instruction (SWIFT_EXTENSION(AutopilotGPTPRO))
 @property (nonatomic, copy) NSString * _Nonnull name;
 @property (nonatomic, copy) NSString * _Nonnull text;
 @end
 
-@class NSBundle;
-@class NSCoder;
 
 SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 @interface InstructionsViewController : UIViewController

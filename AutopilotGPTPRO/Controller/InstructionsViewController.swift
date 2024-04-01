@@ -56,6 +56,9 @@ final class InstructionsViewController: UIViewController {
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addAction(UIAction { [weak self] _ in
+            self?.launchSessionButtonTapped()
+        }, for: .touchUpInside)
         return button
     }()
     
@@ -85,6 +88,7 @@ final class InstructionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "InstructionCell")
@@ -100,13 +104,8 @@ final class InstructionsViewController: UIViewController {
         
         view.backgroundColor = .systemGray6
         
-        view.addSubview(controllerTitle)
+        self.title = "Instructions"
         
-        NSLayoutConstraint.activate([
-            controllerTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0),
-            controllerTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
-            controllerTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
-        ])
         setupViews()
         
     }
@@ -119,12 +118,12 @@ final class InstructionsViewController: UIViewController {
         NSLayoutConstraint.activate([
             listView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             listView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            listView.topAnchor.constraint(equalTo: controllerTitle.bottomAnchor),
+            listView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             listView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             
             instructionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             instructionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            instructionView.topAnchor.constraint(equalTo: controllerTitle.bottomAnchor),
+            instructionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             instructionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
@@ -276,6 +275,14 @@ final class InstructionsViewController: UIViewController {
         instructionView.isHidden.toggle()
         listView.isHidden.toggle()
         fetchData()
+    }
+    
+    private func launchSessionButtonTapped() {
+        print("launch tapped")
+        let sessionViewController = CurrentSessionViewController()
+        //hide bottom bar
+        sessionViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(sessionViewController, animated: true)
     }
 
 }

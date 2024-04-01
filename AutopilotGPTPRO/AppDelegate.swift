@@ -15,6 +15,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
+        let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)
+        
+        let font: UIFont
+        if let boldFontDescriptor = boldFontDescriptor {
+            font = UIFont(descriptor: boldFontDescriptor, size: 0)
+        } else {
+            font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        
+        let textAttributes = [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.85),
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = textAttributes
+        
         return true
     }
 

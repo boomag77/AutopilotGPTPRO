@@ -20,8 +20,8 @@
 		A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */; };
 		A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */; };
 		A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */; };
-		A54CDDD02BB7ABF30032A17C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCF2BB7ABF30032A17C /* SettingsViewController.swift */; };
 		A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */; };
+		A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +40,8 @@
 		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
-		A54CDDCF2BB7ABF30032A17C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
+		A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 				A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */,
 				A53E7E272BB6470300EB5311 /* InstructionsViewController.swift */,
 				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
-				A54CDDCF2BB7ABF30032A17C /* SettingsViewController.swift */,
+				A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -189,9 +189,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */,
 				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,
-				A54CDDD02BB7ABF30032A17C /* SettingsViewController.swift in Sources */,
 				A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */,
 				A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */,
 				A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */,

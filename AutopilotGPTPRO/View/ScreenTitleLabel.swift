@@ -18,8 +18,11 @@ class ScreenTitleLabel: UILabel {
     }
     
     private func setup() {
+        
         textColor = .label.withAlphaComponent(0.85)
-        let textStyle = UIFont.TextStyle.largeTitle
+        textAlignment = .left
+        contentMode = .left
+        let textStyle = UIFont.TextStyle.body
         let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: textStyle)
         let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)
         if let boldFontDescriptor = boldFontDescriptor {
@@ -27,8 +30,9 @@ class ScreenTitleLabel: UILabel {
         } else {
             font = UIFont.preferredFont(forTextStyle: textStyle)
         }
-        adjustsFontForContentSizeCategory = true
+        //adjustsFontForContentSizeCategory = true
         translatesAutoresizingMaskIntoConstraints = false
+        //sizeToFit()
     }
     
 }
