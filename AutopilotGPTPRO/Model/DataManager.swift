@@ -16,7 +16,7 @@ final class DataManager {
                 fatalError("Unable to load persistent store: \(error)")
             }
         }
-        if isEmpty() {
+        if containerIsEmpty() {
             registerNewInstruction(instruction: defaultInstruction)
         }
     }
@@ -72,7 +72,7 @@ final class DataManager {
         }
     }
     
-    private func isEmpty() -> Bool {
+    private func containerIsEmpty() -> Bool {
         let request = Instruction.createFetchRequest()
         do {
             let instructions = try container.viewContext.fetch(request)
@@ -84,6 +84,7 @@ final class DataManager {
         }
         return false
     }
+    
     
     func getInstructions() -> [InstructionModel] {
         var list: [InstructionModel] = []
@@ -113,6 +114,30 @@ final class DataManager {
         if let completion = completion {
             completion()
         }
+        
+    }
+    
+    func removeInstruction(instruction: InstructionModel, _ completion: (() -> Void)? = nil) {
+        guard isExist(instruction: instruction) else { return }
+        
+        let request = Instruction.createFetchRequest()
+        let predicate = NSPredicate(format: "name == %@", instruction.name)
+        request.predicate = predicate
+        
+        do {
+            let results = try container.viewContext.fetch(request)
+            results.forEach {container.viewContext.delete($0)}
+            if containerIsEmpty() {
+                registerNewInstruction(instruction: defaultInstruction)
+            }
+            saveContext()
+            if let completion = completion {
+                completion()
+            }
+        } catch let error as NSError {
+            print ("Error while deleting the object \(instruction.name): \(error), \(error.userInfo)")
+        }
+       
         
     }
     

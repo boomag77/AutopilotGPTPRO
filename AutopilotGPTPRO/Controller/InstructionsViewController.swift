@@ -41,6 +41,24 @@ final class InstructionsViewController: UIViewController {
         return button
     }()
     
+    private lazy var launchSessionButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.filled()
+        config.title = "Launch Autopilot Session"
+        config.baseBackgroundColor = UIColor.systemBlue
+        config.baseForegroundColor = .white.withAlphaComponent(0.85)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        config.cornerStyle = .large
+        button.configuration = config
+        
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemGray6
@@ -73,6 +91,7 @@ final class InstructionsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setup()
         fetchData()
     }
     
@@ -122,6 +141,7 @@ final class InstructionsViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: listView.bottomAnchor, constant: -16.0)
         ])
         
+        listView.isHidden = false
         instructionView.isHidden = true
         fetchData()
     }
@@ -135,6 +155,7 @@ final class InstructionsViewController: UIViewController {
             textView.text = ""
         } else {
             titleField.isEnabled = false
+            titleField.backgroundColor = UIColor.systemGray6
             titleField.text = instruction?.name
             textView.text = instruction?.text
         }
@@ -179,21 +200,44 @@ final class InstructionsViewController: UIViewController {
         
         instructionView.addSubview(titleField)
         instructionView.addSubview(textView)
-        instructionView.addSubview(buttonsStack)
-        NSLayoutConstraint.activate([
-            titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
-            titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-            titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+        
+        if instruction == nil {
+            instructionView.addSubview(buttonsStack)
+            NSLayoutConstraint.activate([
+                titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
+                titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                
+                buttonsStack.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                buttonsStack.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                buttonsStack.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
+                
+                textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
+                textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                textView.bottomAnchor.constraint(equalTo: buttonsStack.topAnchor, constant: -10.0)
+            ])
             
-            buttonsStack.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-            buttonsStack.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-            buttonsStack.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
+        } else {
+            instructionView.addSubview(launchSessionButton)
+            NSLayoutConstraint.activate([
+                titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
+                titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                
+                launchSessionButton.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                launchSessionButton.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                launchSessionButton.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
+                
+                textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
+                textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+                textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+                textView.bottomAnchor.constraint(equalTo: launchSessionButton.topAnchor, constant: -10.0)
+            ])
             
-            textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
-            textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-            textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-            textView.bottomAnchor.constraint(equalTo: buttonsStack.topAnchor, constant: -10.0)
-        ])
+        }
+        
+        
         
         
         
@@ -268,9 +312,21 @@ extension InstructionsViewController: UITableViewDelegate {
         listView.isHidden.toggle()
     }
     
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        //
-//    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _,_,_ in
+            
+                let instructionForRemove: InstructionModel = self!.instructions[indexPath.row]
+            
+                DataManager.shared.removeInstruction(instruction: instructionForRemove) {
+                    self?.fetchData()
+                }
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+
+        return configuration
+    }
 //    
 //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        //

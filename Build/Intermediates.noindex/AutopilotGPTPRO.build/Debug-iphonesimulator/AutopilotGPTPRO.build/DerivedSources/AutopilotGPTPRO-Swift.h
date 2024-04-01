@@ -344,17 +344,28 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 
 @class UITableView;
 @class NSIndexPath;
-
-@interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDelegate>
-- (void)tableView:(UITableView * _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
-@end
-
 @class UITableViewCell;
 
 @interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
 @end
+
+@class UISwipeActionsConfiguration;
+
+@interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDelegate>
+- (void)tableView:(UITableView * _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (UISwipeActionsConfiguration * _Nullable)tableView:(UITableView * _Nonnull)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO27SavedSessionsViewController")
+@interface SavedSessionsViewController : UIViewController
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 @class UIWindow;
 @class UIScene;
@@ -377,15 +388,6 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO16ScreenTitleLabel")
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
-
-
-SWIFT_CLASS("_TtC15AutopilotGPTPRO22SessionsViewController")
-@interface SessionsViewController : UIViewController
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
 
 
 SWIFT_CLASS("_TtC15AutopilotGPTPRO22SettingsViewController")

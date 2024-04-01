@@ -23,7 +23,7 @@ class TabBarController: UITabBarController {
         instructionsVC.tabBarItem = UITabBarItem(title: "Instructions",
                                                  image: UIImage(systemName: "mic"),
                                                  selectedImage: nil)
-        let sessionsVC = SessionsViewController()
+        let sessionsVC = SavedSessionsViewController()
         sessionsVC.tabBarItem = UITabBarItem(title: "Saved sessions",
                                              image: UIImage(systemName: "bubble.left.and.bubble.right"),
                                              selectedImage: nil)

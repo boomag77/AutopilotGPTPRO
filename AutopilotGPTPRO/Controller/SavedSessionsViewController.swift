@@ -1,7 +1,7 @@
 
 import UIKit
 
-class SessionsViewController: UIViewController {
+class SavedSessionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class SessionsViewController: UIViewController {
     
 }
 
-extension SessionsViewController: TabBarDelegate {
+extension SavedSessionsViewController: TabBarDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         setup()
