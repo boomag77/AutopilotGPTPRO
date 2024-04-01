@@ -16,6 +16,9 @@ final class DataManager {
                 fatalError("Unable to load persistent store: \(error)")
             }
         }
+        if isEmpty() {
+            registerNewInstruction(instruction: defaultInstruction)
+        }
     }
     
     lazy private var defaultInstruction: InstructionModel = {
@@ -69,13 +72,25 @@ final class DataManager {
         }
     }
     
+    private func isEmpty() -> Bool {
+        let request = Instruction.createFetchRequest()
+        do {
+            let instructions = try container.viewContext.fetch(request)
+            if instructions.isEmpty {
+                return true
+            }
+        } catch let error as NSError {
+            print("could not fetch instructions \(error)")
+        }
+        return false
+    }
+    
     func getInstructions() -> [InstructionModel] {
         var list: [InstructionModel] = []
         let request = Instruction.createFetchRequest()
         request.includesSubentities = false
         do {
             let instructions: [Instruction] = try container.viewContext.fetch(request)
-            guard !instructions.isEmpty else { return [defaultInstruction] }
             for instruction in instructions {
                 list.append(InstructionModel(name: instruction.name, text: instruction.text))
             }
@@ -85,16 +100,20 @@ final class DataManager {
         return list
     }
     
-    func registerNewInstruction(instruction: InstructionModel) {
+    func registerNewInstruction(instruction: InstructionModel, _ completion: (() -> Void)? = nil) {
         
-        if isExist(instruction: instruction) {
-            return
-        }
+        guard !isExist(instruction: instruction) else { return }
+       
         let newInstruction = Instruction(context: container.viewContext)
         newInstruction.name = instruction.name
         newInstruction.text = instruction.text
         
         saveContext()
+        
+        if let completion = completion {
+            completion()
+        }
+        
     }
     
     private func isExist(instruction: InstructionModel) -> Bool {

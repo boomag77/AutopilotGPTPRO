@@ -342,6 +342,11 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 
 @class UITableView;
 @class NSIndexPath;
+
+@interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDelegate>
+- (void)tableView:(UITableView * _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+@end
+
 @class UITableViewCell;
 
 @interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
