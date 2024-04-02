@@ -347,6 +347,14 @@ SWIFT_CLASS_NAMED("Instruction")
 @end
 
 
+SWIFT_CLASS("_TtC15AutopilotGPTPRO24InstructionTableViewCell")
+@interface InstructionTableViewCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+@end
+
+
 SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 @interface InstructionsViewController : UIViewController
 - (void)viewDidLoad;
@@ -358,7 +366,6 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 
 @class UITableView;
 @class NSIndexPath;
-@class UITableViewCell;
 
 @interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;

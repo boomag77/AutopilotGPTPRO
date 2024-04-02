@@ -65,6 +65,7 @@ final class InstructionsViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemGray6
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -91,7 +92,8 @@ final class InstructionsViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "InstructionCell")
+        
+        tableView.register(InstructionTableViewCell.self, forCellReuseIdentifier: "InstructionCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -302,10 +304,12 @@ extension InstructionsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.text = instructions[indexPath.row].name
-        cell.contentConfiguration = content
+        
+        let instructionName = self.instructions[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionCell",
+                                                 for: indexPath) as! InstructionTableViewCell
+        cell.titleText = instructionName
+        
         return cell
     }
 }
