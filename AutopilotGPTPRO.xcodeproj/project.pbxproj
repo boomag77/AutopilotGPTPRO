@@ -22,6 +22,7 @@
 		A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */; };
 		A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */; };
 		A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */; };
+		A54CDDDB2BBB742F0032A17C /* SessionControlsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
 		A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionViewController.swift; sourceTree = "<group>"; };
+		A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionControlsButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */,
+				A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A54CDDDB2BBB742F0032A17C /* SessionControlsButton.swift in Sources */,
 				A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */,
 				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,

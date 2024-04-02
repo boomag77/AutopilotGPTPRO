@@ -397,13 +397,12 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO16ScreenTitleLabel")
 @end
 
 
-SWIFT_CLASS("_TtC15AutopilotGPTPRO22SettingsViewController")
-@interface SettingsViewController : UIViewController
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS("_TtC15AutopilotGPTPRO21SessionControlsButton")
+@interface SessionControlsButton : UIButton
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (void)layoutSubviews;
 @end
-
 
 
 SWIFT_CLASS("_TtC15AutopilotGPTPRO16TabBarController")
