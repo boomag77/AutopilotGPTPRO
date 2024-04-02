@@ -1,7 +1,10 @@
 
 import UIKit
+import AVFoundation
 
 class CurrentSessionViewController: UIViewController {
+    
+    private var audioRecorder: AVAudioRecorder?
     
     private var recording: Bool = false {
         didSet {
@@ -83,6 +86,7 @@ class CurrentSessionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestMicPermission()
         setup()
         
     }
@@ -136,25 +140,107 @@ class CurrentSessionViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             resetButton.leadingAnchor.constraint(equalTo: activeBottomView.leadingAnchor, constant: 10),
-            resetButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: 10),
+            resetButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: -10),
             resetButton.heightAnchor.constraint(equalToConstant: 64),
             resetButton.widthAnchor.constraint(equalToConstant: 64),
             
             sendButton.trailingAnchor.constraint(equalTo: activeBottomView.trailingAnchor, constant: -10),
-            sendButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: 10),
+            sendButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: -10),
             sendButton.heightAnchor.constraint(equalToConstant: 64),
             sendButton.widthAnchor.constraint(equalToConstant: 64)
+            
         ])
         
     }
     
+    private func requestMicPermission() {
+        
+        if #available(iOS 17, *) {
+            AVAudioApplication.requestRecordPermission { granted in
+                if granted {
+                    print("Microphone permission granted (iOS 17+ method).")
+                } else {
+                    self.showMicAccessNeededAlert()
+                    print("Microphone permission denied (iOS 17+ method).")
+                }
+            }
+        } else {
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                if granted {
+                    print("Microphone permission granted.")
+                } else {
+                    self.showMicAccessNeededAlert()
+                    print("Microphone permission denied.")
+                }
+            }
+        }
+    }
+    
+    private func showMicAccessNeededAlert() {
+        let alertController = UIAlertController(
+            title: "Microphone Access Required",
+            message: "To use this feature, please enable microphone access in Settings.",
+            preferredStyle: .alert)
+
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL, completionHandler: nil)
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     private func recButtonTapped() {
+        startRecording()
         self.recording.toggle()
         print("Recording started!")
     }
     
-    private func endSession() {
+    private func sendButtonTapped() {
+        
+        // stop recording and send file to server
+        // After response's recieved - delete recorded file
+        
+//        if RequestHandler.shared.connectToServer() {
+//            if let audioData = try? Data(contentsOf: URL(fileURLWithPath: "path/to/audio.wav")) {
+//                RequestHandler.shared.sendAudioData(audioData)
+//
+//                if let response = RequestHandler.shared.receiveResponse() {
+//                    print("Received from server: \(response)")
+//                }
+//            } else {
+//                print("Failed to load audio data")
+//            }
+//
+//            RequestHandler.shared.disconnectFromServer()
+//        } else {
+//            print("Failed to connect to the server.")
+//        }
+    }
+    
+    private func resetButtonTapped() {
+        
+        // Stop recording and delete last recorded file
+        
+        self.stopRecording()
         recording.toggle()
+    }
+    
+    private func endSession() {
         saveCurrentSession()
         print("Recording stopped")
     }
@@ -165,3 +251,40 @@ class CurrentSessionViewController: UIViewController {
 
 }
 
+extension CurrentSessionViewController: AVAudioRecorderDelegate {
+    
+    private func startRecording() {
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
+        
+        let settings: [String: Any] = [
+            AVFormatIDKey: Int(kAudioFormatLinearPCM),
+            AVSampleRateKey: 44100,
+            AVNumberOfChannelsKey: 1,
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsFloatKey: false
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+            print("Recording started")
+            
+        } catch {
+            print("Failed to start recording: \(error)")
+        }
+    }
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    private func stopRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        print("Recording stopped")
+    }
+    
+}

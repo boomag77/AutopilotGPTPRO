@@ -277,6 +277,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import AVFAudio;
 @import CoreData;
 @import CoreFoundation;
 @import Foundation;
@@ -324,6 +325,10 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 - (void)viewWillDisappear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <AVAudioRecorderDelegate>
 @end
 
 @class NSEntityDescription;
