@@ -25,6 +25,7 @@
 		A54CDDDB2BBB742F0032A17C /* SessionControlsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */; };
 		A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */; };
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
+		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionControlsButton.swift; sourceTree = "<group>"; };
 		A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
+		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				A53E7E2A2BB64C3400EB5311 /* DataModels.swift */,
 				A53E7E2C2BB64D8900EB5311 /* DataManager.swift */,
 				A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */,
+				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
+				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

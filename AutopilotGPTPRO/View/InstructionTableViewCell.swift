@@ -93,7 +93,6 @@ class InstructionTableViewCell: UITableViewCell {
         
         contentView.backgroundColor = .systemGray6
         
-        
         contentView.addSubview(cellView)
         
         cellView.addSubview(titleLabel)

@@ -81,7 +81,8 @@ final class InstructionsViewController: UIViewController {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.backgroundColor = .white
+        textView.backgroundColor = .systemBackground
+        textView.textColor = .label.withAlphaComponent(0.9)
         textView.isScrollEnabled = true
         textView.isEditable = true
         return textView

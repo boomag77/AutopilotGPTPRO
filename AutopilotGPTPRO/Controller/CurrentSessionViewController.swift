@@ -8,8 +8,13 @@ class CurrentSessionViewController: UIViewController {
     
     private var recording: Bool = false {
         didSet {
-            inactiveBottomView.isHidden.toggle()
-            activeBottomView.isHidden.toggle()
+            if !recording {
+                stopRecording()
+            } else {
+                startRecording()
+            }
+            notRecordingBottomView.isHidden.toggle()
+            recordingBottomView.isHidden.toggle()
         }
     }
     
@@ -60,17 +65,21 @@ class CurrentSessionViewController: UIViewController {
         button.clipsToBounds = true
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addAction(UIAction { [weak self] _ in
+            self?.resetButtonTapped()
+        }, for: .touchUpInside)
+        
         return button
     }()
     
-    private lazy var inactiveBottomView: UIView = {
+    private lazy var notRecordingBottomView: UIView = {
         let view = UIView()
         view.isHidden = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var activeBottomView: UIView = {
+    private lazy var recordingBottomView: UIView = {
         let view = UIView()
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -88,12 +97,10 @@ class CurrentSessionViewController: UIViewController {
         super.viewDidLoad()
         requestMicPermission()
         setup()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         self.endSession()
     }
     
@@ -101,24 +108,24 @@ class CurrentSessionViewController: UIViewController {
         view.backgroundColor = .black
         
         self.view.addSubview(messagesView)
-        self.view.addSubview(inactiveBottomView)
-        self.view.insertSubview(activeBottomView, at: 0)
+        self.view.addSubview(notRecordingBottomView)
+        self.view.insertSubview(recordingBottomView, at: 0)
         
         NSLayoutConstraint.activate([
-            inactiveBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            inactiveBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            inactiveBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            inactiveBottomView.heightAnchor.constraint(equalToConstant: 84),
+            notRecordingBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            notRecordingBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            notRecordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            notRecordingBottomView.heightAnchor.constraint(equalToConstant: 84),
             
-            activeBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            activeBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            activeBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            activeBottomView.heightAnchor.constraint(equalToConstant: 84),
+            recordingBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            recordingBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            recordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            recordingBottomView.heightAnchor.constraint(equalToConstant: 84),
             
             messagesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             messagesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             messagesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            messagesView.bottomAnchor.constraint(equalTo: inactiveBottomView.topAnchor)
+            messagesView.bottomAnchor.constraint(equalTo: notRecordingBottomView.topAnchor)
         ])
         
         setupBottomViews()
@@ -126,32 +133,84 @@ class CurrentSessionViewController: UIViewController {
     
     private func setupBottomViews() {
         
-        inactiveBottomView.addSubview(recButton)
+        notRecordingBottomView.addSubview(recButton)
         
         NSLayoutConstraint.activate([
-            recButton.centerXAnchor.constraint(equalTo: inactiveBottomView.centerXAnchor),
-            recButton.bottomAnchor.constraint(equalTo: inactiveBottomView.bottomAnchor),
+            recButton.centerXAnchor.constraint(equalTo: notRecordingBottomView.centerXAnchor),
+            recButton.bottomAnchor.constraint(equalTo: notRecordingBottomView.bottomAnchor),
             recButton.heightAnchor.constraint(equalToConstant: 64),
             recButton.widthAnchor.constraint(equalToConstant: 64)
         ])
         
-        activeBottomView.addSubview(sendButton)
-        activeBottomView.addSubview(resetButton)
+        recordingBottomView.addSubview(sendButton)
+        recordingBottomView.addSubview(resetButton)
         
         NSLayoutConstraint.activate([
-            resetButton.leadingAnchor.constraint(equalTo: activeBottomView.leadingAnchor, constant: 10),
-            resetButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: -10),
+            resetButton.leadingAnchor.constraint(equalTo: recordingBottomView.leadingAnchor, constant: 10),
+            resetButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor, constant: -10),
             resetButton.heightAnchor.constraint(equalToConstant: 64),
             resetButton.widthAnchor.constraint(equalToConstant: 64),
             
-            sendButton.trailingAnchor.constraint(equalTo: activeBottomView.trailingAnchor, constant: -10),
-            sendButton.bottomAnchor.constraint(equalTo: activeBottomView.bottomAnchor, constant: -10),
+            sendButton.trailingAnchor.constraint(equalTo: recordingBottomView.trailingAnchor, constant: -10),
+            sendButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor, constant: -10),
             sendButton.heightAnchor.constraint(equalToConstant: 64),
             sendButton.widthAnchor.constraint(equalToConstant: 64)
             
         ])
         
     }
+    
+    
+    
+    private func recButtonTapped() {
+        //startRecording()
+        self.recording.toggle()
+    }
+    
+    private func sendButtonTapped() {
+        
+        // stop recording and send file to server
+        // After response's recieved - delete recorded file
+        
+//        if RequestHandler.shared.connectToServer() {
+//            if let audioData = try? Data(contentsOf: URL(fileURLWithPath: "path/to/audio.wav")) {
+//                RequestHandler.shared.sendAudioData(audioData)
+//
+//                if let response = RequestHandler.shared.receiveResponse() {
+//                    print("Received from server: \(response)")
+//                }
+//            } else {
+//                print("Failed to load audio data")
+//            }
+//
+//            RequestHandler.shared.disconnectFromServer()
+//        } else {
+//            print("Failed to connect to the server.")
+//        }
+    }
+    
+    private func resetButtonTapped() {
+        
+        // Stop recording and delete last recorded file
+        
+        recording.toggle()
+    }
+    
+    private func endSession() {
+        if recording {
+            recording.toggle()
+        }
+        saveCurrentSession()
+        print("Session ended")
+    }
+    
+    private func saveCurrentSession() {
+        print("Session saved")
+    }
+
+}
+
+extension CurrentSessionViewController: AVAudioRecorderDelegate {
     
     private func requestMicPermission() {
         
@@ -204,56 +263,21 @@ class CurrentSessionViewController: UIViewController {
         }
     }
     
-    private func recButtonTapped() {
-        startRecording()
-        self.recording.toggle()
-        print("Recording started!")
+    private func configureAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to configure the audio session: \(error)")
+        }
     }
     
-    private func sendButtonTapped() {
-        
-        // stop recording and send file to server
-        // After response's recieved - delete recorded file
-        
-//        if RequestHandler.shared.connectToServer() {
-//            if let audioData = try? Data(contentsOf: URL(fileURLWithPath: "path/to/audio.wav")) {
-//                RequestHandler.shared.sendAudioData(audioData)
-//
-//                if let response = RequestHandler.shared.receiveResponse() {
-//                    print("Received from server: \(response)")
-//                }
-//            } else {
-//                print("Failed to load audio data")
-//            }
-//
-//            RequestHandler.shared.disconnectFromServer()
-//        } else {
-//            print("Failed to connect to the server.")
-//        }
-    }
     
-    private func resetButtonTapped() {
-        
-        // Stop recording and delete last recorded file
-        
-        self.stopRecording()
-        recording.toggle()
-    }
-    
-    private func endSession() {
-        saveCurrentSession()
-        print("Recording stopped")
-    }
-    
-    private func saveCurrentSession() {
-        print("Session saved")
-    }
-
-}
-
-extension CurrentSessionViewController: AVAudioRecorderDelegate {
     
     private func startRecording() {
+        
+        configureAudioSession()
+        
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
         
         let settings: [String: Any] = [
@@ -262,17 +286,22 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
             AVNumberOfChannelsKey: 1,
             AVLinearPCMBitDepthKey: 16,
             AVLinearPCMIsBigEndianKey: false,
-            AVLinearPCMIsFloatKey: false
+            AVLinearPCMIsFloatKey: false,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
         
         do {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.record()
-            print("Recording started")
+            if audioRecorder?.record() == true {
+                print("Recording started")
+            } else {
+                print("Failed to start recording.")
+            }
             
         } catch {
-            print("Failed to start recording: \(error)")
+            print("Failed to initialize the audio recorder: \(error)")
         }
     }
     
@@ -284,7 +313,31 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     private func stopRecording() {
         audioRecorder?.stop()
         audioRecorder = nil
-        print("Recording stopped")
+    }
+    
+    private func checkRecordedFileExists() {
+        let filePath = getDocumentsDirectory().appendingPathComponent("recording.wav")
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            print("File with name: recording.wav exists and full path to this file is: \(filePath.path)")
+            // Optionally, send the file to a server
+        } else {
+            print("Recording file does not exist.")
+        }
+    }
+        
+    internal func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag {
+            print("Recording finished successfully.")
+            checkRecordedFileExists()
+        } else {
+            print("!!! Recording finished unsuccessfully !!!")
+        }
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Encode error occurred: \(error.localizedDescription)")
+        }
     }
     
 }

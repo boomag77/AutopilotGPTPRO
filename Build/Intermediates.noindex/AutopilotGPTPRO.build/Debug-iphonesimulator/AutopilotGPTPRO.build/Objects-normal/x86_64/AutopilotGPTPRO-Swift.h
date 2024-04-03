@@ -325,8 +325,10 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class AVAudioRecorder;
 
 @interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <AVAudioRecorderDelegate>
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder * _Nonnull)recorder successfully:(BOOL)flag;
 @end
 
 @class NSEntityDescription;
