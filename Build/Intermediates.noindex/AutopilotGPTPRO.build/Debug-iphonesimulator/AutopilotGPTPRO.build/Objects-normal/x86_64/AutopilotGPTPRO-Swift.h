@@ -329,6 +329,7 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 
 @interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <AVAudioRecorderDelegate>
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder * _Nonnull)recorder successfully:(BOOL)flag;
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder * _Nonnull)recorder error:(NSError * _Nullable)error;
 @end
 
 @class NSEntityDescription;
@@ -436,6 +437,14 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO16TabBarController")
 
 
 
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO12WaveformView")
+@interface WaveformView : UIView
+- (void)drawRect:(CGRect)rect;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
 
 #endif
 #if __has_attribute(external_source_symbol)

@@ -4,6 +4,9 @@ import AVFoundation
 
 class CurrentSessionViewController: UIViewController {
     
+    var updateTimer: Timer?
+    
+    
     private var audioRecorder: AVAudioRecorder?
     
     private var recording: Bool = false {
@@ -19,6 +22,13 @@ class CurrentSessionViewController: UIViewController {
     }
     
     private var tokens: Int = 896
+    
+    private lazy var waveformView: WaveformView = {
+        let view = WaveformView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var recButton: UIButton = {
         let button = SessionControlsButton()
@@ -95,6 +105,7 @@ class CurrentSessionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         requestMicPermission()
         setup()
     }
@@ -105,7 +116,10 @@ class CurrentSessionViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .black
+        
+        
+        
+        view.backgroundColor = .systemBackground
         
         self.view.addSubview(messagesView)
         self.view.addSubview(notRecordingBottomView)
@@ -114,18 +128,19 @@ class CurrentSessionViewController: UIViewController {
         NSLayoutConstraint.activate([
             notRecordingBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             notRecordingBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            notRecordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            notRecordingBottomView.heightAnchor.constraint(equalToConstant: 84),
+            notRecordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            notRecordingBottomView.heightAnchor.constraint(equalToConstant: 64),
             
             recordingBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             recordingBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            recordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            recordingBottomView.heightAnchor.constraint(equalToConstant: 84),
+            recordingBottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            recordingBottomView.heightAnchor.constraint(equalToConstant: 64),
             
             messagesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             messagesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             messagesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            messagesView.bottomAnchor.constraint(equalTo: notRecordingBottomView.topAnchor)
+            messagesView.bottomAnchor.constraint(equalTo: notRecordingBottomView.topAnchor),
+            messagesView.bottomAnchor.constraint(equalTo: recordingBottomView.topAnchor)
         ])
         
         setupBottomViews()
@@ -144,17 +159,23 @@ class CurrentSessionViewController: UIViewController {
         
         recordingBottomView.addSubview(sendButton)
         recordingBottomView.addSubview(resetButton)
+        recordingBottomView.addSubview(waveformView)
         
         NSLayoutConstraint.activate([
             resetButton.leadingAnchor.constraint(equalTo: recordingBottomView.leadingAnchor, constant: 10),
-            resetButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor, constant: -10),
+            resetButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor),
             resetButton.heightAnchor.constraint(equalToConstant: 64),
             resetButton.widthAnchor.constraint(equalToConstant: 64),
             
             sendButton.trailingAnchor.constraint(equalTo: recordingBottomView.trailingAnchor, constant: -10),
-            sendButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor, constant: -10),
+            sendButton.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor),
             sendButton.heightAnchor.constraint(equalToConstant: 64),
-            sendButton.widthAnchor.constraint(equalToConstant: 64)
+            sendButton.widthAnchor.constraint(equalToConstant: 64),
+            
+            waveformView.leadingAnchor.constraint(equalTo: resetButton.trailingAnchor, constant: 40),
+            waveformView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -40),
+            waveformView.topAnchor.constraint(equalTo: recordingBottomView.topAnchor, constant: 10),
+            waveformView.bottomAnchor.constraint(equalTo: recordingBottomView.bottomAnchor, constant: -10)
             
         ])
         
@@ -277,7 +298,6 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     private func startRecording() {
         
         configureAudioSession()
-        
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
         
         let settings: [String: Any] = [
@@ -296,6 +316,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
             audioRecorder?.record()
             if audioRecorder?.record() == true {
                 print("Recording started")
+                startUpdatingWaveform()
             } else {
                 print("Failed to start recording.")
             }
@@ -305,6 +326,40 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         }
     }
     
+    func startUpdatingWaveform() {
+        
+        audioRecorder?.isMeteringEnabled = true
+        let MaximumPowerLevelsCount = 50
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] timer in
+            self?.audioRecorder?.updateMeters()
+            
+            let averagePower: Float = self?.audioRecorder?.averagePower(forChannel: 0) ?? 0
+            if averagePower > 0 {
+                self?.waveformView.powerLevels.append(CGFloat(averagePower))
+            }
+            self?.waveformView.powerLevels.append(CGFloat(averagePower))
+            
+            // Optionally, trim the powerLevels array to keep it within a reasonable size
+            if self?.waveformView.powerLevels.count ?? 0 > MaximumPowerLevelsCount {
+                self?.waveformView.powerLevels.removeFirst()
+            }
+        }
+    }
+    
+    func stopUpdatingWaveform() {
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
+    
+//    func normalizePowerLevel(from decibels: Float) -> CGFloat {
+//        // Convert decibels to a linear scale
+////        let linearScale = pow(10.0, decibels / 20.0)
+////        return CGFloat(linearScale)
+//        
+//        let normalizedLevel = min(max((decibels + 160) / 160, 0), 1)
+//        return CGFloat(normalizedLevel)
+//    }
+    
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -313,6 +368,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     private func stopRecording() {
         audioRecorder?.stop()
         audioRecorder = nil
+        stopUpdatingWaveform()
     }
     
     private func checkRecordedFileExists() {
@@ -324,6 +380,9 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
             print("Recording file does not exist.")
         }
     }
+    
+    
+    
         
     internal func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag {

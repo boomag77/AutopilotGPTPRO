@@ -115,7 +115,6 @@
 				A53E7E2A2BB64C3400EB5311 /* DataModels.swift */,
 				A53E7E2C2BB64D8900EB5311 /* DataManager.swift */,
 				A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */,
-				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -126,6 +125,7 @@
 				A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */,
 				A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */,
 				A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */,
+				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
