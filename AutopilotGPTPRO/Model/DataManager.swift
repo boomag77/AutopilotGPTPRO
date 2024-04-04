@@ -158,21 +158,25 @@ final class DataManager {
 
 extension DataManager {
     
-    func getMessagesCount(for sessionID: Int) {
+    func getMessagesCount(for sessionID: Int) -> Int {
         
+        guard let session: Session = getSession(id: sessionID) else { return 0 }
+        
+        return session.messages?.count ?? 0
     }
     
     func getMessages(for sessionID: Int) -> [MessageModel] {
+        
         guard let session = getSession(id: sessionID) else {
             print("Session not found")
             return []
         }
         
-        guard let messagesSet = session.messages as? Set<Message> else {
+        guard let messagesSet: Set<Message> = session.messages as? Set<Message> else {
             return []
         }
 
-        let sortedMessages = messagesSet.sorted { $0.date < $1.date }
+        let sortedMessages: [Message] = messagesSet.sorted { $0.date < $1.date }
         
         let messages: [MessageModel] = sortedMessages.compactMap { message -> MessageModel? in
             guard let sender = MessageSender(rawValue: message.sender) else {return nil}
@@ -219,13 +223,45 @@ extension DataManager {
         
     }
     
-    func getSessions() -> [SessionModel] {
+    
+    // Returns SessionModels without their Messages
+    func getSessionsList(sortKey: String, ascending: Bool) -> [SessionModel] {
+        let requset: NSFetchRequest<Session> = Session.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
+        requset.sortDescriptors = [sortDescriptor]
         
+        do {
+            
+            let sessions = try container.viewContext.fetch(requset)
+            let sessionModels = sessions.map { session -> SessionModel in
+                
+                let sessionModel = SessionModel(id: Int(session.id),
+                                                date: session.date,
+                                                position: session.position,
+                                                tokensUsed: nil)
+                return sessionModel
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch sessions: \(error), \(error.userInfo)")
+        }
+        return []
     }
     
-    func getLastExistingSessionID() -> Int {
-        
+    func newSessionID() -> Int {
+        let request: NSFetchRequest<Session> = Session.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        request.fetchLimit = 1
+        do {
+            let results: [Session] = try container.viewContext.fetch(request)
+            if let lastSession = results.first {
+                return Int(lastSession.id) + 1
+            }
+        } catch let error as NSError {
+            print("Could not fetch sessions: \(error), \(error.userInfo)")
+        }
+        return 1
     }
-    
     
 }

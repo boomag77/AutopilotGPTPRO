@@ -2,8 +2,8 @@
 import Foundation
 
 enum MessageSender: String, Hashable {
-    case user
-    case server
+    case user = "user"
+    case autopilot = "autopilot"
 }
 
 struct InstructionModel {
@@ -14,7 +14,8 @@ struct InstructionModel {
 struct SessionModel: Equatable, Hashable {
     var id: Int
     var date: Date
-    var messages: Set<MessageModel>
+    var position: String
+    var messages: Set<MessageModel>?
     var tokensUsed: Int?
 }
 

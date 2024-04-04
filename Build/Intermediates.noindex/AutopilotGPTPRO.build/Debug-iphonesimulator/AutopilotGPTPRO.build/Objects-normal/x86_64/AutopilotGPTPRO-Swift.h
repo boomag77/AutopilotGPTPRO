@@ -446,9 +446,10 @@ SWIFT_CLASS_NAMED("Session")
 
 
 @interface Session (SWIFT_EXTENSION(AutopilotGPTPRO))
-@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic, copy) NSDate * _Nonnull date;
 @property (nonatomic) int64_t tokensUsed;
 @property (nonatomic) int64_t id;
+@property (nonatomic, copy) NSString * _Nonnull position;
 @property (nonatomic, strong) NSSet * _Nullable messages;
 @end
 

@@ -2,7 +2,7 @@
 //  Session+CoreDataProperties.swift
 //  AutopilotGPTPRO
 //
-//  Created by Sergey on 4/3/24.
+//  Created by Sergey on 4/4/24.
 //
 //
 
@@ -16,9 +16,10 @@ extension Session {
         return NSFetchRequest<Session>(entityName: "Session")
     }
 
-    @NSManaged public var date: Date?
+    @NSManaged public var date: Date
     @NSManaged public var tokensUsed: Int64
     @NSManaged public var id: Int64
+    @NSManaged public var position: String
     @NSManaged public var messages: NSSet?
 
 }
