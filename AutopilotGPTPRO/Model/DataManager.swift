@@ -155,3 +155,77 @@ final class DataManager {
     }
     
 }
+
+extension DataManager {
+    
+    func getMessagesCount(for sessionID: Int) {
+        
+    }
+    
+    func getMessages(for sessionID: Int) -> [MessageModel] {
+        guard let session = getSession(id: sessionID) else {
+            print("Session not found")
+            return []
+        }
+        
+        guard let messagesSet = session.messages as? Set<Message> else {
+            return []
+        }
+
+        let sortedMessages = messagesSet.sorted { $0.date < $1.date }
+        
+        let messages: [MessageModel] = sortedMessages.compactMap { message -> MessageModel? in
+            guard let sender = MessageSender(rawValue: message.sender) else {return nil}
+            return MessageModel(date: message.date, sender: sender, text: message.text)
+        }
+        
+        return messages
+    }
+    
+    func registerNewMessage(message: MessageModel, in sessionID: Int) {
+        
+        guard let session = getSession(id: sessionID) else {
+            print("Session not found")
+            return
+        }
+        let newMessage = Message(context: container.viewContext)
+        newMessage.date = Date()
+        newMessage.sender = message.sender.rawValue
+        newMessage.text = message.text
+        newMessage.session = session
+        
+        saveContext()
+    }
+    
+}
+
+extension DataManager {
+    
+    private func getSession(id: Int) -> Session? {
+        
+        let request = Session.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %d", id)
+        
+        do {
+            let sessions = try container.viewContext.fetch(request)
+            return sessions.first
+        } catch let error as NSError {
+            print("Could not fetch session: \(error), \(error.userInfo)")
+            return nil
+        }
+    }
+    
+    func registerNewSession(session: SessionModel) {
+        
+    }
+    
+    func getSessions() -> [SessionModel] {
+        
+    }
+    
+    func getLastExistingSessionID() -> Int {
+        
+    }
+    
+    
+}

@@ -4,10 +4,11 @@ import AVFoundation
 
 class CurrentSessionViewController: UIViewController {
     
-    var updateTimer: Timer?
-    
-    
+    private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
+    private var tokens: Int = 896
+    
+    private var sessionPosts: [MessageModel] = []
     
     private var recording: Bool = false {
         didSet {
@@ -21,7 +22,13 @@ class CurrentSessionViewController: UIViewController {
         }
     }
     
-    private var tokens: Int = 896
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemBackground
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
     
     private lazy var waveformView: WaveformView = {
         let view = WaveformView()
@@ -106,7 +113,10 @@ class CurrentSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //tableView.dataSource = self
+        
         requestMicPermission()
+        
         setup()
     }
     
@@ -116,8 +126,6 @@ class CurrentSessionViewController: UIViewController {
     }
     
     private func setup() {
-        
-        
         
         view.backgroundColor = .systemBackground
         
@@ -184,7 +192,6 @@ class CurrentSessionViewController: UIViewController {
     
     
     private func recButtonTapped() {
-        //startRecording()
         self.recording.toggle()
     }
     
@@ -211,9 +218,6 @@ class CurrentSessionViewController: UIViewController {
     }
     
     private func resetButtonTapped() {
-        
-        // Stop recording and delete last recorded file
-        
         recording.toggle()
     }
     
@@ -298,6 +302,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     private func startRecording() {
         
         configureAudioSession()
+        
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
         
         let settings: [String: Any] = [
@@ -326,7 +331,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         }
     }
     
-    func startUpdatingWaveform() {
+    private func startUpdatingWaveform() {
         
         audioRecorder?.isMeteringEnabled = true
         let MaximumPowerLevelsCount = 50
@@ -346,19 +351,10 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         }
     }
     
-    func stopUpdatingWaveform() {
+    private func stopUpdatingWaveform() {
         updateTimer?.invalidate()
         updateTimer = nil
     }
-    
-//    func normalizePowerLevel(from decibels: Float) -> CGFloat {
-//        // Convert decibels to a linear scale
-////        let linearScale = pow(10.0, decibels / 20.0)
-////        return CGFloat(linearScale)
-//        
-//        let normalizedLevel = min(max((decibels + 160) / 160, 0), 1)
-//        return CGFloat(normalizedLevel)
-//    }
     
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -381,10 +377,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         }
     }
     
-    
-    
-        
-    internal func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag {
             print("Recording finished successfully.")
             checkRecordedFileExists()
@@ -400,3 +393,26 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     }
     
 }
+
+extension CurrentSessionViewController {
+    
+    private func fetchPosts() {
+        
+        tableView.reloadData()
+    }
+    
+}
+
+//extension CurrentSessionViewController: UITableViewDataSource {
+//    
+////    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+////        //
+////
+////    }
+////    
+////    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+////        //
+////    }
+//    
+//    
+//}

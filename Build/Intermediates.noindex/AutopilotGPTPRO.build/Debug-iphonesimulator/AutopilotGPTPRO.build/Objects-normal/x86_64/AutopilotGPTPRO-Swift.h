@@ -325,6 +325,7 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+
 @class AVAudioRecorder;
 
 @interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <AVAudioRecorderDelegate>
@@ -381,6 +382,23 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 @end
 
 
+SWIFT_CLASS_NAMED("Message")
+@interface Message : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@class NSDate;
+@class Session;
+
+@interface Message (SWIFT_EXTENSION(AutopilotGPTPRO))
+@property (nonatomic, copy) NSDate * _Nonnull date;
+@property (nonatomic, copy) NSString * _Nonnull sender;
+@property (nonatomic, copy) NSString * _Nonnull text;
+@property (nonatomic, strong) Session * _Nonnull session;
+@end
+
+
 SWIFT_CLASS("_TtC15AutopilotGPTPRO27SavedSessionsViewController")
 @interface SavedSessionsViewController : UIViewController
 - (void)viewDidLoad;
@@ -409,6 +427,29 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO16ScreenTitleLabel")
 @interface ScreenTitleLabel : UILabel
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS_NAMED("Session")
+@interface Session : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+@interface Session (SWIFT_EXTENSION(AutopilotGPTPRO))
+- (void)addMessagesObject:(Message * _Nonnull)value;
+- (void)removeMessagesObject:(Message * _Nonnull)value;
+- (void)addMessages:(NSSet * _Nonnull)values;
+- (void)removeMessages:(NSSet * _Nonnull)values;
+@end
+
+
+@interface Session (SWIFT_EXTENSION(AutopilotGPTPRO))
+@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic) int64_t tokensUsed;
+@property (nonatomic) int64_t id;
+@property (nonatomic, strong) NSSet * _Nullable messages;
 @end
 
 

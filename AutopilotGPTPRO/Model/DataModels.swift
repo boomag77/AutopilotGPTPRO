@@ -1,7 +1,7 @@
 
 import Foundation
 
-enum MessageSender: Hashable {
+enum MessageSender: String, Hashable {
     case user
     case server
 }
@@ -12,6 +12,7 @@ struct InstructionModel {
 }
 
 struct SessionModel: Equatable, Hashable {
+    var id: Int
     var date: Date
     var messages: Set<MessageModel>
     var tokensUsed: Int?
@@ -22,14 +23,10 @@ struct MessageModel: Hashable {
     static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
         return lhs.date == rhs.date &&
                 lhs.sender == rhs.sender &&
-                lhs.text == rhs.text &&
-                lhs.cost == rhs.cost &&
-                lhs.session == rhs.session
+                lhs.text == rhs.text
     }
     
     var date: Date
     var sender: MessageSender
     var text: String
-    var cost: Int
-    var session: SessionModel
 }

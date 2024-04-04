@@ -281,7 +281,6 @@ final class InstructionsViewController: UIViewController {
     }
     
     private func launchSessionButtonTapped() {
-        print("launch tapped")
         let sessionViewController = CurrentSessionViewController()
         //hide bottom bar
         sessionViewController.hidesBottomBarWhenPushed = true
