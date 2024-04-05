@@ -409,6 +409,12 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO27SavedSessionsViewController")
 @end
 
 
+
+@interface SavedSessionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class UIWindow;
 @class UIScene;
 
@@ -461,6 +467,14 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO21SessionControlsButton")
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (void)layoutSubviews;
+@end
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO20SessionTableViewCell")
+@interface SessionTableViewCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 @end
 
 

@@ -1,10 +1,3 @@
-//
-//  Session+CoreDataProperties.swift
-//  AutopilotGPTPRO
-//
-//  Created by Sergey on 4/4/24.
-//
-//
 
 import Foundation
 import CoreData

@@ -1,9 +1,3 @@
-//
-//  AppDelegate.swift
-//  AutopilotGPTPRO
-//
-//  Created by Sergey on 3/28/24.
-//
 
 import UIKit
 import CoreData

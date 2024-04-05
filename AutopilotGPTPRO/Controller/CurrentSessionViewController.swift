@@ -127,7 +127,7 @@ class CurrentSessionViewController: UIViewController {
     
     private func setup() {
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .black
         
         self.view.addSubview(messagesView)
         self.view.addSubview(notRecordingBottomView)
