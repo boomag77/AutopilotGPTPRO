@@ -6,6 +6,8 @@ class CurrentSessionViewController: UIViewController {
     
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
+    
+    var position: String?
     private var tokens: Int = 896
     
     private var sessionPosts: [MessageModel] = []
@@ -230,6 +232,9 @@ class CurrentSessionViewController: UIViewController {
     }
     
     private func saveCurrentSession() {
+        
+        DataManager.shared.registerNewSession(session: SessionModel(id: 0, date: Date(), position: self.position!))
+        
         print("Session saved")
     }
 

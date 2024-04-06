@@ -8,7 +8,7 @@ class SavedSessionsViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorStyle = .none
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -24,12 +24,13 @@ class SavedSessionsViewController: UIViewController {
     }
     
     private func fetchData() {
-        //sessions = DataManager.shared.getSessions(sortKey: "date", ascending: true)
+        sessions = DataManager.shared.getSessions(sortKey: "date", ascending: true)
         tableView.reloadData()
     }
     
     private func setup() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
+        
         let screenTitle = ScreenTitleLabel(withText: "Sessions")
         
         view.addSubview(screenTitle)
@@ -74,8 +75,8 @@ extension SavedSessionsViewController: TabBarDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 //        tableView.dataSource = self
-//        fetchData()
-        //setup()
+        fetchData()
+        setup()
     }
     
     

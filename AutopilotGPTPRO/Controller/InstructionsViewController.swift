@@ -116,7 +116,8 @@ final class InstructionsViewController: UIViewController {
     private func setupViews() {
         
         self.view.addSubview(listView)
-        self.view.insertSubview(instructionView, at: 0)
+        self.view.addSubview(instructionView)
+        //self.view.insertSubview(instructionView, at: 0)
         
         NSLayoutConstraint.activate([
             listView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -238,11 +239,6 @@ final class InstructionsViewController: UIViewController {
             ])
             
         }
-        
-        
-        
-        
-        
     }
     
     private func fetchData() {
@@ -282,6 +278,7 @@ final class InstructionsViewController: UIViewController {
     
     private func launchSessionButtonTapped() {
         let sessionViewController = CurrentSessionViewController()
+        sessionViewController.position = titleField.text
         //hide bottom bar
         sessionViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(sessionViewController, animated: true)

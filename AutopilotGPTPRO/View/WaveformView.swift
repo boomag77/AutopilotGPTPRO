@@ -14,7 +14,7 @@ class WaveformView: UIView {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
         context.clear(rect)
-        context.setFillColor(UIColor.systemBackground.cgColor)
+        context.setFillColor(UIColor.black.cgColor)
         context.fill(rect)
         let gap: CGFloat = 1
         let barWidth = (rect.width / CGFloat(powerLevels.count)) - gap

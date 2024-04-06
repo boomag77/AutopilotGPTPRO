@@ -246,7 +246,7 @@ extension DataManager {
         
         let newSession = Session(context: container.viewContext)
         newSession.date = session.date
-        newSession.tokensUsed = Int64(session.tokensUsed!)
+        newSession.tokensUsed = Int64(session.tokensUsed ?? 0)
         newSession.id = newSessionID()
         newSession.position = session.position
         
