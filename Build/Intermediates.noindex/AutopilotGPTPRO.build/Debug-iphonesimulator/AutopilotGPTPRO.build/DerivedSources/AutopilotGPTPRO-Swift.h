@@ -316,9 +316,18 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO11AppDelegate")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class NSCoder;
+@class UIEvent;
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO8CheckBox")
+@interface CheckBox : UIControl
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent * _Nullable)event SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class NSString;
 @class NSBundle;
-@class NSCoder;
 
 SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 @interface CurrentSessionViewController : UIViewController
@@ -407,7 +416,6 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-
 @class NSURLSession;
 @class NSURLAuthenticationChallenge;
 @class NSURLCredential;
@@ -415,6 +423,7 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
 @interface RequestHandler (SWIFT_EXTENSION(AutopilotGPTPRO))
 - (void)URLSession:(NSURLSession * _Nonnull)session didReceiveChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
 @end
+
 
 @class NSURLSessionWebSocketTask;
 @class NSData;
@@ -437,6 +446,12 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO27SavedSessionsViewController")
 @interface SavedSessionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+@interface SavedSessionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDelegate>
+- (void)tableView:(UITableView * _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (UISwipeActionsConfiguration * _Nullable)tableView:(UITableView * _Nonnull)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class UIWindow;

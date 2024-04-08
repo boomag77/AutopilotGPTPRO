@@ -86,7 +86,7 @@ class RequestHandler: NSObject {
     }
     
     func receiveMessage(completion: @escaping (String) -> Void) {
-        webSocketTask?.receive { [weak self] result in
+        webSocketTask?.receive { result in
             switch result {
             case .failure(let error):
                 print("Failed to receive message: \(error.localizedDescription)")
@@ -108,8 +108,9 @@ class RequestHandler: NSObject {
                 }
                 
                 // Optionally continue receiving messages here if needed
-                self?.receiveMessage(completion: completion)
+                //self?.receiveMessage(completion: completion)
             }
+            //self?.receiveMessage(completion: completion)
         }
     }
 }
@@ -138,8 +139,8 @@ extension RequestHandler {
 
 
 extension RequestHandler {
-    func sendTextDataAsJSON(_ text: String) {
-        // Creating a simple JSON object with a "message" key
+    func sendInstruction(_ text: String) {
+        // Creating a simple JSON object with a "instruction" key
         let jsonObject: [String: Any] = ["instruction": text]
         
         // Attempt to serialize jsonObject to JSON data

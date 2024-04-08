@@ -5,6 +5,33 @@ final class InstructionsViewController: UIViewController {
     
     private var instructions: [InstructionModel] = []
     
+    private var checkBoxChecked: Bool = false {
+        didSet {
+            if checkBoxChecked {
+                (checkBox as? CheckBox)?.checked = true
+                var config = launchSessionButton.configuration
+                config?.title = "Save and Launch Session"
+                config?.baseBackgroundColor = UIColor.systemBlue
+                config?.baseForegroundColor = .white.withAlphaComponent(0.85)
+                config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+                config?.cornerStyle = .large
+                config?.titleAlignment = .center
+                launchSessionButton.configuration = config
+                
+            } else {
+                (checkBox as? CheckBox)?.checked = false
+                var config = launchSessionButton.configuration
+                config?.title = "Launch Autopilot Session"
+                config?.baseBackgroundColor = UIColor.systemBlue
+                config?.baseForegroundColor = .white.withAlphaComponent(0.85)
+                config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+                config?.cornerStyle = .large
+                config?.titleAlignment = .center
+                launchSessionButton.configuration = config
+            }
+        }
+    }
+    
     private lazy var controllerTitle: UILabel = {
         let label = ScreenTitleLabel(withText: "Instructions")
         return label
@@ -50,12 +77,14 @@ final class InstructionsViewController: UIViewController {
         config.baseForegroundColor = .white.withAlphaComponent(0.85)
         config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
+        config.titleAlignment = .center
         button.configuration = config
         
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        
         button.addAction(UIAction { [weak self] _ in
             self?.launchSessionButtonTapped()
         }, for: .touchUpInside)
@@ -87,11 +116,27 @@ final class InstructionsViewController: UIViewController {
         textView.isEditable = true
         return textView
     }()
+    
+    private lazy var checkBox: UIControl = {
+        let box = CheckBox()
+        box.addAction(UIAction { _ in
+            box.checked.toggle()
+            self.checkBoxChecked.toggle()
+        }, for: .touchUpInside)
+        return box
+    }()
+    
+    private lazy var checkBoxLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Save instruction"
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = .darkGray.withAlphaComponent(0.85)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -153,98 +198,63 @@ final class InstructionsViewController: UIViewController {
     
     private func setupInstructionView(instruction: InstructionModel? = nil) {
         
+        checkBoxChecked = false
+        
         if instruction == nil {
             titleField.isEnabled = true
             titleField.placeholder = "Input title here"
             titleField.text = nil
             textView.text = ""
         } else {
-            titleField.isEnabled = false
+            //titleField.isEnabled = false
             titleField.backgroundColor = UIColor.systemGray6
             titleField.text = instruction?.name
             textView.text = instruction?.text
         }
         
-        let saveButton: UIButton = {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            var config = UIButton.Configuration.filled()
-            config.title = "Save"
-            config.baseBackgroundColor = UIColor.systemBlue
-            config.baseForegroundColor = UIColor.white.withAlphaComponent(0.85)
-            config.cornerStyle = .large
-            button.configuration = config
-            button.addAction(createSaveButtonAction(), for: .touchUpInside)
-            return button
-        }()
-        
-        let cancelButton: UIButton = {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            var config = UIButton.Configuration.filled()
-            config.title = "Cancel"
-            config.baseBackgroundColor = UIColor.systemRed.withAlphaComponent(0.5)
-            config.baseForegroundColor = UIColor.white.withAlphaComponent(0.85)
-            config.cornerStyle = .large
-            button.configuration = config
-            button.addAction(UIAction { [weak self] _ in
-                self?.cancelButtonTapped()
-            }, for: .touchUpInside)
-            return button
-        }()
-        
-        let buttonsStack: UIStackView = {
-            let stack = UIStackView()
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            stack.axis = .horizontal
-            stack.distribution = .fillEqually
-            stack.addArrangedSubview(saveButton)
-            stack.addArrangedSubview(cancelButton)
-            return stack
-        }()
-        
         instructionView.addSubview(titleField)
         instructionView.addSubview(textView)
+        instructionView.addSubview(checkBox)
+        instructionView.addSubview(launchSessionButton)
+        instructionView.addSubview(checkBoxLabel)
+        
+        if (checkBox as? CheckBox)?.checked == true {
+            (checkBox as? CheckBox)?.checked = self.checkBoxChecked
+        }
+        
+        NSLayoutConstraint.activate([
+            titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
+            titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+            titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+            
+            launchSessionButton.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+            launchSessionButton.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+            launchSessionButton.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
+            
+            checkBox.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 26),
+            checkBox.bottomAnchor.constraint(equalTo: launchSessionButton.topAnchor, constant: -16),
+            checkBox.heightAnchor.constraint(equalToConstant: 12),
+            
+            checkBoxLabel.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor),
+            checkBoxLabel.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 16),
+            
+            textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
+            textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+            textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+            textView.bottomAnchor.constraint(equalTo: checkBox.topAnchor, constant: -16.0)
+        ])
         
         if instruction == nil {
-            instructionView.addSubview(buttonsStack)
-            NSLayoutConstraint.activate([
-                titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
-                titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                
-                buttonsStack.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                buttonsStack.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                buttonsStack.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
-                
-                textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
-                textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                textView.bottomAnchor.constraint(equalTo: buttonsStack.topAnchor, constant: -10.0)
-            ])
-            
+            checkBoxLabel.text = "Save new instruction"
+            checkBox.isEnabled = true
         } else {
-            instructionView.addSubview(launchSessionButton)
-            NSLayoutConstraint.activate([
-                titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
-                titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                
-                launchSessionButton.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                launchSessionButton.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                launchSessionButton.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: -10.0),
-                
-                textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
-                textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-                textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-                textView.bottomAnchor.constraint(equalTo: launchSessionButton.topAnchor, constant: -10.0)
-            ])
-            
+            checkBoxLabel.text = "Save instruction's changes"
+            checkBox.isEnabled = true
         }
     }
     
     private func fetchData() {
-        instructions = DataManager.shared.getInstructions()
+        instructions = DataManager.shared.getAllInstructions()
         tableView.reloadData()
     }
     
@@ -256,11 +266,11 @@ final class InstructionsViewController: UIViewController {
     
     func createSaveButtonAction() -> UIAction {
         return UIAction { [weak self] _ in
-            self?.saveButtonTapped()
+            self?.saveInstruction()
         }
     }
     
-    private func saveButtonTapped() {
+    private func saveInstruction() {
         DataManager.shared
             .registerNewInstruction(instruction: InstructionModel(name: titleField.text!,
                                                                   text: textView.text)) { [weak self] in
@@ -272,13 +282,18 @@ final class InstructionsViewController: UIViewController {
         }
     }
     
-    private func cancelButtonTapped() {
-        instructionView.isHidden.toggle()
-        listView.isHidden.toggle()
-        fetchData()
-    }
+//    private func cancelButtonTapped() {
+//        instructionView.isHidden.toggle()
+//        listView.isHidden.toggle()
+//        fetchData()
+//    }
     
     private func launchSessionButtonTapped() {
+        if checkBoxChecked {
+            (checkBox as? CheckBox)?.checked.toggle()
+            checkBoxChecked.toggle()
+            saveInstruction()
+        }
         let sessionViewController = CurrentSessionViewController()
         sessionViewController.position = titleField.text
         //hide bottom bar

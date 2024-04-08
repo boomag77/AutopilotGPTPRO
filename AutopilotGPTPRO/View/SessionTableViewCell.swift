@@ -23,6 +23,15 @@ class SessionTableViewCell: UITableViewCell {
         }
     }
     
+    private var sessionID: String? {
+        didSet {
+            idLabel.text = sessionID
+            updateCellViewConstraints()
+            updatePaddingConstraints()
+        }
+        
+    }
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -37,6 +46,15 @@ class SessionTableViewCell: UITableViewCell {
         label.font = UIFont.preferredFont(forTextStyle: .subheadline)
         label.textColor = .label.withAlphaComponent(0.85)
         label.contentMode = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var idLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        label.textColor = .label.withAlphaComponent(0.85)
+        label.contentMode = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -69,6 +87,7 @@ class SessionTableViewCell: UITableViewCell {
         
         cellView.addSubview(titleLabel)
         cellView.addSubview(dateLabel)
+        cellView.addSubview(idLabel)
     }
     
     func setTitle(title: String) {
@@ -79,6 +98,10 @@ class SessionTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
         self.date = dateFormatter.string(from: date)
+    }
+    
+    func setIdNumber(id: Int) {
+        self.sessionID = String(id)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -104,9 +127,12 @@ class SessionTableViewCell: UITableViewCell {
     private func updateCellViewConstraints() {
         NSLayoutConstraint.deactivate(cellViewConstraints)
         cellViewConstraints = [
+            idLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+            idLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+            
             dateLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
             dateLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-            dateLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+            dateLabel.trailingAnchor.constraint(equalTo: idLabel.trailingAnchor, constant: -10),
             
             titleLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
             titleLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),

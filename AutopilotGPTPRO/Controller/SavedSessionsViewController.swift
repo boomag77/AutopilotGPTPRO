@@ -17,6 +17,8 @@ class SavedSessionsViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.dataSource = self
+        tableView.delegate = self
+        
         tableView.register(SessionTableViewCell.self, forCellReuseIdentifier: "SessionCell")
         fetchData()
         setup()
@@ -60,14 +62,44 @@ extension SavedSessionsViewController: UITableViewDataSource {
         let session = sessions[indexPath.row]
         let positionName = session.position
         let date = session.date
+        let id = session.id
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell",
                                                  for: indexPath) as! SessionTableViewCell
         cell.setTitle(title: positionName)
         cell.setDate(date: date)
+        cell.setIdNumber(id: id)
         
         return cell
     }
     
+    
+}
+
+extension SavedSessionsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedSession = sessions[indexPath.row]
+        print("Selected Session with id: \(selectedSession.id)")
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _,_,_ in
+            
+            let sessionToRemove: SessionModel = self!.sessions[indexPath.row]
+            DataManager.shared.removeSession(withID: sessionToRemove.id) {
+                self?.fetchData()
+            }
+        }
+        
+        deleteAction.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+
+        return configuration
+    }
     
 }
 

@@ -11,6 +11,7 @@ class CurrentSessionViewController: UIViewController {
     private var tokens: Int = 896
     private var recievedMessage: String = "Empty label" {
         didSet {
+            print("!!!!!!!!!!")
             DispatchQueue.main.async { [weak self] in
                 self?.textLabel.text = self?.recievedMessage
             }

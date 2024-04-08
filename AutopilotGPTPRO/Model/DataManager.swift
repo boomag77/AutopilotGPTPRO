@@ -91,7 +91,7 @@ extension DataManager {
         return false
     }
     
-    func getInstructions() -> [InstructionModel] {
+    func getAllInstructions() -> [InstructionModel] {
         var list: [InstructionModel] = []
         let request = Instruction.createFetchRequest()
         request.includesSubentities = false
@@ -106,13 +106,42 @@ extension DataManager {
         return list
     }
     
+    private func updateInstruction(oldName: String,
+                                   oldText: String,
+                                   newName: String,
+                                   newText: String,
+                                   comletion: (() -> Void)? = nil) {
+        
+        
+        
+    }
+    
+    private func fetchInstruction(name: String) -> Instruction? {
+        
+        let request: NSFetchRequest<Instruction> = Instruction.createFetchRequest()
+        request.predicate = NSPredicate(format: "name == %@", name)
+        do {
+            let instruction = try container.viewContext.fetch(request).first
+            return instruction
+        } catch {
+            print("Fetch instruction with name: \(name) failed \(error)")
+        }
+        return nil
+    }
+    
     func registerNewInstruction(instruction: InstructionModel, _ completion: (() -> Void)? = nil) {
         
-        guard !isExist(instruction: instruction) else { return }
-       
-        let newInstruction = Instruction(context: container.viewContext)
-        newInstruction.name = instruction.name
-        newInstruction.text = instruction.text
+        if let existedInstruction: Instruction = fetchInstruction(name: instruction.name) {
+            if existedInstruction.text == instruction.text {
+                return
+            } else {
+                existedInstruction.text = instruction.text
+            }
+        } else {
+            let newInstruction = Instruction(context: container.viewContext)
+            newInstruction.name = instruction.name
+            newInstruction.text = instruction.text
+        }
         
         saveContext()
         
@@ -132,16 +161,21 @@ extension DataManager {
         do {
             let results = try container.viewContext.fetch(request)
             results.forEach {container.viewContext.delete($0)}
+            
             if containerIsEmpty() {
                 registerNewInstruction(instruction: defaultInstruction)
             }
+            
             saveContext()
+            
             if let completion = completion {
                 completion()
             }
         } catch let error as NSError {
             print ("Error while deleting the object \(instruction.name): \(error), \(error.userInfo)")
         }
+        
+        
        
         
     }
@@ -251,6 +285,25 @@ extension DataManager {
         newSession.position = session.position
         
         saveContext()
+    }
+    
+    func removeSession(withID id: Int, completion: (() -> Void)? = nil) {
+        
+        let request: NSFetchRequest<Session> = Session.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", NSNumber(value: Int64(id)))
+        
+        do {
+            let sessionsForRemove = try container.viewContext.fetch(request)
+            sessionsForRemove.forEach { session in
+                container.viewContext.delete(session)
+            }
+        } catch {
+            print("Fetching session with ID: \(id) failed \(error)")
+        }
+        saveContext()
+        if let completion = completion {
+            completion()
+        }
     }
     
     
