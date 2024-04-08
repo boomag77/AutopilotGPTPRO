@@ -9,6 +9,14 @@ class CurrentSessionViewController: UIViewController {
     
     var position: String?
     private var tokens: Int = 896
+    private var recievedMessage: String = "Empty label" {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.textLabel.text = self?.recievedMessage
+            }
+            
+        }
+    }
     
     private var sessionPosts: [MessageModel] = []
     
@@ -23,6 +31,14 @@ class CurrentSessionViewController: UIViewController {
             recordingBottomView.isHidden.toggle()
         }
     }
+    
+    private lazy var textLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = recievedMessage
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -70,6 +86,10 @@ class CurrentSessionViewController: UIViewController {
         button.clipsToBounds = true
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addAction(UIAction { [weak self] _ in
+            self?.sendButtonTapped()
+        },
+                         for: .touchUpInside)
         return button
     }()
     
@@ -107,7 +127,7 @@ class CurrentSessionViewController: UIViewController {
     
     private let messagesView: UIView = {
         let view = UIView()
-        
+        view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -127,11 +147,19 @@ class CurrentSessionViewController: UIViewController {
         self.endSession()
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        setup()
+//    }
+    
     private func setup() {
-        
+        print("setup")
         view.backgroundColor = .black
         
         self.view.addSubview(messagesView)
+        // DELETE!!
+            //messagesView.backgroundColor = .white
+        // DELETE!!
         self.view.addSubview(notRecordingBottomView)
         self.view.insertSubview(recordingBottomView, at: 0)
         
@@ -151,6 +179,12 @@ class CurrentSessionViewController: UIViewController {
             messagesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             messagesView.bottomAnchor.constraint(equalTo: notRecordingBottomView.topAnchor),
             messagesView.bottomAnchor.constraint(equalTo: recordingBottomView.topAnchor)
+        ])
+        
+        messagesView.addSubview(self.textLabel)
+        NSLayoutConstraint.activate([
+            textLabel.centerXAnchor.constraint(equalTo: messagesView.centerXAnchor),
+            textLabel.centerYAnchor.constraint(equalTo: messagesView.centerYAnchor)
         ])
         
         setupBottomViews()
@@ -199,25 +233,39 @@ class CurrentSessionViewController: UIViewController {
     
     private func sendButtonTapped() {
         
+        recording.toggle()
+        
+        let audioFilePath: URL = getFilePath().appendingPathComponent("recording.wav")
+        print("File \(audioFilePath) ready to sending!")
+        
         // stop recording and send file to server
         // After response's recieved - delete recorded file
-        
-//        if RequestHandler.shared.connectToServer() {
-//            if let audioData = try? Data(contentsOf: URL(fileURLWithPath: "path/to/audio.wav")) {
-//                RequestHandler.shared.sendAudioData(audioData)
-//
-//                if let response = RequestHandler.shared.receiveResponse() {
-//                    print("Received from server: \(response)")
-//                }
-//            } else {
-//                print("Failed to load audio data")
-//            }
-//
-//            RequestHandler.shared.disconnectFromServer()
-//        } else {
-//            print("Failed to connect to the server.")
+//        guard let audioFilePath = getPathForAudioFile() else {
+//            print("Audio file path not found.")
+//            return
 //        }
+        
+        do {
+            let audioData = try Data(contentsOf: audioFilePath)
+            RequestHandler.shared.sendAudioData(audioData)
+        } catch {
+            print("Failed to load audio data: \(error.localizedDescription)")
+        }
+        
+        // Assuming the server sends a response after processing the audio
+        RequestHandler.shared.receiveMessage { [weak self] responseText in
+            self?.recievedMessage = responseText
+//            DispatchQueue.main.async {
+//                self?.recievedMessage = responseText
+//                //self?.textLabel.text = responseText
+//            }
+            
+            //print("Response from server: \(responseText)")
+        }
     }
+        
+        
+    
     
     private func resetButtonTapped() {
         recording.toggle()
@@ -308,7 +356,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         
         configureAudioSession()
         
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
+        let audioFilename = getFilePath().appendingPathComponent("recording.wav")
         
         let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
@@ -361,7 +409,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
         updateTimer = nil
     }
     
-    private func getDocumentsDirectory() -> URL {
+    private func getFilePath() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
@@ -373,7 +421,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     }
     
     private func checkRecordedFileExists() {
-        let filePath = getDocumentsDirectory().appendingPathComponent("recording.wav")
+        let filePath = getFilePath().appendingPathComponent("recording.wav")
         if FileManager.default.fileExists(atPath: filePath.path) {
             print("File with name: recording.wav exists and full path to this file is: \(filePath.path)")
             // Optionally, send the file to a server

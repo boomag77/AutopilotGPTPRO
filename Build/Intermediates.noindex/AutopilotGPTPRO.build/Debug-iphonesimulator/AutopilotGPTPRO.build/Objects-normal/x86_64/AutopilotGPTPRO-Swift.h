@@ -279,6 +279,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import CoreData;
 @import CoreFoundation;
 @import Foundation;
+@import ObjectiveC;
 @import UIKit;
 #endif
 
@@ -396,6 +397,29 @@ SWIFT_CLASS_NAMED("Message")
 @property (nonatomic, copy) NSString * _Nonnull sender;
 @property (nonatomic, copy) NSString * _Nonnull text;
 @property (nonatomic, strong) Session * _Nonnull session;
+@end
+
+
+SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
+@interface RequestHandler : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@class NSURLSession;
+@class NSURLAuthenticationChallenge;
+@class NSURLCredential;
+
+@interface RequestHandler (SWIFT_EXTENSION(AutopilotGPTPRO))
+- (void)URLSession:(NSURLSession * _Nonnull)session didReceiveChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
+@end
+
+@class NSURLSessionWebSocketTask;
+@class NSData;
+
+@interface RequestHandler (SWIFT_EXTENSION(AutopilotGPTPRO)) <NSURLSessionWebSocketDelegate>
+- (void)URLSession:(NSURLSession * _Nonnull)session webSocketTask:(NSURLSessionWebSocketTask * _Nonnull)webSocketTask didOpenWithProtocol:(NSString * _Nullable)protocol;
+- (void)URLSession:(NSURLSession * _Nonnull)session webSocketTask:(NSURLSessionWebSocketTask * _Nonnull)webSocketTask didCloseWithCode:(NSURLSessionWebSocketCloseCode)closeCode reason:(NSData * _Nullable)reason;
 @end
 
 

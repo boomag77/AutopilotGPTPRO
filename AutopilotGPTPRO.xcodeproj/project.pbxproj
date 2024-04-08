@@ -117,8 +117,8 @@
 			children = (
 				A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */,
 				A53E7E272BB6470300EB5311 /* InstructionsViewController.swift */,
-				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 				A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */,
+				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
