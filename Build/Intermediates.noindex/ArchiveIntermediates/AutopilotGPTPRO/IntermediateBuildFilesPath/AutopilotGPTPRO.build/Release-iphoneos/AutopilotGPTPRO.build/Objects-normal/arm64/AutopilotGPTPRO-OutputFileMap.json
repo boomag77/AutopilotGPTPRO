@@ -1,0 +1,115 @@
+{
+  "" : {
+    "const-values" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master.swiftconstvalues",
+    "dependencies" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master.d",
+    "diagnostics" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master.dia",
+    "emit-module-dependencies" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master-emit-module.dia",
+    "swift-dependencies" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AutopilotGPTPRO-master.swiftdeps"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/AppDelegate.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AppDelegate.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AppDelegate.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/AppDelegate.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Controller/CurrentSessionViewController.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/CurrentSessionViewController.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/CurrentSessionViewController.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/CurrentSessionViewController.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Controller/InstructionsViewController.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionsViewController.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionsViewController.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionsViewController.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Controller/SavedSessionsViewController.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SavedSessionsViewController.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SavedSessionsViewController.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SavedSessionsViewController.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Controller/TabBarController.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/TabBarController.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/TabBarController.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/TabBarController.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Model/DataManager.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataManager.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataManager.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataManager.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Model/DataModels.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataModels.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataModels.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/DataModels.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/Model/RequestHandler.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/RequestHandler.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/RequestHandler.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/RequestHandler.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/SceneDelegate.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SceneDelegate.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SceneDelegate.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SceneDelegate.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/View/InstructionTableViewCell.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionTableViewCell.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionTableViewCell.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/InstructionTableViewCell.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/View/ScreenTitleLabel.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/ScreenTitleLabel.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/ScreenTitleLabel.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/ScreenTitleLabel.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/View/SessionControlsButton.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionControlsButton.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionControlsButton.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionControlsButton.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/View/SessionTableViewCell.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionTableViewCell.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionTableViewCell.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/SessionTableViewCell.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/AutopilotGPTPRO/View/WaveformView.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/WaveformView.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/WaveformView.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/WaveformView.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Instruction+CoreDataClass.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataClass.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataClass.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataClass.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Instruction+CoreDataProperties.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataProperties.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataProperties.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Instruction+CoreDataProperties.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Message+CoreDataClass.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataClass.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataClass.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataClass.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Message+CoreDataProperties.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataProperties.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataProperties.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Message+CoreDataProperties.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Session+CoreDataClass.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataClass.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataClass.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataClass.o"
+  },
+  "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Session+CoreDataProperties.swift" : {
+    "index-unit-output-path" : "/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataProperties.o",
+    "llvm-bc" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataProperties.bc",
+    "object" : "/Users/sergey/Library/Mobile Documents/com~apple~CloudDocs/CODE PROJECTS/AutopilotGPTPRO/AutopilotGPTPRO/Build/Intermediates.noindex/ArchiveIntermediates/AutopilotGPTPRO/IntermediateBuildFilesPath/AutopilotGPTPRO.build/Release-iphoneos/AutopilotGPTPRO.build/Objects-normal/arm64/Session+CoreDataProperties.o"
+  }
+}
