@@ -14,9 +14,10 @@ class MessageTableViewCell: UITableViewCell {
     private var sender: MessageSender? {
         didSet {
             if sender == .user {
-                bulletPointView.tintColor = .red.withAlphaComponent(0.6)
+                bulletPointView.tintColor = .red.withAlphaComponent(0.7)
+                messageTextView.textColor = UIColor.gray.withAlphaComponent(0.85)
             } else {
-                bulletPointView.tintColor = .green.withAlphaComponent(0.6)
+                bulletPointView.tintColor = .green.withAlphaComponent(0.7)
             }
         }
     }

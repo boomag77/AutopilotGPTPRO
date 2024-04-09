@@ -430,7 +430,6 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-
 @class NSURLSession;
 @class NSURLAuthenticationChallenge;
 @class NSURLCredential;
@@ -442,10 +441,12 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
 
 @class NSURLSessionWebSocketTask;
 @class NSData;
+@class NSURLSessionTask;
 
 @interface RequestHandler (SWIFT_EXTENSION(AutopilotGPTPRO)) <NSURLSessionWebSocketDelegate>
 - (void)URLSession:(NSURLSession * _Nonnull)session webSocketTask:(NSURLSessionWebSocketTask * _Nonnull)webSocketTask didOpenWithProtocol:(NSString * _Nullable)protocol;
 - (void)URLSession:(NSURLSession * _Nonnull)session webSocketTask:(NSURLSessionWebSocketTask * _Nonnull)webSocketTask didCloseWithCode:(NSURLSessionWebSocketCloseCode)closeCode reason:(NSData * _Nullable)reason;
+- (void)URLSession:(NSURLSession * _Nonnull)session task:(NSURLSessionTask * _Nonnull)task didCompleteWithError:(NSError * _Nullable)error;
 @end
 
 

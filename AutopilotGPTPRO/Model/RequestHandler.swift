@@ -56,7 +56,7 @@ class RequestHandler: NSObject {
     
     override init() {
         super.init()
-        connectToServer()
+        //connectToServer()
     }
     
     func connectToServer() {
@@ -73,7 +73,7 @@ class RequestHandler: NSObject {
 //        receiveMessage { receivedText in
 //            print("Received text: \(receivedText)")
 //        }
-        print("Connecting to server at \(audioServerURL) for audio and \(textServerURL) for text")
+        //print("Connecting to server at \(audioServerURL) for audio and \(textServerURL) for text")
     }
     
     func disconnectFromServer() {
@@ -94,8 +94,10 @@ class RequestHandler: NSObject {
         }
     }
     
-    func sendText(_ text: String) {
-        let jsonObject: [String: Any] = ["instruction": text]
+    func sendInstruction(_ text: String) {
+        
+        let jsonObject: [String: Any] = ["instruction_from_app": text]
+        
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
               let jsonString = String(data: jsonData, encoding: .utf8) else {
             print("Failed to serialize JSON")
@@ -105,9 +107,29 @@ class RequestHandler: NSObject {
         let message = URLSessionWebSocketTask.Message.string(jsonString)
         textWebSocketTask?.send(message) { error in
             if let error = error {
-                print("Failed to send text data as JSON: \(error.localizedDescription)")
+                print("Failed to send instruction text as JSON: \(error.localizedDescription)")
             } else {
-                print("Text data sent as JSON successfully")
+                print("Instruction text sent as JSON successfully")
+            }
+        }
+    }
+    
+    func sendTranscribedText(_ text: String) {
+        
+        let jsonObject: [String: Any] = ["transcribed_text": text]
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            print("Failed to serialize JSON")
+            return
+        }
+        
+        let message = URLSessionWebSocketTask.Message.string(jsonString)
+        textWebSocketTask?.send(message) { error in
+            if let error = error {
+                print("Failed to send Transcribed text as JSON: \(error.localizedDescription)")
+            } else {
+                print("Transcribed text sent as JSON successfully")
             }
         }
     }
@@ -147,18 +169,20 @@ class RequestHandler: NSObject {
             case .failure(let error):
                 print("Failed to receive JSON message: \(error.localizedDescription)")
                 completion(.failure(error))
+                
             case .success(let message):
                 switch message {
                 case .string(let jsonString):
                     self?.parseJSONString(jsonString, completion: completion)
                 case .data(let jsonData):
+                    print("data")
                     self?.parseJSONData(jsonData, completion: completion)
                 @unknown default:
                     print("Unknown message type received")
                 }
                 
                 // Continuously receive messages by recursively calling this method
-                self?.receiveJSONResponse(completion: completion)
+                //self?.receiveJSONResponse(completion: completion)
             }
         }
     }
@@ -167,7 +191,9 @@ class RequestHandler: NSObject {
 
 extension RequestHandler {
     
-    private func parseJSONString(_ jsonString: String, completion: (Result<String, Error>) -> Void) {
+    // Parses a JSON string and completes with either the server's response or an error.
+    private func parseJSONString(_ jsonString: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
         guard let data = jsonString.data(using: .utf8) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert string to data"])))
             return
@@ -175,19 +201,34 @@ extension RequestHandler {
         parseJSONData(data, completion: completion)
     }
 
-    private func parseJSONData(_ jsonData: Data, completion: (Result<String, Error>) -> Void) {
+    // Parses a JSON Data object and completes with either the server's response or an error.
+    private func parseJSONData(_ jsonData: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        //completion(.success("Response from server"))
+        
         do {
-            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-               let responseText = json["responseText"] as? String {
-                completion(.success(responseText))
+            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                if let responseText = json["response"] as? String {
+                    // Success case: the server returned a response.
+                    completion(.success(responseText))
+                } else if let errorText = json["error"] as? String {
+                    // Error case: the server returned an error.
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: errorText])))
+                } else {
+                    // The JSON did not contain the expected keys.
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "JSON did not contain 'response' or 'error' keys"])))
+                }
             } else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Key 'responseText' not found or invalid in the JSON"])))
+                // The JSON structure was not as expected.
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to parse JSON"])))
             }
         } catch {
+            // There was an error parsing the JSON.
             completion(.failure(error))
         }
     }
 }
+
 
 extension RequestHandler: URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
@@ -207,6 +248,17 @@ extension RequestHandler: URLSessionWebSocketDelegate {
             print("Audio WebSocket connection closed")
         }
     }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if let error = error {
+            print("WebSocket task completed with error: \(error.localizedDescription)")
+        } else {
+            print("WebSocket task completed successfully.")
+        }
+    }
+    
+    
+    
 }
 
 extension RequestHandler {
@@ -218,38 +270,6 @@ extension RequestHandler {
             completionHandler(.useCredential, credential)
         } else {
             completionHandler(.performDefaultHandling, nil)
-        }
-    }
-}
-
-
-extension RequestHandler {
-    
-    func sendInstruction(_ text: String) {
-        // Creating a simple JSON object with a "instruction" key
-        let jsonObject: [String: Any] = ["instruction": text]
-        
-        // Attempt to serialize jsonObject to JSON data
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) else {
-            print("Failed to serialize JSON")
-            return
-        }
-        
-        // Assuming the server expects a stringified JSON object
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            // Create a WebSocket text message from the jsonString
-            let message = URLSessionWebSocketTask.Message.string(jsonString)
-            
-            // Send the message
-            audioWebSocketTask?.send(message) { error in
-                if let error = error {
-                    print("Failed to send text data as JSON: \(error.localizedDescription)")
-                } else {
-                    print("Text data sent as JSON successfully")
-                }
-            }
-        } else {
-            print("Failed to encode JSON data as string")
         }
     }
 }

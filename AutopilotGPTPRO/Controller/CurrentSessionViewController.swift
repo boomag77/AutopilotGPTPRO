@@ -294,19 +294,20 @@ class CurrentSessionViewController: UIViewController {
         
     private func sendInstructionToServer(instruction: String) {
         
-        RequestHandler.shared.sendText(instruction)
+        RequestHandler.shared.sendInstruction(instruction)
         
-        // Assuming the server sends a response after processing the audio
         RequestHandler.shared.receiveJSONResponse { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let textResponse):
-                        let receivedMessage = MessageModel(date: Date(), sender: .user, text: textResponse)
+                        let receivedMessage = MessageModel(date: Date(), sender: .autopilot, text: textResponse)
+                        print(receivedMessage.text)
                         self?.sessionMessages.append(receivedMessage)
-                        // Update UI here if necessary, e.g., refreshing a table view.
+                        // appending should refresh a table view.
+                        
+                        
                     case .failure(let error):
                         print("Error receiving response: \(error)")
-                        // Handle error, e.g., show an error message to the user.
                     }
                 }
             }
