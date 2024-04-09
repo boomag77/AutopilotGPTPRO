@@ -27,6 +27,7 @@
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
 		A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452502BC465CF00D56B6A /* CheckBox.swift */; };
+		A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */; };
 		A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */; };
 		A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */; };
 		A5988B2B2BBE4C280026D7A6 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B272BBE4C280026D7A6 /* Session+CoreDataClass.swift */; };
@@ -57,6 +58,7 @@
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		A58452502BC465CF00D56B6A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A5988B272BBE4C280026D7A6 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -144,6 +146,7 @@
 				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 				A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */,
 				A58452502BC465CF00D56B6A /* CheckBox.swift */,
+				A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				A5988B2E2BBF438D0026D7A6 /* SessionTableViewCell.swift in Sources */,
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
+				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
 				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,

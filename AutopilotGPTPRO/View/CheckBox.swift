@@ -63,11 +63,6 @@ class CheckBox: UIControl {
         
         backgroundColor = UIColor.clear
         
-//        addAction(UIAction { [weak self] _ in
-//            self?.checked.toggle()
-//        }, for: .touchUpInside)
-//        isAccessibilityElement = true
-//        accessibilityTraits = .button
     }
 
 }

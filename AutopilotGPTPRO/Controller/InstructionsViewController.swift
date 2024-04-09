@@ -296,6 +296,7 @@ final class InstructionsViewController: UIViewController {
         }
         let sessionViewController = CurrentSessionViewController()
         sessionViewController.position = titleField.text
+        sessionViewController.instruction = textView.text
         //hide bottom bar
         sessionViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(sessionViewController, animated: true)

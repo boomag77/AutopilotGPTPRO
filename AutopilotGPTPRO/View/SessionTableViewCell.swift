@@ -69,7 +69,6 @@ class SessionTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setup()
     }
         
@@ -77,8 +76,6 @@ class SessionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
         
     }
-    
-    
     
     private func setup() {
         
@@ -125,6 +122,7 @@ class SessionTableViewCell: UITableViewCell {
     }
     
     private func updateCellViewConstraints() {
+        
         NSLayoutConstraint.deactivate(cellViewConstraints)
         cellViewConstraints = [
             idLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),

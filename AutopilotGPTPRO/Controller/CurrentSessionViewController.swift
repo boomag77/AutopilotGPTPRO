@@ -7,19 +7,29 @@ class CurrentSessionViewController: UIViewController {
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     
+    
     var position: String?
+    
+    var instruction: String?
+    
     private var tokens: Int = 896
-    private var recievedMessage: String = "Empty label" {
+//    private var recievedMessage: String = "Empty label" {
+//        didSet {
+//            DispatchQueue.main.async { [weak self] in
+//                self?.textLabel.text = self?.recievedMessage
+//            }
+//            
+//        }
+//    }
+    
+    private var sessionMessages: [MessageModel] = [] {
         didSet {
-            print("!!!!!!!!!!")
             DispatchQueue.main.async { [weak self] in
-                self?.textLabel.text = self?.recievedMessage
+                self?.tableView.reloadData()
             }
             
         }
     }
-    
-    private var sessionPosts: [MessageModel] = []
     
     private var recording: Bool = false {
         didSet {
@@ -33,18 +43,18 @@ class CurrentSessionViewController: UIViewController {
         }
     }
     
-    private lazy var textLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.text = recievedMessage
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    private lazy var textLabel: UILabel = {
+//        let label = UILabel()
+//        label.textColor = .white
+//        label.text = recievedMessage
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .black
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -136,11 +146,17 @@ class CurrentSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //tableView.dataSource = self
+        tableView.dataSource = self
+        
+        tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
         
         requestMicPermission()
         
         setup()
+        
+        // MARK: TO-DO add checking nl!!!!!!!!!
+        RequestHandler.shared.connectToServer()
+        sendInstructionToServer(instruction: instruction!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -158,9 +174,7 @@ class CurrentSessionViewController: UIViewController {
         view.backgroundColor = .black
         
         self.view.addSubview(messagesView)
-        // DELETE!!
-            //messagesView.backgroundColor = .white
-        // DELETE!!
+        
         self.view.addSubview(notRecordingBottomView)
         self.view.insertSubview(recordingBottomView, at: 0)
         
@@ -176,16 +190,25 @@ class CurrentSessionViewController: UIViewController {
             recordingBottomView.heightAnchor.constraint(equalToConstant: 64),
             
             messagesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            messagesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            messagesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            messagesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            messagesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             messagesView.bottomAnchor.constraint(equalTo: notRecordingBottomView.topAnchor),
             messagesView.bottomAnchor.constraint(equalTo: recordingBottomView.topAnchor)
         ])
         
-        messagesView.addSubview(self.textLabel)
+//        messagesView.addSubview(self.textLabel)
+//        NSLayoutConstraint.activate([
+//            textLabel.centerXAnchor.constraint(equalTo: messagesView.centerXAnchor),
+//            textLabel.centerYAnchor.constraint(equalTo: messagesView.centerYAnchor)
+//        ])
+        
+        messagesView.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
-            textLabel.centerXAnchor.constraint(equalTo: messagesView.centerXAnchor),
-            textLabel.centerYAnchor.constraint(equalTo: messagesView.centerYAnchor)
+            tableView.topAnchor.constraint(equalTo: messagesView.topAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: messagesView.leadingAnchor, constant: 5),
+            tableView.trailingAnchor.constraint(equalTo: messagesView.trailingAnchor, constant: -5),
+            tableView.bottomAnchor.constraint(equalTo: messagesView.bottomAnchor, constant: -10)
         ])
         
         setupBottomViews()
@@ -254,8 +277,12 @@ class CurrentSessionViewController: UIViewController {
         }
         
         // Assuming the server sends a response after processing the audio
-        RequestHandler.shared.receiveMessage { [weak self] responseText in
-            self?.recievedMessage = responseText
+        RequestHandler.shared.receiveAudioMessage { [weak self] responseText in
+            //self?.recievedMessage = responseText
+            
+            let recievedMessage: MessageModel = MessageModel(date: Date(), sender: .user, text: responseText)
+            self?.sessionMessages.append(recievedMessage)
+            
 //            DispatchQueue.main.async {
 //                self?.recievedMessage = responseText
 //                //self?.textLabel.text = responseText
@@ -265,7 +292,25 @@ class CurrentSessionViewController: UIViewController {
         }
     }
         
+    private func sendInstructionToServer(instruction: String) {
         
+        RequestHandler.shared.sendText(instruction)
+        
+        // Assuming the server sends a response after processing the audio
+        RequestHandler.shared.receiveJSONResponse { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let textResponse):
+                        let receivedMessage = MessageModel(date: Date(), sender: .user, text: textResponse)
+                        self?.sessionMessages.append(receivedMessage)
+                        // Update UI here if necessary, e.g., refreshing a table view.
+                    case .failure(let error):
+                        print("Error receiving response: \(error)")
+                        // Handle error, e.g., show an error message to the user.
+                    }
+                }
+            }
+    }
     
     
     private func resetButtonTapped() {
@@ -277,6 +322,7 @@ class CurrentSessionViewController: UIViewController {
             recording.toggle()
         }
         saveCurrentSession()
+        RequestHandler.shared.disconnectFromServer()
         print("Session ended")
     }
     
@@ -457,16 +503,24 @@ extension CurrentSessionViewController {
     
 }
 
-//extension CurrentSessionViewController: UITableViewDataSource {
-//    
-////    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////        //
-////
-////    }
-////    
-////    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-////        //
-////    }
-//    
-//    
-//}
+extension CurrentSessionViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sessionMessages.count
+
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let message = sessionMessages[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MessageTableViewCell
+        
+        cell.setText(text: message.text)
+        cell.setSender(sender: message.sender)
+        
+        return cell
+        
+    }
+    
+    
+}

@@ -336,6 +336,15 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO28CurrentSessionViewController")
 @end
 
 
+@class UITableView;
+@class NSIndexPath;
+@class UITableViewCell;
+
+@interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class AVAudioRecorder;
 
 @interface CurrentSessionViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <AVAudioRecorderDelegate>
@@ -376,8 +385,6 @@ SWIFT_CLASS("_TtC15AutopilotGPTPRO26InstructionsViewController")
 @end
 
 
-@class UITableView;
-@class NSIndexPath;
 
 @interface InstructionsViewController (SWIFT_EXTENSION(AutopilotGPTPRO)) <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
@@ -409,10 +416,18 @@ SWIFT_CLASS_NAMED("Message")
 @end
 
 
+SWIFT_CLASS("_TtC15AutopilotGPTPRO20MessageTableViewCell")
+@interface MessageTableViewCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC15AutopilotGPTPRO14RequestHandler")
 @interface RequestHandler : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 @class NSURLSession;
 @class NSURLAuthenticationChallenge;
