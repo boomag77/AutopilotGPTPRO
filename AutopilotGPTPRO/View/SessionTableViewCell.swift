@@ -32,6 +32,14 @@ class SessionTableViewCell: UITableViewCell {
         
     }
     
+    private var messagesCount: Int? {
+        didSet {
+            messagesCountLabel.text = "messages: \(messagesCount ?? 0)"
+            updateCellViewConstraints()
+            updatePaddingConstraints()
+        }
+    }
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -66,6 +74,14 @@ class SessionTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private var messagesCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = .gray.withAlphaComponent(0.85)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -85,6 +101,7 @@ class SessionTableViewCell: UITableViewCell {
         cellView.addSubview(titleLabel)
         cellView.addSubview(dateLabel)
         cellView.addSubview(idLabel)
+        cellView.addSubview(messagesCountLabel)
     }
     
     func setTitle(title: String) {
@@ -99,6 +116,10 @@ class SessionTableViewCell: UITableViewCell {
     
     func setIdNumber(id: Int) {
         self.sessionID = String(id)
+    }
+    
+    func setMessagesCount(count: Int?) {
+        self.messagesCount = count
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -135,7 +156,12 @@ class SessionTableViewCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
             titleLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
-            titleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
+            //titleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10),
+            
+            messagesCountLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 20),
+            messagesCountLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            messagesCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+            messagesCountLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
         ]
         NSLayoutConstraint.activate(cellViewConstraints)
         

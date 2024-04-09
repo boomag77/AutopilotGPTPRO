@@ -22,6 +22,8 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
+    
+    
     private lazy var bulletPointView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "circle.fill")

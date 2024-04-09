@@ -1,3 +1,10 @@
+//
+//  Session+CoreDataProperties.swift
+//  AutopilotGPTPRO
+//
+//  Created by Sergey on 4/9/24.
+//
+//
 
 import Foundation
 import CoreData
@@ -10,9 +17,10 @@ extension Session {
     }
 
     @NSManaged public var date: Date
-    @NSManaged public var tokensUsed: Int64
     @NSManaged public var id: Int64
     @NSManaged public var position: String
+    @NSManaged public var tokensUsed: Int64
+    @NSManaged public var duration: Int64
     @NSManaged public var messages: NSSet?
 
 }

@@ -263,7 +263,7 @@ extension DataManager {
         }
     }
     
-    private func getSession(id: Int) -> Session? {
+    func getSession(id: Int) -> Session? {
         
         let request = Session.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", id)
@@ -277,16 +277,31 @@ extension DataManager {
         }
     }
     
-    func registerNewSession(session: SessionModel) {
+    func registerNewSession(date: Date, position: String) -> Int {
         
-        let newSession = Session(context: container.viewContext)
-        newSession.date = session.date
-        newSession.tokensUsed = Int64(session.tokensUsed ?? 0)
-        newSession.id = newSessionID()
-        newSession.position = session.position
+        let newSession = SessionModel(id: Int(newSessionID()), date: date, position: position)
+        
+        let session = Session(context: container.viewContext)
+        session.date = newSession.date
+        session.tokensUsed = 0
+        session.id = Int64(newSession.id)
+        session.position = newSession.position
         
         saveContext()
+        
+        return newSession.id
     }
+    
+//    func registerNewSession(session: SessionModel) {
+//        
+//        let newSession = Session(context: container.viewContext)
+//        newSession.date = session.date
+//        newSession.tokensUsed = Int64(session.tokensUsed ?? 0)
+//        newSession.id = newSessionID()
+//        newSession.position = session.position
+//        
+//        saveContext()
+//    }
     
     func removeSession(withID id: Int, completion: (() -> Void)? = nil) {
         

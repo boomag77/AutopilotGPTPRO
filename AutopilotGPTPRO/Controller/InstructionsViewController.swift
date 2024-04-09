@@ -289,14 +289,17 @@ final class InstructionsViewController: UIViewController {
 //    }
     
     private func launchSessionButtonTapped() {
+        
+        guard let title = titleField.text, let text = textView.text else { return }
+        
         if checkBoxChecked {
             (checkBox as? CheckBox)?.checked.toggle()
             checkBoxChecked.toggle()
             saveInstruction()
         }
         let sessionViewController = CurrentSessionViewController()
-        sessionViewController.position = titleField.text
-        sessionViewController.instruction = textView.text
+        
+        sessionViewController.instruction = InstructionModel(name: title, text: text)
         //hide bottom bar
         sessionViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(sessionViewController, animated: true)

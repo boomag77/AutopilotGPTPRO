@@ -7,25 +7,24 @@ class CurrentSessionViewController: UIViewController {
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     
+    var instruction: InstructionModel? {
+        didSet {
+            startSesion(instruction!)
+        }
+    }
     
-    var position: String?
-    
-    var instruction: String?
-    
+    private var sessionID: Int?
     private var tokens: Int = 896
-//    private var recievedMessage: String = "Empty label" {
-//        didSet {
-//            DispatchQueue.main.async { [weak self] in
-//                self?.textLabel.text = self?.recievedMessage
-//            }
-//            
-//        }
-//    }
+    
     
     private var sessionMessages: [MessageModel] = [] {
         didSet {
             DispatchQueue.main.async { [weak self] in
+                DataManager.shared
+                    .registerNewMessage(message: (self?.sessionMessages.last!)!,
+                                                      in: (self?.sessionID)!)
                 self?.tableView.reloadData()
+                print(DataManager.shared.getMessagesCount(for: (self?.sessionID)!))
             }
             
         }
@@ -42,14 +41,6 @@ class CurrentSessionViewController: UIViewController {
             recordingBottomView.isHidden.toggle()
         }
     }
-    
-//    private lazy var textLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .white
-//        label.text = recievedMessage
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -147,16 +138,14 @@ class CurrentSessionViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.dataSource = self
-        
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
         
         requestMicPermission()
         
         setup()
         
-        // MARK: TO-DO add checking nl!!!!!!!!!
-        RequestHandler.shared.connectToServer()
-        sendInstructionToServer(instruction: instruction!)
+        startSesion(self.instruction!)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -283,12 +272,6 @@ class CurrentSessionViewController: UIViewController {
             let recievedMessage: MessageModel = MessageModel(date: Date(), sender: .user, text: responseText)
             self?.sessionMessages.append(recievedMessage)
             
-//            DispatchQueue.main.async {
-//                self?.recievedMessage = responseText
-//                //self?.textLabel.text = responseText
-//            }
-            
-            //print("Response from server: \(responseText)")
         }
     }
         
@@ -318,6 +301,22 @@ class CurrentSessionViewController: UIViewController {
         recording.toggle()
     }
     
+    
+
+}
+
+// MARK: Session managing
+
+extension CurrentSessionViewController {
+    
+    private func startSesion(_ instruction: InstructionModel) {
+        
+        self.sessionID = DataManager.shared.registerNewSession(date: Date(), position: instruction.name)
+        RequestHandler.shared.connectToServer()
+        sendInstructionToServer(instruction: instruction.text)
+        
+    }
+    
     private func endSession() {
         if recording {
             recording.toggle()
@@ -329,12 +328,13 @@ class CurrentSessionViewController: UIViewController {
     
     private func saveCurrentSession() {
         
-        DataManager.shared.registerNewSession(session: SessionModel(id: 0, date: Date(), position: self.position!))
+//        DataManager.shared.registerNewSession(session: SessionModel(id: 0, date: Date(), position: self.position!))
         
         print("Session saved")
     }
-
 }
+
+// MARK: Audio recording managing
 
 extension CurrentSessionViewController: AVAudioRecorderDelegate {
     
@@ -362,6 +362,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     }
     
     private func showMicAccessNeededAlert() {
+        
         let alertController = UIAlertController(
             title: "Microphone Access Required",
             message: "To use this feature, please enable microphone access in Settings.",
@@ -504,6 +505,8 @@ extension CurrentSessionViewController {
     
 }
 
+// MARK: TableView
+
 extension CurrentSessionViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -522,6 +525,5 @@ extension CurrentSessionViewController: UITableViewDataSource {
         return cell
         
     }
-    
     
 }
