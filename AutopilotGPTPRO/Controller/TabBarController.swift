@@ -28,12 +28,14 @@ class TabBarController: UITabBarController {
         sessionsVC.tabBarItem = UITabBarItem(title: "Saved sessions",
                                              image: UIImage(systemName: "bubble.left.and.bubble.right"),
                                              selectedImage: nil)
+        let secondNavController = UINavigationController(rootViewController: sessionsVC)
+        
 //        let settingsVC = SettingsViewController()
 //        settingsVC.tabBarItem = UITabBarItem(title: "Settings",
 //                                             image: UIImage(systemName: "gearshape"),
 //                                             selectedImage: nil)
         
-        viewControllers = [firstNavController, sessionsVC]
+        viewControllers = [firstNavController, secondNavController]
         
         tabBarController(self, didSelect: instructionsVC)
     }

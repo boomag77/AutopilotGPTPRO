@@ -99,14 +99,14 @@ final class InstructionsViewController: UIViewController {
         return tableView
     }()
     
-    let titleField: UITextField = {
+    let positionTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         return textField
     }()
     
-    let textView: UITextView = {
+    let instructionTextTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -145,8 +145,16 @@ final class InstructionsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         setup()
         fetchData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     
@@ -201,19 +209,19 @@ final class InstructionsViewController: UIViewController {
         checkBoxChecked = false
         
         if instruction == nil {
-            titleField.isEnabled = true
-            titleField.placeholder = "Input title here"
-            titleField.text = nil
-            textView.text = ""
+            positionTextField.isEnabled = true
+            positionTextField.placeholder = "Input title here"
+            positionTextField.text = nil
+            instructionTextTextView.text = ""
         } else {
             //titleField.isEnabled = false
-            titleField.backgroundColor = UIColor.systemGray6
-            titleField.text = instruction?.name
-            textView.text = instruction?.text
+            positionTextField.backgroundColor = UIColor.systemGray6
+            positionTextField.text = instruction?.name
+            instructionTextTextView.text = instruction?.text
         }
         
-        instructionView.addSubview(titleField)
-        instructionView.addSubview(textView)
+        instructionView.addSubview(positionTextField)
+        instructionView.addSubview(instructionTextTextView)
         instructionView.addSubview(checkBox)
         instructionView.addSubview(launchSessionButton)
         instructionView.addSubview(checkBoxLabel)
@@ -223,9 +231,9 @@ final class InstructionsViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            titleField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
-            titleField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-            titleField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+            positionTextField.topAnchor.constraint(equalTo: instructionView.topAnchor, constant: 10.0),
+            positionTextField.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+            positionTextField.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
             
             launchSessionButton.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
             launchSessionButton.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
@@ -238,10 +246,10 @@ final class InstructionsViewController: UIViewController {
             checkBoxLabel.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor),
             checkBoxLabel.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 16),
             
-            textView.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 10.0),
-            textView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
-            textView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
-            textView.bottomAnchor.constraint(equalTo: checkBox.topAnchor, constant: -16.0)
+            instructionTextTextView.topAnchor.constraint(equalTo: positionTextField.bottomAnchor, constant: 10.0),
+            instructionTextTextView.leadingAnchor.constraint(equalTo: instructionView.leadingAnchor, constant: 16.0),
+            instructionTextTextView.trailingAnchor.constraint(equalTo: instructionView.trailingAnchor, constant: -16.0),
+            instructionTextTextView.bottomAnchor.constraint(equalTo: checkBox.topAnchor, constant: -16.0)
         ])
         
         if instruction == nil {
@@ -272,10 +280,10 @@ final class InstructionsViewController: UIViewController {
     
     private func saveInstruction() {
         DataManager.shared
-            .registerNewInstruction(instruction: InstructionModel(name: titleField.text!,
-                                                                  text: textView.text)) { [weak self] in
-                self?.titleField.text = nil
-                self?.textView.text = nil
+            .registerNewInstruction(instruction: InstructionModel(name: positionTextField.text!,
+                                                                  text: instructionTextTextView.text)) { [weak self] in
+                self?.positionTextField.text = nil
+                self?.instructionTextTextView.text = nil
                 self?.instructionView.isHidden.toggle()
                 self?.listView.isHidden.toggle()
                 self?.fetchData()
@@ -290,7 +298,7 @@ final class InstructionsViewController: UIViewController {
     
     private func launchSessionButtonTapped() {
         
-        guard let title = titleField.text, let text = textView.text else { return }
+        guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
         
         if checkBoxChecked {
             (checkBox as? CheckBox)?.checked.toggle()

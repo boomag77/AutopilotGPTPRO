@@ -206,7 +206,7 @@ extension DataManager {
         return session.messages?.count ?? 0
     }
     
-    func getMessages(for sessionID: Int) -> [MessageModel] {
+    func getMessages(forSessionID sessionID: Int) -> [MessageModel] {
         
         guard let session = getSession(id: sessionID) else {
             print("Session not found")

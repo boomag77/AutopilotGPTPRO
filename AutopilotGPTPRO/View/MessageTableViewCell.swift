@@ -4,6 +4,12 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
     
+    var messageTextBackgroundColor: UIColor = .black {
+        didSet {
+            setup()
+        }
+    }
+    
     private var text: String? {
         didSet {
             messageTextView.text = text
@@ -36,7 +42,7 @@ class MessageTableViewCell: UITableViewCell {
     private lazy var messageTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.backgroundColor = .black
+        //textView.backgroundColor = messageTextBackgroundColor
         textView.textColor = .white.withAlphaComponent(0.85)
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textView.isScrollEnabled = false
@@ -56,7 +62,8 @@ class MessageTableViewCell: UITableViewCell {
     
     private func setup() {
         
-        contentView.backgroundColor = .black
+        contentView.backgroundColor = messageTextBackgroundColor
+        messageTextView.backgroundColor = messageTextBackgroundColor
         contentView.addSubview(bulletPointView)
         contentView.addSubview(messageTextView)
         

@@ -16,6 +16,8 @@ class SavedSessionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor  = .systemGray6
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -23,6 +25,20 @@ class SavedSessionsViewController: UIViewController {
         fetchData()
         setup()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // hide navigation bar
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Show navigation bar on child controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func fetchData() {
@@ -33,17 +49,19 @@ class SavedSessionsViewController: UIViewController {
     private func setup() {
         view.backgroundColor = .systemGray6
         
-        let screenTitle = ScreenTitleLabel(withText: "Sessions")
+        self.title = "Sessions"
         
-        view.addSubview(screenTitle)
-        screenTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
-        screenTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
-        screenTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
+        //let screenTitle = ScreenTitleLabel(withText: "Sessions")
+        
+//        view.addSubview(screenTitle)
+//        screenTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
+//        screenTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+//        screenTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
         
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
@@ -83,6 +101,15 @@ extension SavedSessionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedSession = sessions[indexPath.row]
+        
+        let sessionVC = SavedSessionMessagesVC()
+        
+        sessionVC.setSessionID(selectedSession.id)
+        sessionVC.title = selectedSession.position
+        //hide bottom bar
+        //sessionViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(sessionVC, animated: true)
+        
         print("Selected Session with id: \(selectedSession.id)")
     }
     
