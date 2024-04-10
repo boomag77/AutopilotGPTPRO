@@ -21,3 +21,4 @@ xcuserdata/
 # Игнорируем файлы специфичные для рабочей области, которые могут быть созданы Xcode
 *.xcworkspace
 !default.xcworkspace
+.DS_Store
