@@ -144,7 +144,7 @@ class CurrentSessionViewController: UIViewController {
         
         setup()
         
-        startSesion(self.instruction!)
+        //startSesion(self.instruction!)
         
     }
     
@@ -311,8 +311,8 @@ extension CurrentSessionViewController {
     
     private func startSesion(_ instruction: InstructionModel) {
         
-        self.sessionID = DataManager.shared.registerNewSession(date: Date(), 
-                                                               position: instruction.name)
+        self.sessionID = DataManager.shared
+            .registerNewSession(date: Date(), position: instruction.name)
         
         RequestHandler.shared.connectToServer()
         sendInstructionToServer(instruction: instruction.text)
@@ -320,19 +320,26 @@ extension CurrentSessionViewController {
     }
     
     private func endSession() {
+        
         if recording {
             recording.toggle()
         }
         saveCurrentSession()
+        
         RequestHandler.shared.disconnectFromServer()
         print("Session ended")
     }
     
+    // Remove session from storage if it's no messages
     private func saveCurrentSession() {
         
-//        DataManager.shared.registerNewSession(session: SessionModel(id: 0, date: Date(), position: self.position!))
+        if DataManager.shared.getMessagesCount(forSessionID: self.sessionID!) == 0 {
+            print("Current session is Empty and will not be saved")
+            DataManager.shared.removeSession(withID: self.sessionID!)
+        } else {
+            print("Session saved")
+        }
         
-        print("Session saved")
     }
 }
 
