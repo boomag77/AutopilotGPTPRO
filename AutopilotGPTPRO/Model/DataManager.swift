@@ -21,6 +21,10 @@ final class DataManager {
         }
     }
     
+    deinit {
+        print("Data Manager cleared")
+    }
+    
     lazy private var defaultInstruction: InstructionModel = {
         
         let name = "Junior QA Engineer"
@@ -32,28 +36,27 @@ final class DataManager {
         advice to the candidate, focusing on key facts and essential
         information. Ensure your guidance is brief, relevant, and quick to
         read.
+        1. Quickly Process Each Segment: As you receive conversation
+        pieces in 10-second intervals, swiftly understand the context
+        and questions asked.
+        2. Deliver Prompt Concise Advice: Provide immediate, bullet-point
+        suggestions to the candidate, relevant to the last segment
+        heard.
+        3. Highlight Relevant Skills: Emphasize skills crucial for a QA
+        Engineer, like testing methodologies and tools.
+        4. Clear Communication Tips: Advise on thorough, thoughtful
+        clearly, demonstrating teamwork, and effective collaboration.
+        5. Technical Query Responses: Offer succinct answers to
+        technical questions, focusing on QA principles and practices.
+        6. Encourage Insightful Questions: Remind the candidate to ask
+        meaningful questions about the company and role.
+        7. End on a Strong Note: Suggest a powerful closing
+        statement, highlighting the candidate's interest and fit for
+        the role.
+        Notye: The advice should adapt to the conversation's pace and
+        content. Be prepared to shift focus quickly based on the
+        interviewer's questions and the candidate's responses.
         """
-//        1. Quickly Process Each Segment: As you receive conversation
-//        pieces in 10-second intervals, swiftly understand the context
-//        and questions asked.
-//        2. Deliver Prompt Concise Advice: Provide immediate, bullet-point
-//        suggestions to the candidate, relevant to the last segment
-//        heard.
-//        3. Highlight Relevant Skills: Emphasize skills crucial for a QA
-//        Engineer, like testing methodologies and tools.
-//        4. Clear Communication Tips: Advise on thorough, thoughtful
-//        clearly, demonstrating teamwork, and effective collaboration.
-//        5. Technical Query Responses: Offer succinct answers to
-//        technical questions, focusing on QA principles and practices.
-//        6. Encourage Insightful Questions: Remind the candidate to ask
-//        meaningful questions about the company and role.
-//        7. End on a Strong Note: Suggest a powerful closing
-//        statement, highlighting the candidate's interest and fit for
-//        the role.
-//        Notye: The advice should adapt to the conversation's pace and
-//        content. Be prepared to shift focus quickly based on the
-//        interviewer's questions and the candidate's responses.
-//        """
         
         let instruction = InstructionModel(name: name, text: text)
         

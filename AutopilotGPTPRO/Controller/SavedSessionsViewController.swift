@@ -22,7 +22,7 @@ class SavedSessionsViewController: UIViewController {
         tableView.delegate = self
         
         tableView.register(SessionTableViewCell.self, forCellReuseIdentifier: "SessionCell")
-        fetchData()
+        //fetchData()
         setup()
         
     }
@@ -30,6 +30,7 @@ class SavedSessionsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
+        
         // hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
@@ -50,13 +51,6 @@ class SavedSessionsViewController: UIViewController {
         view.backgroundColor = .systemGray6
         
         self.title = "Sessions"
-        
-        //let screenTitle = ScreenTitleLabel(withText: "Sessions")
-        
-//        view.addSubview(screenTitle)
-//        screenTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
-//        screenTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
-//        screenTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
         
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -107,10 +101,9 @@ extension SavedSessionsViewController: UITableViewDelegate {
         sessionVC.setSessionID(selectedSession.id)
         sessionVC.title = selectedSession.position
         //hide bottom bar
-        //sessionViewController.hidesBottomBarWhenPushed = true
+        sessionVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(sessionVC, animated: true)
         
-        print("Selected Session with id: \(selectedSession.id)")
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

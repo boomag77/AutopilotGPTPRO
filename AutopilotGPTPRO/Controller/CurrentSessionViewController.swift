@@ -4,7 +4,7 @@ import AVFoundation
 
 class CurrentSessionViewController: UIViewController {
     
-    private var updateTimer: Timer?
+    private weak var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     
     var instruction: InstructionModel? {
@@ -133,9 +133,18 @@ class CurrentSessionViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    deinit {
+        print("CurrentSessionViewController is being deinitialized!")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let backButton = UIBarButtonItem(title: "End Session", style: .plain, target: self, action: #selector(backToInstructionsList))
+//        self.navigationItem.leftBarButtonItem = backButton
+        
+        
         
         tableView.dataSource = self
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
@@ -148,18 +157,34 @@ class CurrentSessionViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        // remove StartSessionVC from navigationController stack
+        if var navigationStack = navigationController?.viewControllers {
+            navigationStack.remove(at: 1)
+            navigationController?.setViewControllers(navigationStack, animated: true)
+        }
+        
+        
+        
+        
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.endSession()
+        //navigationController?.popToRootViewController(animated: false)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        setup()
+//    @objc private func backToInstructionsList() {
+//        let rootVC = InstructionsViewController()
+//        present(rootVC, animated: true)
 //    }
     
     private func setup() {
-        print("setup")
+        
         view.backgroundColor = .black
         
         self.view.addSubview(messagesView)
