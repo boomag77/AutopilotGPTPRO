@@ -117,9 +117,9 @@ class StartSessionVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //positionTextField.delegate = self
+        positionTextField.delegate = self
         
-        positionTextField.becomeFirstResponder()
+        //positionTextField.becomeFirstResponder()
     }
     
     private func setup() {
@@ -216,9 +216,6 @@ extension StartSessionVC {
                                                                   text: instructionTextTextView.text)) { [weak self] in
                 self?.positionTextField.text = nil
                 self?.instructionTextTextView.text = nil
-//                self?.instructionView.isHidden.toggle()
-//                self?.listView.isHidden.toggle()
-//                self?.fetchData()
         }
     }
     
