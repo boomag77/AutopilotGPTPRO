@@ -292,17 +292,6 @@ extension DataManager {
         return newSession.id
     }
     
-//    func registerNewSession(session: SessionModel) {
-//        
-//        let newSession = Session(context: container.viewContext)
-//        newSession.date = session.date
-//        newSession.tokensUsed = Int64(session.tokensUsed ?? 0)
-//        newSession.id = newSessionID()
-//        newSession.position = session.position
-//        
-//        saveContext()
-//    }
-    
     func removeSession(withID id: Int, completion: (() -> Void)? = nil) {
         
         let request: NSFetchRequest<Session> = Session.fetchRequest()
@@ -313,6 +302,7 @@ extension DataManager {
             sessionsForRemove.forEach { session in
                 container.viewContext.delete(session)
             }
+            updateIDs()
         } catch {
             print("Fetching session with ID: \(id) failed \(error)")
         }
@@ -322,8 +312,7 @@ extension DataManager {
         }
     }
     
-    
-    // Returns SessionModels without their Messages
+    // Returns SessionModels list without their Messages
     func getSessions(sortKey: String, ascending: Bool) -> [SessionModel] {
         
         let requset: NSFetchRequest<Session> = Session.fetchRequest()
@@ -361,6 +350,19 @@ extension DataManager {
             print("Could not fetch sessions: \(error), \(error.userInfo)")
         }
         return 1
+    }
+    
+    private func updateIDs() {
+        let requset: NSFetchRequest<Session> = Session.fetchRequest()
+        
+        do {
+            let sessions = try container.viewContext.fetch(requset)
+            sessions.enumerated().forEach { index, session in
+                session.id = Int64(index + 1)
+            }
+        } catch let error as NSError {
+            print("Could not fetch sessions: \(error), \(error.userInfo)")
+        }
     }
     
 }
