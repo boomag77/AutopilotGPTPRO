@@ -199,7 +199,7 @@ extension DataManager {
 
 extension DataManager {
     
-    func getMessagesCount(for sessionID: Int) -> Int {
+    func getMessagesCount(forSessionID sessionID: Int) -> Int {
         
         guard let session: Session = getSession(id: sessionID) else { return 0 }
         

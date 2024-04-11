@@ -24,7 +24,7 @@ class CurrentSessionViewController: UIViewController {
                     .registerNewMessage(message: (self?.sessionMessages.last!)!,
                                                       in: (self?.sessionID)!)
                 self?.tableView.reloadData()
-                print(DataManager.shared.getMessagesCount(for: (self?.sessionID)!))
+                print(DataManager.shared.getMessagesCount(forSessionID: (self?.sessionID)!))
             }
             
         }
@@ -311,7 +311,9 @@ extension CurrentSessionViewController {
     
     private func startSesion(_ instruction: InstructionModel) {
         
-        self.sessionID = DataManager.shared.registerNewSession(date: Date(), position: instruction.name)
+        self.sessionID = DataManager.shared.registerNewSession(date: Date(), 
+                                                               position: instruction.name)
+        
         RequestHandler.shared.connectToServer()
         sendInstructionToServer(instruction: instruction.text)
         

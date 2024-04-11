@@ -3,7 +3,7 @@ import UIKit
 
 class SavedSessionsViewController: UIViewController {
     
-    private var sessions: [SessionModel] = [SessionModel(id: 1, date: Date(), position: "Pos1"), SessionModel(id: 2, date: Date(), position: "Pos2")]
+    private var sessions: [SessionModel] = []
     
     private lazy var tableView: UITableView = {
         let view = UITableView()
@@ -29,7 +29,7 @@ class SavedSessionsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        fetchData()
         // hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
@@ -42,7 +42,7 @@ class SavedSessionsViewController: UIViewController {
     }
     
     private func fetchData() {
-        sessions = DataManager.shared.getSessions(sortKey: "date", ascending: true)
+        sessions = DataManager.shared.getSessions(sortKey: "date", ascending: false)
         tableView.reloadData()
     }
     
@@ -81,7 +81,7 @@ extension SavedSessionsViewController: UITableViewDataSource {
         let positionName = session.position
         let date = session.date
         let id = session.id
-        let messagesCount = DataManager.shared.getMessagesCount(for: id)
+        let messagesCount = DataManager.shared.getMessagesCount(forSessionID: id)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell",
                                                  for: indexPath) as! SessionTableViewCell
