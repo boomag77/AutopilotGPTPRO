@@ -100,7 +100,7 @@ class SessionTableViewCell: UITableViewCell {
         
         cellView.addSubview(titleLabel)
         cellView.addSubview(dateLabel)
-        cellView.addSubview(idLabel)
+        //cellView.addSubview(idLabel)
         cellView.addSubview(messagesCountLabel)
     }
     
@@ -109,8 +109,11 @@ class SessionTableViewCell: UITableViewCell {
     }
     
     func setDate(date: Date) {
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/YYYY"
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
         self.date = dateFormatter.string(from: date)
     }
     
@@ -146,17 +149,16 @@ class SessionTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.deactivate(cellViewConstraints)
         cellViewConstraints = [
-            idLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
-            idLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+//            idLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+//            idLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
             
             dateLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
             dateLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-            dateLabel.trailingAnchor.constraint(equalTo: idLabel.trailingAnchor, constant: -10),
+            dateLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
             
             titleLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
             titleLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
-            //titleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10),
             
             messagesCountLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 20),
             messagesCountLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),

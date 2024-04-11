@@ -129,8 +129,8 @@ extension SavedSessionsViewController: TabBarDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 //        tableView.dataSource = self
-        fetchData()
-        setup()
+//        fetchData()
+//        setup()
     }
     
     
