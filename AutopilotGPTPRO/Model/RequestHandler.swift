@@ -47,6 +47,7 @@ import Foundation
 final class RequestHandler: NSObject {
     
     static let shared = RequestHandler()
+    
         
     private var audioWebSocketTask: URLSessionWebSocketTask?
     private var textWebSocketTask: URLSessionWebSocketTask?
@@ -69,11 +70,6 @@ final class RequestHandler: NSObject {
         audioWebSocketTask?.resume()
         textWebSocketTask?.resume()
         
-        // Example usage of receiveMessage
-//        receiveMessage { receivedText in
-//            print("Received text: \(receivedText)")
-//        }
-        //print("Connecting to server at \(audioServerURL) for audio and \(textServerURL) for text")
     }
     
     func disconnectFromServer() {
@@ -82,8 +78,12 @@ final class RequestHandler: NSObject {
         print("Disconnected from server")
     }
     
-    func sendAudioData(_ audioData: Data) {
+    func sendRecordedAudioData(_ audioData: Data) {
         
+        if audioWebSocketTask?.state != .running {
+            connectToServer()
+        }
+        print("*** Audio socket connected ***")
         let message = URLSessionWebSocketTask.Message.data(audioData)
         audioWebSocketTask?.send(message) { error in
             if let error = error {
@@ -134,8 +134,10 @@ final class RequestHandler: NSObject {
         }
     }
     
-    func receiveAudioMessage(completion: @escaping (String) -> Void) {
-        
+    func receiveTranscribedAudioMessage(completion: @escaping (String) -> Void) {
+        if audioWebSocketTask?.state != .running {
+            connectToServer()
+        }
         audioWebSocketTask?.receive { result in
             switch result {
             case .failure(let error):
@@ -157,9 +159,10 @@ final class RequestHandler: NSObject {
                     completion("Unknown message type received")
                 }
                 
-                // Optionally continue receiving messages here if needed
-                //self?.receiveMessage(completion: completion)
+                
             }
+            // Optionally continue receiving messages here if needed
+            //self.receiveAudioMessage(completion: completion)
         }
     }
     
@@ -245,7 +248,10 @@ extension RequestHandler: URLSessionWebSocketDelegate {
         if webSocketTask == textWebSocketTask {
             print("Text WebSocket connection closed")
         } else if webSocketTask == audioWebSocketTask {
-            print("Audio WebSocket connection closed")
+            if closeCode == .messageTooBig {
+                print("Disconnected: Data frame size is too large.")
+            }
+            print("Audio WebSocket connection closed: \(closeCode.rawValue)")
         }
     }
     

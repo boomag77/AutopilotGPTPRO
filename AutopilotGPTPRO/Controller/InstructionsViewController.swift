@@ -32,7 +32,11 @@ final class InstructionsViewController: UIViewController {
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(self.addNewButtonTapped), for: .touchUpInside)
+        
+        button.addAction(UIAction { [weak self] _ in
+            self?.addNewButtonTapped()
+        }, for: .touchUpInside)
+        
         return button
     }()
     
@@ -97,13 +101,10 @@ final class InstructionsViewController: UIViewController {
         tableView.reloadData()
     }
     
-    @objc private func addNewButtonTapped() {
+    private func addNewButtonTapped() {
         
         showStartSessionVC()
         
-//        setupInstructionView()
-//        instructionView.isHidden.toggle()
-//        listView.isHidden.toggle()
     }
     
     private func showStartSessionVC(_ instruction: InstructionModel? = nil) {

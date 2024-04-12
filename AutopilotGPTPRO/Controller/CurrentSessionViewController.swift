@@ -6,7 +6,7 @@ final class CurrentSessionViewController: UIViewController {
     
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
-    
+    private var requester = RequestHandler()
     
     var instruction: InstructionModel? {
         didSet {
@@ -274,7 +274,18 @@ final class CurrentSessionViewController: UIViewController {
         recording.toggle()
         
         let audioFilePath: URL = getFilePath().appendingPathComponent("recording.wav")
-        print("File \(audioFilePath) ready to sending!")
+        
+        do {
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: audioFilePath.path)
+            if let fileSize = fileAttributes[FileAttributeKey.size] as? NSNumber {
+                // Convert bytes to megabytes (1 MB = 1,024 KB = 1,048,576 bytes)
+                let fileSizeInMB = Double(truncating: fileSize) / 1_048_576
+                //print("File \(audioFilePath) is ready for sending!")
+                print("File size: \(String(format: "%.2f", fileSizeInMB)) MB")
+            }
+        } catch {
+            print("Error getting file attributes: \(error.localizedDescription)")
+        }
         
         // stop recording and send file to server
         // After response's recieved - delete recorded file
@@ -285,16 +296,17 @@ final class CurrentSessionViewController: UIViewController {
         
         do {
             let audioData = try Data(contentsOf: audioFilePath)
-            RequestHandler.shared.sendAudioData(audioData)
+            requester.sendRecordedAudioData(audioData)
         } catch {
             print("Failed to load audio data: \(error.localizedDescription)")
         }
         
         // Assuming the server sends a response after processing the audio
-        RequestHandler.shared.receiveAudioMessage { [weak self] responseText in
-            //self?.recievedMessage = responseText
+        requester.receiveTranscribedAudioMessage { [weak self] responseText in
             
-            let recievedMessage: MessageModel = MessageModel(date: Date(), sender: .user, text: responseText)
+            let recievedMessage: MessageModel = MessageModel(date: Date(), 
+                                                             sender: .user,
+                                                             text: responseText)
             self?.sessionMessages.append(recievedMessage)
             
         }
@@ -302,9 +314,9 @@ final class CurrentSessionViewController: UIViewController {
         
     private func sendInstructionToServer(instruction: String) {
         
-        RequestHandler.shared.sendInstruction(instruction)
+        requester.sendInstruction(instruction)
         
-        RequestHandler.shared.receiveJSONResponse { [weak self] result in
+        requester.receiveJSONResponse { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let textResponse):
@@ -339,7 +351,7 @@ extension CurrentSessionViewController {
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
         
-        RequestHandler.shared.connectToServer()
+        //requester.connectToServer()
         sendInstructionToServer(instruction: instruction.text)
         
     }
@@ -351,7 +363,7 @@ extension CurrentSessionViewController {
         }
         saveCurrentSession()
         
-        RequestHandler.shared.disconnectFromServer()
+        requester.disconnectFromServer()
         print("Session ended")
     }
     
