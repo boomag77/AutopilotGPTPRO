@@ -7,6 +7,7 @@ final class CurrentSessionViewController: UIViewController {
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     
+    
     var instruction: InstructionModel? {
         didSet {
             startSesion(instruction!)
@@ -52,7 +53,6 @@ final class CurrentSessionViewController: UIViewController {
     
     private lazy var waveformView: WaveformView = {
         let view = WaveformView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
