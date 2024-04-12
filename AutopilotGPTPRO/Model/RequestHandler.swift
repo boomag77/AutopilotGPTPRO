@@ -248,15 +248,6 @@ extension RequestHandler {
 
 extension RequestHandler: URLSessionWebSocketDelegate {
     
-    private func handleTextWebSocketOpened() async {
-        
-    }
-    
-    private func handleAudioWebSocketOpened() async {
-        
-        
-    }
-    
     private func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) async {
         
         if webSocketTask == textWebSocketTask {
