@@ -2,9 +2,9 @@
 import UIKit
 import AVFoundation
 
-class CurrentSessionViewController: UIViewController {
+final class CurrentSessionViewController: UIViewController {
     
-    private weak var updateTimer: Timer?
+    private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     
     var instruction: InstructionModel? {
@@ -127,7 +127,7 @@ class CurrentSessionViewController: UIViewController {
         return view
     }()
     
-    private let messagesView: UIView = {
+    private lazy var messagesView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false

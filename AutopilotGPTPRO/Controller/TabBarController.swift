@@ -5,7 +5,7 @@ protocol TabBarDelegate: UIViewController {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController)
 }
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
     
     override func viewDidLoad() {

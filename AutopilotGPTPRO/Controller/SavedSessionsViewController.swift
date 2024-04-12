@@ -1,7 +1,7 @@
 
 import UIKit
 
-class SavedSessionsViewController: UIViewController {
+final class SavedSessionsViewController: UIViewController {
     
     private var sessions: [SessionModel] = []
     

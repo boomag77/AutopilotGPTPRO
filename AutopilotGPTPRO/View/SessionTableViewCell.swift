@@ -75,7 +75,7 @@ class SessionTableViewCell: UITableViewCell {
         return view
     }()
     
-    private var messagesCountLabel: UILabel = {
+    private lazy var messagesCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textColor = .gray.withAlphaComponent(0.85)

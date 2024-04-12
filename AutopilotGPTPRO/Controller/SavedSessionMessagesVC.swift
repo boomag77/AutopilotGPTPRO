@@ -1,7 +1,7 @@
 
 import UIKit
 
-class SavedSessionMessagesVC: UITableViewController {
+final class SavedSessionMessagesVC: UITableViewController {
     
     private var messages: [MessageModel] = []
     private var sessionID: Int? {

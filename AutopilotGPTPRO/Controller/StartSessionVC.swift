@@ -1,7 +1,7 @@
 
 import UIKit
 
-class StartSessionVC: UIViewController {
+final class StartSessionVC: UIViewController {
     
     var instruction: InstructionModel? {
         didSet {
@@ -37,7 +37,7 @@ class StartSessionVC: UIViewController {
         }
     }
     
-    let positionTextField: UITextField = {
+    private lazy var positionTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .systemBackground
@@ -47,7 +47,7 @@ class StartSessionVC: UIViewController {
         return textField
     }()
     
-    let instructionTextTextView: UITextView = {
+    private lazy var instructionTextTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -102,7 +102,6 @@ class StartSessionVC: UIViewController {
     }()
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
         print("StartSessionVC is being deinitialized")
     }
 
@@ -202,7 +201,10 @@ extension StartSessionVC {
             saveInstruction()
         }
         
-        let activeSessionVC = CurrentSessionViewController()
+        lazy var activeSessionVC = {
+            let controller = CurrentSessionViewController()
+            return controller
+        }()
         
         activeSessionVC.instruction = InstructionModel(name: title, text: text)
         //hide bottom bar

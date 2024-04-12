@@ -44,7 +44,7 @@
 
 import Foundation
 
-class RequestHandler: NSObject {
+final class RequestHandler: NSObject {
     
     static let shared = RequestHandler()
         
