@@ -10,7 +10,10 @@ final class CurrentSessionViewController: UIViewController {
     
     var instruction: InstructionModel? {
         didSet {
-            startSesion(instruction!)
+            Task {
+                await startSesion(instruction!)
+            }
+            
         }
     }
     
@@ -89,7 +92,10 @@ final class CurrentSessionViewController: UIViewController {
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [weak self] _ in
-            self?.sendButtonTapped()
+            Task {
+                await self?.sendButtonTapped()
+            }
+            
         },
                          for: .touchUpInside)
         return button
@@ -174,7 +180,10 @@ final class CurrentSessionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.endSession()
+        Task {
+            await self.endSession()
+        }
+        
         //navigationController?.popToRootViewController(animated: false)
     }
     
@@ -269,7 +278,7 @@ final class CurrentSessionViewController: UIViewController {
         self.recording.toggle()
     }
     
-    private func sendButtonTapped() {
+    private func sendButtonTapped() async {
         
         recording.toggle()
         
@@ -296,13 +305,13 @@ final class CurrentSessionViewController: UIViewController {
         
         do {
             let audioData = try Data(contentsOf: audioFilePath)
-            requester.sendRecordedAudioData(audioData)
+            await requester.sendRecordedAudioData(audioData)
         } catch {
             print("Failed to load audio data: \(error.localizedDescription)")
         }
         
         // Assuming the server sends a response after processing the audio
-        requester.receiveTranscribedAudioMessage { [weak self] responseText in
+        await requester.receiveTranscribedAudioMessage { [weak self] responseText in
             
             let recievedMessage: MessageModel = MessageModel(date: Date(), 
                                                              sender: .user,
@@ -312,11 +321,11 @@ final class CurrentSessionViewController: UIViewController {
         }
     }
         
-    private func sendInstructionToServer(instruction: String) {
+    private func sendInstructionToServer(instruction: String) async {
         
-        requester.sendInstruction(instruction)
+        await requester.sendInstruction(instruction)
         
-        requester.receiveJSONResponse { [weak self] result in
+        await requester.receiveJSONResponse { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let textResponse):
@@ -346,24 +355,24 @@ final class CurrentSessionViewController: UIViewController {
 
 extension CurrentSessionViewController {
     
-    private func startSesion(_ instruction: InstructionModel) {
+    private func startSesion(_ instruction: InstructionModel) async {
         
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
         
         //requester.connectToServer()
-        sendInstructionToServer(instruction: instruction.text)
+        await sendInstructionToServer(instruction: instruction.text)
         
     }
     
-    private func endSession() {
+    private func endSession() async {
         
         if recording {
             recording.toggle()
         }
         saveCurrentSession()
         
-        requester.disconnectFromServer()
+        await requester.disconnectFromServer()
         print("Session ended")
     }
     

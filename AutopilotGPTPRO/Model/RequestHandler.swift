@@ -44,9 +44,9 @@
 
 import Foundation
 
-final class RequestHandler: NSObject {
+actor RequestHandler: NSObject {
     
-    static let shared = RequestHandler()
+    //static let shared = RequestHandler()
     
         
     private var audioWebSocketTask: URLSessionWebSocketTask?
@@ -58,6 +58,10 @@ final class RequestHandler: NSObject {
     override init() {
         super.init()
         //connectToServer()
+    }
+    
+    deinit {
+        print("Requester deinitialized")
     }
     
     func connectToServer() {
@@ -167,26 +171,35 @@ final class RequestHandler: NSObject {
     }
     
     func receiveJSONResponse(completion: @escaping (Result<String, Error>) -> Void) {
-        textWebSocketTask?.receive { [weak self] result in
-            switch result {
-            case .failure(let error):
-                print("Failed to receive JSON message: \(error.localizedDescription)")
-                completion(.failure(error))
-                
-            case .success(let message):
-                switch message {
-                case .string(let jsonString):
-                    self?.parseJSONString(jsonString, completion: completion)
-                case .data(let jsonData):
-                    print("data")
-                    self?.parseJSONData(jsonData, completion: completion)
-                @unknown default:
-                    print("Unknown message type received")
+        textWebSocketTask?.receive { result in
+            Task {
+                switch result {
+                case .failure(let error):
+                    print("Failed to receive JSON message: \(error.localizedDescription)")
+                    completion(.failure(error))
+                    
+                case .success(let message):
+                    switch message {
+                    case .string(let jsonString):
+                        Task { [weak self] in
+                            await self?.parseJSONString(jsonString, completion: completion)
+                        }
+                        
+                    case .data(let jsonData):
+                        print("data")
+                        Task { [weak self] in
+                            await self?.parseJSONData(jsonData, completion: completion)
+                        }
+                    @unknown default:
+                        print("Unknown message type received")
+                        completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown message type received"])))
+                    }
+                    
+                    // Continuously receive messages by recursively calling this method
+                    //self?.receiveJSONResponse(completion: completion)
                 }
-                
-                // Continuously receive messages by recursively calling this method
-                //self?.receiveJSONResponse(completion: completion)
             }
+            
         }
     }
 
@@ -234,7 +247,8 @@ extension RequestHandler {
 
 
 extension RequestHandler: URLSessionWebSocketDelegate {
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+    
+    private func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) async {
         
         if webSocketTask == textWebSocketTask {
             print("Text WebSocket connection opened")
@@ -243,7 +257,7 @@ extension RequestHandler: URLSessionWebSocketDelegate {
         }
     }
     
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+    private func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) async {
         
         if webSocketTask == textWebSocketTask {
             print("Text WebSocket connection closed")
@@ -255,7 +269,7 @@ extension RequestHandler: URLSessionWebSocketDelegate {
         }
     }
     
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    private func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) async {
         if let error = error {
             print("WebSocket task completed with error: \(error.localizedDescription)")
         } else {
@@ -269,7 +283,7 @@ extension RequestHandler: URLSessionWebSocketDelegate {
 
 extension RequestHandler {
     
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    private func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) async {
         // WARNING: Trusting all certificates is insecure and not recommended for production
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust, let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)

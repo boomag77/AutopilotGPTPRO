@@ -149,9 +149,6 @@ extension InstructionsViewController: UITableViewDelegate {
         
         showStartSessionVC(selectedInstruction)
         
-//        setupInstructionView(instruction: selectedInstruction)
-//        instructionView.isHidden.toggle()
-//        listView.isHidden.toggle()
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

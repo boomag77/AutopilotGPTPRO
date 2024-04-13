@@ -2,6 +2,10 @@
 import Foundation
 import CoreData
 
+enum DataManagerError: Error {
+    case failSaveContext(String)
+}
+
 final class DataManager {
     
     static let shared = DataManager()
@@ -19,10 +23,6 @@ final class DataManager {
         if containerIsEmpty() {
             registerNewInstruction(instruction: defaultInstruction)
         }
-    }
-    
-    deinit {
-        print("Data Manager cleared")
     }
     
     lazy private var defaultInstruction: InstructionModel = {
@@ -366,6 +366,21 @@ extension DataManager {
         } catch let error as NSError {
             print("Could not fetch sessions: \(error), \(error.userInfo)")
         }
+    }
+    
+}
+
+extension DataManager {
+    
+    func fetchEntity<T: NSManagedObject>(_ entityType: T.Type) -> [T] {
+        let request = entityType.fetchRequest()
+        var result: [T] = []
+        do {
+            result = try container.viewContext.fetch(request) as? [T] ?? []
+        } catch {
+            //
+        }
+        return result
     }
     
 }

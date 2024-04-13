@@ -62,9 +62,9 @@ final class StartSessionVC: UIViewController {
     
     private lazy var checkBox: UIControl = {
         let box = CheckBox()
-        box.addAction(UIAction { _ in
+        box.addAction(UIAction { [weak self] _ in
             box.checked.toggle()
-            self.checkBoxChecked.toggle()
+            self?.checkBoxChecked.toggle()
         }, for: .touchUpInside)
         return box
     }()
