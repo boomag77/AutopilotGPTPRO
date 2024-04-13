@@ -407,7 +407,6 @@
 				DEVELOPMENT_TEAM = 66Q476X4QM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -420,7 +419,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = autopilot.AutopilotGPTPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.burdakov.Autopilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -442,7 +441,6 @@
 				DEVELOPMENT_TEAM = 66Q476X4QM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -455,7 +453,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = autopilot.AutopilotGPTPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.burdakov.Autopilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
