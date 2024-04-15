@@ -26,11 +26,16 @@ final class CurrentSessionViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 
                 self?.tableView.reloadData()
-                
+                self?.scrollToBottom()
                 //print(DataManager.shared.getMessagesCount(forSessionID: (self?.sessionID)!))
             }
             
         }
+    }
+    
+    private func scrollToBottom() {
+        let indexPath = IndexPath(row: sessionMessages.count - 1, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     private var recording: Bool = false {
@@ -140,7 +145,7 @@ final class CurrentSessionViewController: UIViewController {
     }()
     
     deinit {
-        print("CurrentSessionViewController is being deinitialized!")
+        //print("CurrentSessionViewController is being deinitialized!")
     }
 
     override func viewDidLoad() {
@@ -282,18 +287,18 @@ final class CurrentSessionViewController: UIViewController {
         recording.toggle()
         
         let audioFilePath: URL = getFilePath().appendingPathComponent("recording.wav")
-        
-        do {
-            let fileAttributes = try FileManager.default.attributesOfItem(atPath: audioFilePath.path)
-            if let fileSize = fileAttributes[FileAttributeKey.size] as? NSNumber {
-                // Convert bytes to megabytes (1 MB = 1,024 KB = 1,048,576 bytes)
-                let fileSizeInMB = Double(truncating: fileSize) / 1_048_576
-                //print("File \(audioFilePath) is ready for sending!")
-                print("File size: \(String(format: "%.2f", fileSizeInMB)) MB")
-            }
-        } catch {
-            print("Error getting file attributes: \(error.localizedDescription)")
-        }
+//        
+//        do {
+//            let fileAttributes = try FileManager.default.attributesOfItem(atPath: audioFilePath.path)
+//            if let fileSize = fileAttributes[FileAttributeKey.size] as? NSNumber {
+//                // Convert bytes to megabytes (1 MB = 1,024 KB = 1,048,576 bytes)
+//                let fileSizeInMB = Double(truncating: fileSize) / 1_048_576
+//                print("File \(audioFilePath) is ready for sending!")
+//                print("File size: \(String(format: "%.2f", fileSizeInMB)) MB")
+//            }
+//        } catch {
+//            print("Error getting file attributes: \(error.localizedDescription)")
+//        }
         
         // stop recording and send file to server
         // After response's recieved - delete recorded file
@@ -306,7 +311,7 @@ final class CurrentSessionViewController: UIViewController {
             let audioData = try Data(contentsOf: audioFilePath)
             await requester.sendRecordedAudioData(audioData)
         } catch {
-            print("Failed to load audio data: \(error.localizedDescription)")
+            //print("Failed to load audio data: \(error.localizedDescription)")
         }
         
         // Assuming the server sends a response after processing the audio
@@ -348,21 +353,6 @@ final class CurrentSessionViewController: UIViewController {
         
         await requester.sendInstruction(instruction)
         
-//        await requester.receiveJSONResponse { [weak self] result in
-//                DispatchQueue.main.async {
-//                    switch result {
-//                    case .success(let textResponse):
-//                        let receivedMessage = MessageModel(date: Date(), sender: .autopilot, text: textResponse)
-//                        print(receivedMessage.text)
-//                        self?.sessionMessages.append(receivedMessage)
-//                        // appending should refresh a table view.
-//                        
-//                        
-//                    case .failure(let error):
-//                        print("Error receiving response: \(error)")
-//                    }
-//                }
-//            }
     }
     
     
@@ -385,7 +375,6 @@ extension CurrentSessionViewController {
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
         
-        //requester.connectToServer()
         await sendInstructionToServer(instruction: instruction.text)
         
     }
@@ -398,17 +387,17 @@ extension CurrentSessionViewController {
         saveCurrentSession()
         
         await requester.disconnectFromServer()
-        print("Session ended")
+        //print("Session ended")
     }
     
     // Remove session from storage if it's no messages
     private func saveCurrentSession() {
         
         if DataManager.shared.getMessagesCount(forSessionID: self.sessionID!) == 0 {
-            print("Current session is Empty and will not be saved")
+            //print("Current session is Empty and will not be saved")
             DataManager.shared.removeSession(withID: self.sessionID!)
         } else {
-            print("Session saved")
+            //print("Session saved")
         }
         
     }
@@ -552,7 +541,7 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     private func checkRecordedFileExists() {
         let filePath = getFilePath().appendingPathComponent("recording.wav")
         if FileManager.default.fileExists(atPath: filePath.path) {
-            print("File with name: recording.wav exists and full path to this file is: \(filePath.path)")
+            //print("File with name: recording.wav exists and full path to this file is: \(filePath.path)")
             // Optionally, send the file to a server
         } else {
             print("Recording file does not exist.")

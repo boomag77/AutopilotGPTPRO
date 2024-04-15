@@ -101,12 +101,23 @@ final class StartSessionVC: UIViewController {
         return button
     }()
     
-    deinit {
-        print("StartSessionVC is being deinitialized")
-    }
+//    deinit {
+//        print("StartSessionVC is being deinitialized")
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        instructionTextTextView.delegate = self
+        
+    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
+            self?.keyboardWillShow(notification: notification)
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] notification in
+            self?.keyboardWillHide(notification: notification)
+        }
+        
         self.title = "Start Session"
         view.backgroundColor = .systemGray6
         setup()
@@ -233,6 +244,40 @@ extension StartSessionVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // This hides the keyboard.
         return true
+    }
+    
+}
+
+extension StartSessionVC {
+    
+    private func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+
+        instructionTextTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight-80, right: 0)
+        instructionTextTextView.scrollIndicatorInsets = instructionTextTextView.contentInset
+
+        if let _ = instructionTextTextView.selectedTextRange {
+            instructionTextTextView.scrollRangeToVisible(instructionTextTextView.selectedRange)
+        }
+    }
+
+    private func keyboardWillHide(notification: Notification) {
+        instructionTextTextView.contentInset = .zero
+        instructionTextTextView.scrollIndicatorInsets = .zero
+    }
+    
+}
+
+extension StartSessionVC: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        var rect = textView.caretRect(for: textView.selectedTextRange!.end)
+        rect.size.height += textView.textContainerInset.bottom
+        textView.scrollRectToVisible(rect, animated: true)
     }
     
 }

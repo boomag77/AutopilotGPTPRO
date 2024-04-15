@@ -23,6 +23,7 @@ class MessageTableViewCell: UITableViewCell {
                 bulletPointView.tintColor = .red.withAlphaComponent(0.7)
                 messageTextView.textColor = UIColor.gray.withAlphaComponent(0.85)
             } else {
+                messageTextView.textColor = UIColor.white.withAlphaComponent(0.85)
                 bulletPointView.tintColor = .green.withAlphaComponent(0.7)
             }
         }
@@ -43,7 +44,7 @@ class MessageTableViewCell: UITableViewCell {
         let textView = UITextView()
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         //textView.backgroundColor = messageTextBackgroundColor
-        textView.textColor = .white.withAlphaComponent(0.85)
+        //textView.textColor = .white.withAlphaComponent(0.85)
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false

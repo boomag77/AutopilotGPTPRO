@@ -77,17 +77,14 @@ actor RequestHandler {
         let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: OperationQueue())
         
         webSocketTask = session.webSocketTask(with: serverURL)
-        //textWebSocketTask = session.webSocketTask(with: textServerURL)
         
         webSocketTask?.resume()
-        //textWebSocketTask?.resume()
         print("connecting to server")
         
     }
     
     func disconnectFromServer() {
         webSocketTask?.cancel(with: .goingAway, reason: nil)
-        //textWebSocketTask?.cancel(with: .goingAway, reason: nil)
         print("Disconnected from server")
     }
     
@@ -129,38 +126,18 @@ actor RequestHandler {
         }
     }
     
-//    func sendTranscribedText(_ text: String) {
-//        
-//        let jsonObject: [String: Any] = ["transcribed_text": text]
-//        
-//        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
-//              let jsonString = String(data: jsonData, encoding: .utf8) else {
-//            print("Failed to serialize JSON")
-//            return
-//        }
-//        
-//        let message = URLSessionWebSocketTask.Message.string(jsonString)
-//        textWebSocketTask?.send(message) { error in
-//            if let error = error {
-//                print("Failed to send Transcribed text as JSON: \(error.localizedDescription)")
-//            } else {
-//                print("Transcribed text sent as JSON successfully")
-//            }
-//        }
-//    }
-    
     func receiveTranscribedAudioMessage(completion: @escaping (Result<[String: String], Error>) -> Void) {
         webSocketTask?.receive { result in
             switch result {
             case .failure(let error):
                 print("Failed to receive message: \(error.localizedDescription)")
-                completion(.failure(error)) // Propagate the error using Result type
+                completion(.failure(error))
 
             case .success(let message):
                 switch message {
                 case .string(let text):
-                    // Assuming `text` is a JSON string containing both required fields
-                    print("Received text: \(text)")
+                    // JSON string contain both required fields
+                    //print("Received text: \(text)")
                     
                     if let data = text.data(using: .utf8) {
                         do {
@@ -184,8 +161,8 @@ actor RequestHandler {
                     }
 
                 case .data(let data):
-                    // Assuming `data` contains JSON formatted similarly to the string case
-                    print("Received data: \(data)")
+                    // JSON as in the string case
+                    //print("Received data: \(data)")
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                            let transcribed = json["transcribed"] as? String,
