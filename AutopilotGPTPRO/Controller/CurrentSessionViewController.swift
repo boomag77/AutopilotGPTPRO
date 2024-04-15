@@ -6,7 +6,7 @@ final class CurrentSessionViewController: UIViewController {
     
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
-    private var requester = RequestHandler()
+    private var requester: RequestHandler = RequestHandler()
     
     var instruction: InstructionModel? {
         didSet {
@@ -24,11 +24,10 @@ final class CurrentSessionViewController: UIViewController {
     private var sessionMessages: [MessageModel] = [] {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                DataManager.shared
-                    .registerNewMessage(message: (self?.sessionMessages.last!)!,
-                                                      in: (self?.sessionID)!)
+                
                 self?.tableView.reloadData()
-                print(DataManager.shared.getMessagesCount(forSessionID: (self?.sessionID)!))
+                
+                //print(DataManager.shared.getMessagesCount(forSessionID: (self?.sessionID)!))
             }
             
         }
@@ -151,7 +150,6 @@ final class CurrentSessionViewController: UIViewController {
 //        self.navigationItem.leftBarButtonItem = backButton
         
         
-        
         tableView.dataSource = self
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
         
@@ -191,6 +189,7 @@ final class CurrentSessionViewController: UIViewController {
 //        let rootVC = InstructionsViewController()
 //        present(rootVC, animated: true)
 //    }
+    
     
     private func setup() {
         
@@ -311,35 +310,59 @@ final class CurrentSessionViewController: UIViewController {
         }
         
         // Assuming the server sends a response after processing the audio
-        await requester.receiveTranscribedAudioMessage { [weak self] responseText in
-            
-            let recievedMessage: MessageModel = MessageModel(date: Date(), 
-                                                             sender: .user,
-                                                             text: responseText)
-            self?.sessionMessages.append(recievedMessage)
-            
+        await requester.receiveTranscribedAudioMessage() { [weak self] result in
+            switch result {
+            case .success(let responseDict):
+                DispatchQueue.main.async {
+                    self?.processResponseDictionary(responseDict)
+                }
+            case .failure(let error):
+                print("Failed to receive transcribed message: \(error.localizedDescription)")
+            }
         }
+            
+    }
+    
+    private func processResponseDictionary(_ responseDict: [String: String]) {
+        
+        guard let transcribedText = responseDict["transcribed"],
+              let responseText = responseDict["response"] else {
+            print("Response dictionary missing expected keys")
+            return
+        }
+
+        let transcribedMessage = MessageModel(date: Date(), sender: .user, text: transcribedText)
+        let responseMessage = MessageModel(date: Date(), sender: .autopilot, text: responseText)
+        
+        sessionMessages.append(transcribedMessage)
+        DataManager.shared
+            .registerNewMessage(message: transcribedMessage,
+                                in: self.sessionID!)
+        sessionMessages.append(responseMessage)
+        DataManager.shared
+            .registerNewMessage(message: responseMessage,
+                                in: self.sessionID!)
     }
         
     private func sendInstructionToServer(instruction: String) async {
         
         await requester.sendInstruction(instruction)
         
-        await requester.receiveJSONResponse { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let textResponse):
-                        let receivedMessage = MessageModel(date: Date(), sender: .autopilot, text: textResponse)
-                        print(receivedMessage.text)
-                        self?.sessionMessages.append(receivedMessage)
-                        // appending should refresh a table view.
-                        
-                        
-                    case .failure(let error):
-                        print("Error receiving response: \(error)")
-                    }
-                }
-            }
+//        await requester.receiveJSONResponse { [weak self] result in
+//                DispatchQueue.main.async {
+//                    switch result {
+//                    case .success(let textResponse):
+//                        let receivedMessage = MessageModel(date: Date(), sender: .autopilot, text: textResponse)
+//                        print(receivedMessage.text)
+//                        self?.sessionMessages.append(receivedMessage)
+//                        // appending should refresh a table view.
+//                        
+//                        
+//                    case .failure(let error):
+//                        print("Error receiving response: \(error)")
+//                    }
+//                }
+//            }
     }
     
     
@@ -356,6 +379,8 @@ final class CurrentSessionViewController: UIViewController {
 extension CurrentSessionViewController {
     
     private func startSesion(_ instruction: InstructionModel) async {
+        
+        await requester.connectToServer()
         
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)

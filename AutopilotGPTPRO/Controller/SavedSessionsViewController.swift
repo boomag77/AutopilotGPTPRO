@@ -75,7 +75,7 @@ extension SavedSessionsViewController: UITableViewDataSource {
         let positionName = session.position
         let date = session.date
         let id = session.id
-        let messagesCount = DataManager.shared.getMessagesCount(forSessionID: id)
+        let messagesCount = DataManager.shared.getMessagesCount(forSessionID: id) / 2
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell",
                                                  for: indexPath) as! SessionTableViewCell

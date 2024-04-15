@@ -44,52 +44,63 @@
 
 import Foundation
 
-actor RequestHandler: NSObject {
+actor RequestHandler {
     
     //static let shared = RequestHandler()
     
-        
-    private var audioWebSocketTask: URLSessionWebSocketTask?
-    private var textWebSocketTask: URLSessionWebSocketTask?
     
-    private let audioServerURL = URL(string: "wss://autopilotgpt.pro:8765")!
-    private let textServerURL = URL(string: "wss://autopilotgpt.pro:8704")!
+    private var webSocketTask: URLSessionWebSocketTask?
+    //private var textWebSocketTask: URLSessionWebSocketTask?
     
-    override init() {
-        super.init()
-        //connectToServer()
-    }
+    private let serverURL = URL(string: "wss://autopilotgpt.pro:8765/start_chat")!
+    //private let textServerURL = URL(string: "wss://autopilotgpt.pro:8704/start_chat")!
+    
+//    override init() {
+//        super.init()
+//    }
+    private let delegate = WebSocketDelegate()
     
     deinit {
         print("Requester deinitialized")
     }
     
-    func connectToServer() {
+    static func createAndConnect() async -> RequestHandler {
+        let requester = RequestHandler()
+        await requester.connectToServer()
+        return requester
+    }
+    
+    func connectToServer() async {
         
-        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        delegate.owner = self
         
-        audioWebSocketTask = session.webSocketTask(with: audioServerURL)
-        textWebSocketTask = session.webSocketTask(with: textServerURL)
+        let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: OperationQueue())
         
-        audioWebSocketTask?.resume()
-        textWebSocketTask?.resume()
+        webSocketTask = session.webSocketTask(with: serverURL)
+        //textWebSocketTask = session.webSocketTask(with: textServerURL)
+        
+        webSocketTask?.resume()
+        //textWebSocketTask?.resume()
+        print("connecting to server")
         
     }
     
     func disconnectFromServer() {
-        audioWebSocketTask?.cancel(with: .goingAway, reason: nil)
-        textWebSocketTask?.cancel(with: .goingAway, reason: nil)
+        webSocketTask?.cancel(with: .goingAway, reason: nil)
+        //textWebSocketTask?.cancel(with: .goingAway, reason: nil)
         print("Disconnected from server")
     }
     
-    func sendRecordedAudioData(_ audioData: Data) {
+    func sendRecordedAudioData(_ audioData: Data) async {
         
-        if audioWebSocketTask?.state != .running {
-            connectToServer()
-        }
-        print("*** Audio socket connected ***")
+//        if webSocketTask?.state != .running {
+//            connectToServer()
+//        } else {
+//            print("*** Audio socket connected ***")
+//        }
+        
         let message = URLSessionWebSocketTask.Message.data(audioData)
-        audioWebSocketTask?.send(message) { error in
+        webSocketTask?.send(message) { error in
             if let error = error {
                 print("Failed to send audio data: \(error.localizedDescription)")
             } else {
@@ -100,7 +111,7 @@ actor RequestHandler: NSObject {
     
     func sendInstruction(_ text: String) {
         
-        let jsonObject: [String: Any] = ["instruction_from_app": text]
+        let jsonObject: [String: Any] = ["instruction_prompt": text, "user_id": 11]
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
               let jsonString = String(data: jsonData, encoding: .utf8) else {
@@ -109,7 +120,7 @@ actor RequestHandler: NSObject {
         }
         
         let message = URLSessionWebSocketTask.Message.string(jsonString)
-        textWebSocketTask?.send(message) { error in
+        webSocketTask?.send(message) { error in
             if let error = error {
                 print("Failed to send instruction text as JSON: \(error.localizedDescription)")
             } else {
@@ -118,60 +129,89 @@ actor RequestHandler: NSObject {
         }
     }
     
-    func sendTranscribedText(_ text: String) {
-        
-        let jsonObject: [String: Any] = ["transcribed_text": text]
-        
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
-              let jsonString = String(data: jsonData, encoding: .utf8) else {
-            print("Failed to serialize JSON")
-            return
-        }
-        
-        let message = URLSessionWebSocketTask.Message.string(jsonString)
-        textWebSocketTask?.send(message) { error in
-            if let error = error {
-                print("Failed to send Transcribed text as JSON: \(error.localizedDescription)")
-            } else {
-                print("Transcribed text sent as JSON successfully")
-            }
-        }
-    }
+//    func sendTranscribedText(_ text: String) {
+//        
+//        let jsonObject: [String: Any] = ["transcribed_text": text]
+//        
+//        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
+//              let jsonString = String(data: jsonData, encoding: .utf8) else {
+//            print("Failed to serialize JSON")
+//            return
+//        }
+//        
+//        let message = URLSessionWebSocketTask.Message.string(jsonString)
+//        textWebSocketTask?.send(message) { error in
+//            if let error = error {
+//                print("Failed to send Transcribed text as JSON: \(error.localizedDescription)")
+//            } else {
+//                print("Transcribed text sent as JSON successfully")
+//            }
+//        }
+//    }
     
-    func receiveTranscribedAudioMessage(completion: @escaping (String) -> Void) {
-        if audioWebSocketTask?.state != .running {
-            connectToServer()
-        }
-        audioWebSocketTask?.receive { result in
+    func receiveTranscribedAudioMessage(completion: @escaping (Result<[String: String], Error>) -> Void) {
+        webSocketTask?.receive { result in
             switch result {
             case .failure(let error):
                 print("Failed to receive message: \(error.localizedDescription)")
-                completion("Error: \(error.localizedDescription)") // Returning error as string
+                completion(.failure(error)) // Propagate the error using Result type
+
             case .success(let message):
                 switch message {
                 case .string(let text):
+                    // Assuming `text` is a JSON string containing both required fields
                     print("Received text: \(text)")
-                    completion(text) // Returning the received text
-                case .data(let data):
-                    print("Received data: \(data)")
-                    if let text = String(data: data, encoding: .utf8) {
-                        completion(text) // Converting data to text if possible
+                    
+                    if let data = text.data(using: .utf8) {
+                        do {
+                            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                               let transcribed = json["transcribed"] as? String,
+                               let response = json["response"] as? [String: Any],
+                                let message = response["message"] as? String {
+                                completion(.success(["transcribed": transcribed, "response": message]))
+                            } else {
+                                let error = NSError(domain: "DataErrorDomain", code: 0, 
+                                                    userInfo: [NSLocalizedDescriptionKey: "JSON does not contain 'transcribed' or 'response' keys"])
+                                completion(.failure(error))
+                            }
+                        } catch {
+                            completion(.failure(error))
+                        }
                     } else {
-                        completion("Received non-text data") // Handling non-text data
+                        let error = NSError(domain: "DataErrorDomain", code: 0,
+                                            userInfo: [NSLocalizedDescriptionKey: "Failed to decode JSON string"])
+                        completion(.failure(error))
                     }
+
+                case .data(let data):
+                    // Assuming `data` contains JSON formatted similarly to the string case
+                    print("Received data: \(data)")
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                           let transcribed = json["transcribed"] as? String,
+                           let response = json["response"] as? [String: Any],
+                            let message = response["message"] as? String {
+                            completion(.success(["transcribed": transcribed, "response": message]))
+                        } else {
+                            let error = NSError(domain: "DataErrorDomain", code: 0,
+                                                userInfo: [NSLocalizedDescriptionKey: "JSON does not contain 'transcribed' or 'response' keys"])
+                            completion(.failure(error))
+                        }
+                    } catch {
+                        completion(.failure(error))
+                    }
+
                 @unknown default:
-                    completion("Unknown message type received")
+                    let error = NSError(domain: "WebSocketErrorDomain", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Unknown message type received"])
+                    completion(.failure(error))
                 }
-                
-                
             }
-            // Optionally continue receiving messages here if needed
-            //self.receiveAudioMessage(completion: completion)
         }
     }
     
-    func receiveJSONResponse(completion: @escaping (Result<String, Error>) -> Void) {
-        textWebSocketTask?.receive { result in
+    func receiveJSONResponse(completion: @escaping (Result<[String: String], Error>) -> Void) {
+        webSocketTask?.receive { result in
             Task {
                 switch result {
                 case .failure(let error):
@@ -208,7 +248,7 @@ actor RequestHandler: NSObject {
 extension RequestHandler {
     
     // Parses a JSON string and completes with either the server's response or an error.
-    private func parseJSONString(_ jsonString: String, completion: @escaping (Result<String, Error>) -> Void) {
+    private func parseJSONString(_ jsonString: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
         
         guard let data = jsonString.data(using: .utf8) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert string to data"])))
@@ -218,78 +258,37 @@ extension RequestHandler {
     }
 
     // Parses a JSON Data object and completes with either the server's response or an error.
-    private func parseJSONData(_ jsonData: Data, completion: @escaping (Result<String, Error>) -> Void) {
-        
-        //completion(.success("Response from server"))
-        
+    private func parseJSONData(_ jsonData: Data, completion: @escaping (Result<[String: String], Error>) -> Void) {
         do {
             if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-                if let responseText = json["response"] as? String {
-                    // Success case: the server returned a response.
-                    completion(.success(responseText))
-                } else if let errorText = json["error"] as? String {
-                    // Error case: the server returned an error.
-                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: errorText])))
+                var resultData = [String: String]()
+                
+                if let transcribedText = json["transcribed"] as? String {
+                    resultData["transcribed"] = transcribedText
                 } else {
-                    // The JSON did not contain the expected keys.
-                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "JSON did not contain 'response' or 'error' keys"])))
+                    let errorInfo = "JSON did not contain 'transcribed' key"
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: errorInfo])))
+                    return
                 }
+                
+                if let responseText = json["response"] as? String {
+                    resultData["response"] = responseText
+                } else {
+                    let errorInfo = "JSON did not contain 'response' key"
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: errorInfo])))
+                    return
+                }
+                
+                // Success case: both 'transcribed' and 'response' are available
+                completion(.success(resultData))
             } else {
                 // The JSON structure was not as expected.
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to parse JSON"])))
+                let parseErrorInfo = "Failed to parse JSON: structure was not as expected."
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: parseErrorInfo])))
             }
         } catch {
             // There was an error parsing the JSON.
             completion(.failure(error))
-        }
-    }
-}
-
-
-extension RequestHandler: URLSessionWebSocketDelegate {
-    
-    private func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) async {
-        
-        if webSocketTask == textWebSocketTask {
-            print("Text WebSocket connection opened")
-        } else if webSocketTask == audioWebSocketTask {
-            print("Audio WebSocket connection opened")
-        }
-    }
-    
-    private func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) async {
-        
-        if webSocketTask == textWebSocketTask {
-            print("Text WebSocket connection closed")
-        } else if webSocketTask == audioWebSocketTask {
-            if closeCode == .messageTooBig {
-                print("Disconnected: Data frame size is too large.")
-            }
-            print("Audio WebSocket connection closed: \(closeCode.rawValue)")
-        }
-    }
-    
-    private func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) async {
-        if let error = error {
-            print("WebSocket task completed with error: \(error.localizedDescription)")
-        } else {
-            print("WebSocket task completed successfully.")
-        }
-    }
-    
-    
-    
-}
-
-extension RequestHandler {
-    
-    private func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) async {
-        // WARNING: Trusting all certificates is insecure and not recommended for production
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust, let serverTrust = challenge.protectionSpace.serverTrust {
-            let credential = URLCredential(trust: serverTrust)
-            completionHandler(.useCredential, credential)
-        } else {
-            completionHandler(.performDefaultHandling, nil)
         }
     }
 }
