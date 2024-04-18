@@ -1,26 +1,41 @@
 
-import Foundation
+import UIKit
+
+//protocol WebSocketObserverProtocol: UIViewController {
+//    func webSocketDidiOpen()
+//    func webSocketDidClose(with error: Error?)
+//    
+//    func webSocketDidFailWithError(_ error: Error?)
+//}
 
 class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
     
     weak var owner: RequestHandler?
-
-    
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        
+        Task {
+            await owner?.setConnectionState(.connected)
+        }
         print("Websocket connection opened")
     }
     
+    
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         
+//        let error = NSError(domain: "WebSocketError",
+//                            code: Int(closeCode.rawValue),
+//                            userInfo: [NSLocalizedDescriptionKey: "WebSocket closed with code \(closeCode.rawValue)"])
+        Task {
+            await owner?.setConnectionState(.disconnected)
+        }
         print("WebSocket connection closed")
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
         if let error = error {
-            print("WebSocket task completed with error: \(error.localizedDescription)")
+            
+            print("From Delegate: WebSocket task completed with error: \(error.localizedDescription)")
         }
     }
     
@@ -34,4 +49,8 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
             completionHandler(.performDefaultHandling, nil)
         }
     }
+    
+    
+    
+    
 }

@@ -30,7 +30,10 @@
 		A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */; };
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
+		A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5697F9C2BD0CDB600576836 /* JSONParser.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
+		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
+		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
 		A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452502BC465CF00D56B6A /* CheckBox.swift */; };
 		A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */; };
 		A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */; };
@@ -64,7 +67,10 @@
 		A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		A5697F9C2BD0CDB600576836 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
+		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A58452502BC465CF00D56B6A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -138,10 +144,13 @@
 		A53E7E292BB64BEC00EB5311 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A573661B2BCE0C6B0083CB04 /* Errors.swift */,
 				A53E7E2A2BB64C3400EB5311 /* DataModels.swift */,
 				A53E7E2C2BB64D8900EB5311 /* DataManager.swift */,
 				A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */,
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
+				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
+				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -237,8 +246,10 @@
 				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
 				A51FA2E82BC5C6E7007042A9 /* Session+CoreDataProperties.swift in Sources */,
 				A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */,
+				A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,
 				A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */,
+				A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */,
 				A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */,
 				A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */,
 				A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */,
@@ -250,6 +261,7 @@
 				A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */,
 				A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */,
 				A5988B2E2BBF438D0026D7A6 /* SessionTableViewCell.swift in Sources */,
+				A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */,
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
 				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,

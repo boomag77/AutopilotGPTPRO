@@ -1,19 +1,35 @@
 
 import UIKit
 import AVFoundation
+//import Network
 
-final class CurrentSessionViewController: UIViewController {
+enum ConnectionState: String {
+    case connected = "Connected"
+    case disconnected = "Disconnected"
+}
+
+final class CurrentSessionViewController: UIViewController, RequestHandlerViewControllerProtocol {
     
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
-    private var requester: RequestHandler = RequestHandler()
+    private var requester: RequestHandler!
+    private var webSocketDelegate: WebSocketDelegate!
+    
+    private var stateCheckTimer: Timer?
+    
+    
+    var connectionState: ConnectionState = .disconnected {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.connectionStateLabel.text = self?.connectionState.rawValue
+            }
+        }
+    }
     
     var instruction: InstructionModel? {
         didSet {
-            Task {
-                await startSesion(instruction!)
-            }
-            
+            setupWebSocket()
+            startSesion(instruction!)
         }
     }
     
@@ -27,9 +43,27 @@ final class CurrentSessionViewController: UIViewController {
                 
                 self?.tableView.reloadData()
                 self?.scrollToBottom()
-                //print(DataManager.shared.getMessagesCount(forSessionID: (self?.sessionID)!))
             }
             
+        }
+    }
+    
+    private func startStateMonitoring() {
+        stateCheckTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+//            Task {
+//                await self?.checkWebSocketTaskState()
+//            }
+//            Task {
+//                try await self?.requester.webSocketTask?.receive()
+//            }
+        }
+    }
+    
+    private func checkWebSocketTaskState() async {
+        if await requester.isWebSocketTaskRunning() {
+            print("Task is Running")
+        } else {
+            print("Task is not running")
         }
     }
     
@@ -144,6 +178,15 @@ final class CurrentSessionViewController: UIViewController {
         return view
     }()
     
+    private lazy var connectionStateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "Connection"
+        label.textAlignment = .center
+        label.sizeToFit()
+        return label
+    }()
+    
     deinit {
         //print("CurrentSessionViewController is being deinitialized!")
     }
@@ -151,9 +194,11 @@ final class CurrentSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let backButton = UIBarButtonItem(title: "End Session", style: .plain, target: self, action: #selector(backToInstructionsList))
-//        self.navigationItem.leftBarButtonItem = backButton
+        Task {
+            await requester.setViewController(self)
+        }
         
+        navigationItem.titleView = connectionStateLabel
         
         tableView.dataSource = self
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
@@ -162,7 +207,6 @@ final class CurrentSessionViewController: UIViewController {
         
         setup()
         
-        //startSesion(self.instruction!)
         
     }
     
@@ -176,24 +220,19 @@ final class CurrentSessionViewController: UIViewController {
             navigationController?.setViewControllers(navigationStack, animated: true)
         }
         
-        
-        
+        startStateMonitoring()
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        
         super.viewWillDisappear(animated)
         Task {
             await self.endSession()
         }
         
-        //navigationController?.popToRootViewController(animated: false)
+        self.stateCheckTimer?.invalidate()
     }
-    
-//    @objc private func backToInstructionsList() {
-//        let rootVC = InstructionsViewController()
-//        present(rootVC, animated: true)
-//    }
     
     
     private func setup() {
@@ -309,51 +348,63 @@ final class CurrentSessionViewController: UIViewController {
         
         do {
             let audioData = try Data(contentsOf: audioFilePath)
-            await requester.sendRecordedAudioData(audioData)
+            await requester?.sendRecordedAudioData(audioData)
         } catch {
-            //print("Failed to load audio data: \(error.localizedDescription)")
+            print("Failed to load audio data: \(error.localizedDescription)")
         }
         
         // Assuming the server sends a response after processing the audio
-        await requester.receiveTranscribedAudioMessage() { [weak self] result in
-            switch result {
-            case .success(let responseDict):
-                DispatchQueue.main.async {
-                    self?.processResponseDictionary(responseDict)
-                }
-            case .failure(let error):
-                print("Failed to receive transcribed message: \(error.localizedDescription)")
-            }
-        }
+        await requester?.receiveTranscribedAudioMessage()
+//        { [weak self] result in
+//            switch result {
+//            case .success(let responseDict):
+//                DispatchQueue.main.async {
+//                    self?.processResponse(responseDict)
+//                }
+//            case .failure(let error):
+//                print("Failed to receive transcribed message: \(error.localizedDescription)")
+//            }
+//        }
             
     }
     
-    private func processResponseDictionary(_ responseDict: [String: String]) {
-        
-        guard let transcribedText = responseDict["transcribed"],
-              let responseText = responseDict["response"] else {
-            print("Response dictionary missing expected keys")
-            return
-        }
+    func processResponse(_ response: Result<[String: String], Error>) {
+        switch response {
+        case .failure(let error):
+            print("Failed to receive response from server \(error.localizedDescription)")
+        case .success(let responseDict):
+            guard let transcribedText = responseDict["transcribed"],
+                  let responseText = responseDict["response"] else {
+                print("Response from server is missing expected keys")
+                return
+            }
 
-        let transcribedMessage = MessageModel(date: Date(), sender: .user, text: transcribedText)
-        let responseMessage = MessageModel(date: Date(), sender: .autopilot, text: responseText)
-        
-        sessionMessages.append(transcribedMessage)
-        DataManager.shared
-            .registerNewMessage(message: transcribedMessage,
-                                in: self.sessionID!)
-        sessionMessages.append(responseMessage)
-        DataManager.shared
-            .registerNewMessage(message: responseMessage,
-                                in: self.sessionID!)
+            let transcribedMessage = MessageModel(date: Date(), sender: .user, text: transcribedText)
+            let responseMessage = MessageModel(date: Date(), sender: .autopilot, text: responseText)
+            
+            sessionMessages.append(transcribedMessage)
+            DataManager.shared
+                .registerNewMessage(message: transcribedMessage,
+                                    in: self.sessionID!)
+            sessionMessages.append(responseMessage)
+            DataManager.shared
+                .registerNewMessage(message: responseMessage,
+                                    in: self.sessionID!)
+        }
     }
         
     private func sendInstructionToServer(instruction: String) async {
         
-        await requester.sendInstruction(instruction)
+        await requester?.sendInstruction(instruction)
         
     }
+    
+//    private func showAlert(_ error: Error) {
+//        ErrorHandler.shared.handleError(error, on: self as UIViewController) { [weak self] in
+//            await self?.requester.connectToServer()
+//            await self?.sendInstructionToServer(instruction: (self?.instruction!.text)!)
+//        }
+//    }
     
     
     private func resetButtonTapped() {
@@ -368,14 +419,31 @@ final class CurrentSessionViewController: UIViewController {
 
 extension CurrentSessionViewController {
     
-    private func startSesion(_ instruction: InstructionModel) async {
+    private func setupWebSocket() {
+        requester = RequestHandler()
         
-        await requester.connectToServer()
+        
+        
+        Task {
+            await requester?.connect()
+        }
+        
+    }
+    
+    private func startSesion(_ instruction: InstructionModel) {
+        
+        
+        
+        //webSocketDelegate.observer = self
+        //await requester.connect()
         
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
         
-        await sendInstructionToServer(instruction: instruction.text)
+        Task {
+            await sendInstructionToServer(instruction: instruction.text)
+        }
+        
         
     }
     
@@ -386,7 +454,7 @@ extension CurrentSessionViewController {
         }
         saveCurrentSession()
         
-        await requester.disconnectFromServer()
+        await requester?.disconnect()
         //print("Session ended")
     }
     
@@ -596,3 +664,37 @@ extension CurrentSessionViewController: UITableViewDataSource {
     }
     
 }
+
+extension CurrentSessionViewController {
+    
+    func setConnectionState(_ state: ConnectionState) {
+        self.connectionState = state
+    }
+    
+}
+
+//extension CurrentSessionViewController: WebSocketObserverProtocol {
+//    
+//    func webSocketDidiOpen() {
+//        isConnected = true
+//    }
+//    
+//    func webSocketDidClose(with error: Error?) {
+//        setupWebSocket()
+//        Task {
+//            await requester.sendInstruction(instruction!.text)
+//        }
+//        isConnected = false
+//    }
+//    
+//    func webSocketDidFailWithError(_ error: Error?) {
+//        setupWebSocket()
+//        Task {
+//            await requester.sendInstruction(instruction!.text)
+//        }
+//        isConnected = false
+//    }
+//    
+//    
+//}
+
