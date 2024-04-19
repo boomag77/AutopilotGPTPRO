@@ -420,9 +420,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 66Q476X4QM;
+				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -435,7 +436,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = JNVQ4PQ369.AutopilotGPTPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -454,9 +455,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 66Q476X4QM;
+				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -469,7 +471,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = JNVQ4PQ369.AutopilotGPTPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
