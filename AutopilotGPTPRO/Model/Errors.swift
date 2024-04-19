@@ -6,34 +6,53 @@ protocol AutopilotError: Error {
 }
 
 
-enum NetworkError: AutopilotError {
+//enum NetworkError: AutopilotError {
+//    
+//    case disconnected
+//    case failedToReceive
+//    
+//    var title: String {
+//        return "Network Error"
+//    }
+//    
+//    var description: String {
+//        switch self {
+//        case .disconnected:
+//            return "The Internet connection appears to be offline."
+//        case .failedToReceive:
+//            return "Failed to receive response from server."
+//        }
+//        
+//    }
+//    
+////    func retryAction() -> (() -> Void)? {
+////        switch self {
+////        case .disconnected:
+////            return {  }
+////        case .failedToReceive:
+////            return
+////        default:
+////            return nil
+////        }
+////    }
+//}
+
+enum WebSocketError: AutopilotError {
     
-    case disconnected
-    case failedToReceive
+    case webSocketTaskCompleteError
+    
     
     var title: String {
-        return "Network Error"
+        return "WebSocket Error"
     }
     
     var description: String {
         switch self {
-        case .disconnected:
-            return "The Internet connection appears to be offline."
-        case .failedToReceive:
-            return "Failed to receive response from server."
+        case .webSocketTaskCompleteError:
+            return "WebSocket task completed with error"
         }
-        
     }
     
-//    func retryAction() -> (() -> Void)? {
-//        switch self {
-//        case .disconnected:
-//            return {  }
-//        case .failedToReceive:
-//            return
-//        default:
-//            return nil
-//        }
-//    }
+    
 }
 

@@ -1,21 +1,12 @@
 
 import UIKit
 
-//protocol WebSocketObserverProtocol: UIViewController {
-//    func webSocketDidiOpen()
-//    func webSocketDidClose(with error: Error?)
-//    
-//    func webSocketDidFailWithError(_ error: Error?)
-//}
-
 class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
     
     weak var owner: RequestHandler?
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        Task {
-            await owner?.setConnectionState(.connected)
-        }
+        
         print("Websocket connection opened")
     }
     
@@ -25,18 +16,20 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
 //        let error = NSError(domain: "WebSocketError",
 //                            code: Int(closeCode.rawValue),
 //                            userInfo: [NSLocalizedDescriptionKey: "WebSocket closed with code \(closeCode.rawValue)"])
-        Task {
-            await owner?.setConnectionState(.disconnected)
-        }
+        
         print("WebSocket connection closed")
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
-        if let error = error {
-            
-            print("From Delegate: WebSocket task completed with error: \(error.localizedDescription)")
-        }
+        
+        if let error = error as? URLError, error.code == .cancelled {
+                print("WebSocket task was cancelled intentionally.")
+            } else if let error = error {
+                print("WebSocket task completed with error: \(error.localizedDescription)")
+            } else {
+                print("The task completed successfully, without errors.")
+            }
     }
     
     internal func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

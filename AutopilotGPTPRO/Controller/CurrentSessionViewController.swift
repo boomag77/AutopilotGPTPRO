@@ -8,27 +8,15 @@ enum ConnectionState: String {
     case disconnected = "Disconnected"
 }
 
-final class CurrentSessionViewController: UIViewController, RequestHandlerViewControllerProtocol {
+final class CurrentSessionViewController: UIViewController {
     
     private var updateTimer: Timer?
     private var audioRecorder: AVAudioRecorder?
     private var requester: RequestHandler!
-    private var webSocketDelegate: WebSocketDelegate!
-    
-    private var stateCheckTimer: Timer?
-    
-    
-    var connectionState: ConnectionState = .disconnected {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.connectionStateLabel.text = self?.connectionState.rawValue
-            }
-        }
-    }
     
     var instruction: InstructionModel? {
         didSet {
-            setupWebSocket()
+            //setupWebSocket()
             startSesion(instruction!)
         }
     }
@@ -48,29 +36,7 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
         }
     }
     
-    private func startStateMonitoring() {
-        stateCheckTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-//            Task {
-//                await self?.checkWebSocketTaskState()
-//            }
-//            Task {
-//                try await self?.requester.webSocketTask?.receive()
-//            }
-        }
-    }
     
-    private func checkWebSocketTaskState() async {
-        if await requester.isWebSocketTaskRunning() {
-            print("Task is Running")
-        } else {
-            print("Task is not running")
-        }
-    }
-    
-    private func scrollToBottom() {
-        let indexPath = IndexPath(row: sessionMessages.count - 1, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-    }
     
     private var recording: Bool = false {
         didSet {
@@ -178,27 +144,18 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
         return view
     }()
     
-    private lazy var connectionStateLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.text = "Connection"
-        label.textAlignment = .center
-        label.sizeToFit()
-        return label
-    }()
     
     deinit {
-        //print("CurrentSessionViewController is being deinitialized!")
+        //endSession()
+        print("CurrentSessionViewController is being deinitialized!")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Task {
-            await requester.setViewController(self)
+        Task { [weak self] in
+            await self?.requester.setViewController(self)
         }
-        
-        navigationItem.titleView = connectionStateLabel
         
         tableView.dataSource = self
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
@@ -220,19 +177,19 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
             navigationController?.setViewControllers(navigationStack, animated: true)
         }
         
-        startStateMonitoring()
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
-        Task {
-            await self.endSession()
-        }
         
-        self.stateCheckTimer?.invalidate()
+//        Task {
+//            await self.endSession()
+//        }
+        saveCurrentSession()
+        //endSession()
     }
+    
     
     
     private func setup() {
@@ -314,8 +271,10 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
         ])
         
     }
-    
-    
+
+}
+
+extension CurrentSessionViewController {
     
     private func recButtonTapped() {
         self.recording.toggle()
@@ -326,18 +285,8 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
         recording.toggle()
         
         let audioFilePath: URL = getFilePath().appendingPathComponent("recording.wav")
-//        
-//        do {
-//            let fileAttributes = try FileManager.default.attributesOfItem(atPath: audioFilePath.path)
-//            if let fileSize = fileAttributes[FileAttributeKey.size] as? NSNumber {
-//                // Convert bytes to megabytes (1 MB = 1,024 KB = 1,048,576 bytes)
-//                let fileSizeInMB = Double(truncating: fileSize) / 1_048_576
-//                print("File \(audioFilePath) is ready for sending!")
-//                print("File size: \(String(format: "%.2f", fileSizeInMB)) MB")
-//            }
-//        } catch {
-//            print("Error getting file attributes: \(error.localizedDescription)")
-//        }
+//
+//
         
         // stop recording and send file to server
         // After response's recieved - delete recorded file
@@ -352,110 +301,44 @@ final class CurrentSessionViewController: UIViewController, RequestHandlerViewCo
         } catch {
             print("Failed to load audio data: \(error.localizedDescription)")
         }
-        
-        // Assuming the server sends a response after processing the audio
-        await requester?.receiveTranscribedAudioMessage()
-//        { [weak self] result in
-//            switch result {
-//            case .success(let responseDict):
-//                DispatchQueue.main.async {
-//                    self?.processResponse(responseDict)
-//                }
-//            case .failure(let error):
-//                print("Failed to receive transcribed message: \(error.localizedDescription)")
-//            }
-//        }
             
     }
-    
-    func processResponse(_ response: Result<[String: String], Error>) {
-        switch response {
-        case .failure(let error):
-            print("Failed to receive response from server \(error.localizedDescription)")
-        case .success(let responseDict):
-            guard let transcribedText = responseDict["transcribed"],
-                  let responseText = responseDict["response"] else {
-                print("Response from server is missing expected keys")
-                return
-            }
-
-            let transcribedMessage = MessageModel(date: Date(), sender: .user, text: transcribedText)
-            let responseMessage = MessageModel(date: Date(), sender: .autopilot, text: responseText)
-            
-            sessionMessages.append(transcribedMessage)
-            DataManager.shared
-                .registerNewMessage(message: transcribedMessage,
-                                    in: self.sessionID!)
-            sessionMessages.append(responseMessage)
-            DataManager.shared
-                .registerNewMessage(message: responseMessage,
-                                    in: self.sessionID!)
-        }
-    }
-        
-    private func sendInstructionToServer(instruction: String) async {
-        
-        await requester?.sendInstruction(instruction)
-        
-    }
-    
-//    private func showAlert(_ error: Error) {
-//        ErrorHandler.shared.handleError(error, on: self as UIViewController) { [weak self] in
-//            await self?.requester.connectToServer()
-//            await self?.sendInstructionToServer(instruction: (self?.instruction!.text)!)
-//        }
-//    }
-    
     
     private func resetButtonTapped() {
         recording.toggle()
     }
     
-    
-
 }
+
+
 
 // MARK: Session managing
 
 extension CurrentSessionViewController {
-    
-    private func setupWebSocket() {
-        requester = RequestHandler()
-        
-        
-        
-        Task {
-            await requester?.connect()
-        }
-        
-    }
-    
+
     private func startSesion(_ instruction: InstructionModel) {
         
+        requester = RequestHandler()
         
-        
-        //webSocketDelegate.observer = self
-        //await requester.connect()
+        Task {
+            await requester.setInstruction(instruction)
+        }
         
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
         
-        Task {
-            await sendInstructionToServer(instruction: instruction.text)
-        }
-        
-        
     }
     
-    private func endSession() async {
+    private func endSession() {
         
         if recording {
             recording.toggle()
         }
         saveCurrentSession()
         
-        await requester?.disconnect()
-        //print("Session ended")
+        Task {
+            await requester?.disconnect()
+        }
     }
     
     // Remove session from storage if it's no messages
@@ -474,6 +357,23 @@ extension CurrentSessionViewController {
 // MARK: Audio recording managing
 
 extension CurrentSessionViewController: AVAudioRecorderDelegate {
+    
+    // Return String of file size in Mb in format "1.23"
+    private func getRecordedAudiFileSize(_ filePath: URL) -> String {
+        var fileSizeInMB: Double = 0
+        do {
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: filePath.path)
+            if let fileSize = fileAttributes[FileAttributeKey.size] as? NSNumber {
+                // Convert bytes to megabytes (1 MB = 1,024 KB = 1,048,576 bytes)
+                fileSizeInMB = Double(truncating: fileSize) / 1_048_576
+//                print("File \(filePath) is ready for sending!")
+//                print("File size: \(String(format: "%.2f", fileSizeInMB)) MB")
+            }
+        } catch {
+            //print("Error getting file attributes: \(error.localizedDescription)")
+        }
+        return String(format: "%.2f", fileSizeInMB)
+    }
     
     private func requestMicPermission() {
         
@@ -633,15 +533,6 @@ extension CurrentSessionViewController: AVAudioRecorderDelegate {
     
 }
 
-extension CurrentSessionViewController {
-    
-    private func fetchPosts() {
-        
-        tableView.reloadData()
-    }
-    
-}
-
 // MARK: TableView
 
 extension CurrentSessionViewController: UITableViewDataSource {
@@ -663,38 +554,45 @@ extension CurrentSessionViewController: UITableViewDataSource {
         
     }
     
-}
-
-extension CurrentSessionViewController {
-    
-    func setConnectionState(_ state: ConnectionState) {
-        self.connectionState = state
+    private func scrollToBottom() {
+        let indexPath = IndexPath(row: sessionMessages.count - 1, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
 }
 
-//extension CurrentSessionViewController: WebSocketObserverProtocol {
-//    
-//    func webSocketDidiOpen() {
-//        isConnected = true
-//    }
-//    
-//    func webSocketDidClose(with error: Error?) {
-//        setupWebSocket()
-//        Task {
-//            await requester.sendInstruction(instruction!.text)
-//        }
-//        isConnected = false
-//    }
-//    
-//    func webSocketDidFailWithError(_ error: Error?) {
-//        setupWebSocket()
-//        Task {
-//            await requester.sendInstruction(instruction!.text)
-//        }
-//        isConnected = false
-//    }
-//    
-//    
-//}
+
+
+extension CurrentSessionViewController: RequestHandlerViewControllerProtocol {
+    
+    func presentResponse(_ response: Result<[String: String], Error>) {
+        
+        switch response {
+            
+        case .failure(let error):
+            //ErrorHandler.shared.handleError(WebSocketError.webSocketTaskCompleteError, on: self, retryAction: nil)
+            print("Failed!! to receive response from server \(error.localizedDescription)")
+            
+        case .success(let responseDict):
+            guard let transcribedText = responseDict["transcribed"],
+                  let responseText = responseDict["response"] else {
+                print("Response from server is missing expected keys")
+                return
+            }
+
+            let transcribedMessage = MessageModel(date: Date(), sender: .user, text: transcribedText)
+            let responseMessage = MessageModel(date: Date(), sender: .autopilot, text: responseText)
+            
+            sessionMessages.append(transcribedMessage)
+            DataManager.shared
+                .registerNewMessage(message: transcribedMessage,
+                                    in: self.sessionID!)
+            sessionMessages.append(responseMessage)
+            DataManager.shared
+                .registerNewMessage(message: responseMessage,
+                                    in: self.sessionID!)
+        }
+    }
+    
+}
 

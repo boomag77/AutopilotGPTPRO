@@ -45,29 +45,46 @@
 import UIKit
 
 protocol RequestHandlerViewControllerProtocol: UIViewController {
-    var connectionState: ConnectionState { get set }
-    func processResponse(_ response: Result<[String: String], Error>)
+    
+    var instruction: InstructionModel? { get }
+    func presentResponse(_ response: Result<[String: String], Error>)
 }
 
 actor RequestHandler {
+    
+    var shouldContinueReceivingMessages = true
     
     private var webSocketTask: URLSessionWebSocketTask?
     
     private let serverURL = URL(string: "wss://autopilotgpt.pro:8765/start_chat")!
     
-    var delegate = WebSocketDelegate()
-    weak var viewController: RequestHandlerViewControllerProtocol? {
+    var delegate: WebSocketDelegate?
+    
+    var instruction: InstructionModel? {
         didSet {
-            print("viewController set as \(viewController)")
+            delegate = WebSocketDelegate()
+            delegate?.owner = self
+            connect()
+            sendInstruction()
         }
     }
     
+    
+    weak var viewController: RequestHandlerViewControllerProtocol? 
+    
     deinit {
         print("Requester deinitialized")
+        Task { [weak self] in
+            await self?.disconnect()
+        }
     }
     
-    func isWebSocketTaskRunning() -> Bool {
-        return webSocketTask?.state == .running
+    func getViewController() -> UIViewController? {
+        return viewController
+    }
+    
+    func setInstruction(_ instruction: InstructionModel) {
+        self.instruction = instruction
     }
     
     func setViewController(_ viewController: UIViewController?) {
@@ -76,28 +93,54 @@ actor RequestHandler {
     
     func connect() {
         
-        delegate.owner = self
+        //delegate.owner = self
         
-        let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: OperationQueue())
+        let session = configureURLSession()
         
         webSocketTask = session.webSocketTask(with: serverURL)
         
         webSocketTask?.resume()
         
+        listenForMessages()
+        
         print("connecting to server")
         
     }
     
+    func reconnect() {
+        connect()
+        sendInstruction()
+        listenForMessages()
+    }
+    
+    private func configureURLSession() -> URLSession {
+        let configuration = URLSessionConfiguration.default
+        
+        configuration.timeoutIntervalForRequest = 30
+        //configuration.timeoutIntervalForResource = 120
+        
+        return URLSession(configuration: configuration, delegate: delegate, delegateQueue: OperationQueue())
+    }
+    
     func disconnect() {
-        webSocketTask?.cancel(with: .goingAway, reason: nil)
+        delegate = nil
+        shouldContinueReceivingMessages = false
+        let reason = "Normal disconnect".data(using: .utf8)
+        webSocketTask?.cancel(with: .normalClosure, reason: reason)
+        webSocketTask = nil
         print("Disconnected from server")
     }
     
-    func sendRecordedAudioData(_ audioData: Data) async {
+    func sendRecordedAudioData(_ audioData: Data) {
         
-//        if webSocketTask?.state != .running {
-//            connectToServer()
-//        }
+        if webSocketTask?.state != .running {
+            let data = audioData
+            print("While sending recorded - Task isn't running! Trying to reconnect......")
+            reconnect()
+            //sendInstruction()
+            sendRecordedAudioData(data)
+            
+        }
         
         let message = URLSessionWebSocketTask.Message.data(audioData)
         
@@ -109,9 +152,16 @@ actor RequestHandler {
                 print("Audio data sent successfully")
             }
         }
+        
+//        Task {
+//            listenForMessages()
+//        }
+        
     }
     
-    func sendInstruction(_ text: String) {
+    func sendInstruction() {
+        
+        let text = self.instruction!.text
         
         let jsonObject: [String: Any] = ["instruction_prompt": text, "user_id": 11]
         
@@ -133,152 +183,58 @@ actor RequestHandler {
             }
         }
         
+//        Task {
+//            listenForMessages()
+//        }
+        
     }
     
-    func receiveTranscribedAudioMessage() {
+    private func listenForMessages() {
+        
+        if !shouldContinueReceivingMessages {
+                print("Stopped listening for messages.")
+                return  // Stop recursion
+            }
         
         webSocketTask?.receive { [weak self] result in
             switch result {
             case .failure(let error):
                 
                 Task { [weak self] in
-                    guard let self = self else {return}
-                    await self.viewController?.processResponse(.failure(error))
+                    //guard let self = self else {return}
+                    await self?.viewController?.presentResponse(.failure(error))
                 }
+//                Task { [weak self] in
+//                    await self?.reconnect()
+//                }
+                
 
             case .success(let message):
-                switch message {
-                case .string(let text):
-                    let parser = JSONParser()
-                    let response = parser.parseJSONString(text)
-                    Task { [weak self] in
-                        guard let self = self else {return}
-                        await self.viewController?.processResponse(response)
-                    }
-                    
-
-                case .data(let data):
-                    let parser = JSONParser()
-                    let response = parser.parseJSONData(data)
-                    Task { [weak self] in
-                        guard let self = self else {return}
-                        await self.viewController?.processResponse(response)
-                    }
-
-                @unknown default:
-                    let error = NSError(domain: "WebSocketErrorDomain", code: 0,
-                                        userInfo: [NSLocalizedDescriptionKey: "Unknown message type received"])
-                    Task { [weak self] in
-                        guard let self = self else {return}
-                        await self.viewController?.processResponse(.failure(error))
-                    }
+                Task { [weak self] in
+                    guard let self = self else {return}
+                    let response = await self.handleReceivedMessage(message)
+                    await self.viewController?.presentResponse(response)
                 }
-                //self?.receiveTranscribedAudioMessage()
+                
+                Task { [weak self] in
+                    await self?.listenForMessages()
+                }
             }
         }
     }
     
-//    func receiveJSONResponse(completion: @escaping (Result<[String: String], Error>) -> Void) {
-//        webSocketTask?.receive { result in
-//            Task {
-//                switch result {
-//                case .failure(let error):
-//                    print("Failed to receive JSON message: \(error.localizedDescription)")
-//                    completion(.failure(error))
-//                    
-//                case .success(let message):
-//                    switch message {
-//                    case .string(let jsonString):
-//                        Task { [weak self] in
-//                            await self?.parseJSONString(jsonString, completion: completion)
-//                        }
-//                        
-//                    case .data(let jsonData):
-//                        print("data")
-//                        Task { [weak self] in
-//                            await self?.parseJSONData(jsonData, completion: completion)
-//                        }
-//                    @unknown default:
-//                        print("Unknown message type received")
-//                        completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown message type received"])))
-//                    }
-//                    
-//                    // Continuously receive messages by recursively calling this method
-//                    //self?.receiveJSONResponse(completion: completion)
-//                }
-//            }
-//            
-//        }
-//    }
-
-}
-
-//extension RequestHandler {
-//    
-//    // Parses a JSON string and completes with either the server's response or an error.
-//    private func parseJSONString(_ jsonString: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
-//        
-//        if let data = jsonString.data(using: .utf8) {
-//            parseJSONData(data, completion: completion)
-//        } else {
-//            let error = NSError(domain: "DataErrorDomain", code: 0,
-//                                userInfo: [NSLocalizedDescriptionKey: "Failed to decode JSON string"])
-//            completion(.failure(error))
-//        }
-//        
-//    }
-//
-//    // Parses a JSON Data object and completes with either the server's response or an error.
-//    private func parseJSONData(_ jsonData: Data, completion: @escaping (Result<[String: String], Error>) -> Void) {
-//        do {
-//            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-//               let transcribed = json["transcribed"] as? String,
-//               let response = json["response"] as? [String: Any],
-//                let message = response["message"] as? String {
-//                completion(.success(["transcribed": transcribed, "response": message]))
-//            } else {
-//                let error = NSError(domain: "DataErrorDomain", code: 0,
-//                                    userInfo: [NSLocalizedDescriptionKey: "JSON does not contain 'transcribed' or 'response' keys"])
-//                completion(.failure(error))
-//            }
-//        } catch {
-//            completion(.failure(error))
-//        }
-//    }
-//}
-
-extension RequestHandler {
-    
-    func setConnectionState(_ state: ConnectionState) {
-        self.viewController?.connectionState = state
+    private func handleReceivedMessage(_ message: URLSessionWebSocketTask.Message) -> Result<[String: String], Error> {
+        
+        let jsonParser = JSONParser()
+        let parsedResponse = jsonParser.parseJSONMessage(message)
+        
+        switch parsedResponse {
+        case .failure(let error):
+            return .failure(error)
+        case .success(let dictionary):
+            return .success(dictionary)
+            
+        }
     }
-    
 }
 
-//extension RequestHandler {
-//    
-//    private func listenForMessages() async {
-//        while let task = webSocketTask {
-//            do {
-//                let message = try await task.receive()
-//                handleMessage(message)
-//            } catch {
-//                print("Error in receiving message: \(error)")
-//                break  // Exit the loop and potentially handle the error or reconnect
-//            }
-//        }
-//    }
-//    
-//    private func handleMessage(_ message: URLSessionWebSocketTask.Message) {
-//        switch message {
-//        case .string(let text):
-//            parseJSONString(text, completion: <#T##(Result<[String : String], Error>) -> Void#>)
-//        case .data(let data):
-//            print("Received data: \(data)")
-//            // Handle data message
-//        @unknown default:
-//            fatalError("Unknown message type received")
-//        }
-//    }
-//    
-//}

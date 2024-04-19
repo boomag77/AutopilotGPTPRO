@@ -13,7 +13,20 @@ final class JSONParser {
 
 extension JSONParser {
     
-    func parseJSONString(_ jsonString: String) -> Result<[String: String], Error> {
+    func parseJSONMessage(_ message: URLSessionWebSocketTask.Message) -> Result<[String: String], Error> {
+        switch message {
+        case .string(let text):
+            return parseJSONString(text)
+        case .data(let data):
+            return parseJSONData(data)
+        @unknown default:
+            let error = NSError(domain: "WebSocketErrorDomain", code: 0,
+                                userInfo: [NSLocalizedDescriptionKey: "Unknown message type received"])
+            return .failure(error)
+        }
+    }
+    
+    private func parseJSONString(_ jsonString: String) -> Result<[String: String], Error> {
         
         if let data = jsonString.data(using: .utf8) {
             return parseJSONData(data)
@@ -26,7 +39,7 @@ extension JSONParser {
     }
 
     // Parses a JSON Data object and completes with either the server's response or an error.
-    func parseJSONData(_ jsonData: Data) -> Result<[String: String], Error> {
+    private func parseJSONData(_ jsonData: Data) -> Result<[String: String], Error> {
         do {
             if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
                let transcribed = json["transcribed"] as? String,

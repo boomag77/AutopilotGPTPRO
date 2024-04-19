@@ -3,12 +3,13 @@
 import UIKit
 
 class ErrorHandler {
+    
     static let shared = ErrorHandler()
     
     private init() {}
     
-    func handleError(_ error: Error, on viewController: UIViewController?, retryAction: (() async  -> Void)?) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+    func handleError(_ error: AutopilotError, on viewController: UIViewController?, retryAction: (() async  -> Void)?) {
+        let alert = UIAlertController(title: error.title, message: error.description, preferredStyle: .alert)
         
         // 'OK' action
         alert.addAction(UIAlertAction(title: "OK", style: .default))
