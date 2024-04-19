@@ -20,17 +20,17 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
         print("WebSocket connection closed")
     }
     
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        
-        
-        if let error = error as? URLError, error.code == .cancelled {
-                print("WebSocket task was cancelled intentionally.")
-            } else if let error = error {
-                print("WebSocket task completed with error: \(error.localizedDescription)")
-            } else {
-                print("The task completed successfully, without errors.")
-            }
-    }
+//    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+//        
+//        
+//        if let error = error as? URLError, error.code == .cancelled {
+//                print("WebSocket task was cancelled intentionally.")
+//            } else if let error = error {
+//                print("WebSocket task completed with error: \(error.localizedDescription)")
+//            } else {
+//                print("The task completed successfully, without errors.")
+//            }
+//    }
     
     internal func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
