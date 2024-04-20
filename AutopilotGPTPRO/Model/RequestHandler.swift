@@ -213,6 +213,7 @@ actor RequestHandler {
                 Task { [weak self] in
                     guard let self = self else {return}
                     let response = await self.handleReceivedMessage(message)
+                    
                     await self.viewController?.presentResponse(response)
                 }
                 

@@ -177,6 +177,9 @@ final class CurrentSessionViewController: UIViewController {
             navigationController?.setViewControllers(navigationStack, animated: true)
         }
         
+        let instructionMessage = MessageModel(date: Date(), sender: .user, text: instruction!.text)
+        sessionMessages.append(instructionMessage)
+        
         
     }
     
@@ -326,7 +329,6 @@ extension CurrentSessionViewController {
         
         self.sessionID = DataManager.shared
             .registerNewSession(date: Date(), position: instruction.name)
-        
     }
     
     private func endSession() {
