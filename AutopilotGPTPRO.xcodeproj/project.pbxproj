@@ -31,6 +31,10 @@
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
 		A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5697F9C2BD0CDB600576836 /* JSONParser.swift */; };
+		A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9262BD5F2C100B3ECD6 /* Adapty */; };
+		A569F92A2BD5F2F800B3ECD6 /* AdaptyUI in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9292BD5F2F800B3ECD6 /* AdaptyUI */; };
+		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
+		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
@@ -68,6 +72,9 @@
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		A5697F9C2BD0CDB600576836 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
+		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
+		A569F9302BD7732D00B3ECD6 /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = file; name = StoreKitConfig.storekit; path = AutopilotGPTPRO/StoreKitConfig.storekit; sourceTree = SOURCE_ROOT; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -83,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
+				A569F92A2BD5F2F800B3ECD6 /* AdaptyUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +123,7 @@
 				A51FA2E62BC5C6E7007042A9 /* Session+CoreDataProperties.swift */,
 				A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */,
 				A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */,
+				A569F92B2BD5F56100B3ECD6 /* Adapty */,
 				A54CDDD12BB7AC1D0032A17C /* View */,
 				A53E7E292BB64BEC00EB5311 /* Model */,
 				A53E7E262BB646DA00EB5311 /* Controller */,
@@ -151,6 +161,7 @@
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
 				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
+				A569F9302BD7732D00B3ECD6 /* StoreKitConfig.storekit */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +180,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A569F92B2BD5F56100B3ECD6 /* Adapty */ = {
+			isa = PBXGroup;
+			children = (
+				A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */,
+				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
+			);
+			path = Adapty;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -185,6 +205,10 @@
 			dependencies = (
 			);
 			name = AutopilotGPTPRO;
+			packageProductDependencies = (
+				A569F9262BD5F2C100B3ECD6 /* Adapty */,
+				A569F9292BD5F2F800B3ECD6 /* AdaptyUI */,
+			);
 			productName = AutopilotGPTPRO;
 			productReference = A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */;
 			productType = "com.apple.product-type.application";
@@ -213,6 +237,10 @@
 				Base,
 			);
 			mainGroup = A53E7E062BB643AC00EB5311;
+			packageReferences = (
+				A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
+				A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */,
+			);
 			productRefGroup = A53E7E102BB643AC00EB5311 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -249,6 +277,7 @@
 				A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,
 				A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */,
+				A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */,
 				A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */,
 				A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */,
 				A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */,
@@ -266,6 +295,7 @@
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
 				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,
 				A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */,
+				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
 				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,
@@ -423,6 +453,7 @@
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "GPT Autopilot for Interview";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -435,7 +466,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.05;
 				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -458,6 +489,7 @@
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "GPT Autopilot for Interview";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -470,7 +502,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.05;
 				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -505,6 +537,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.3;
+			};
+		};
+		A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adaptyteam/AdaptyUI-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A569F9262BD5F2C100B3ECD6 /* Adapty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = Adapty;
+		};
+		A569F9292BD5F2F800B3ECD6 /* AdaptyUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */;
+			productName = AdaptyUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */ = {

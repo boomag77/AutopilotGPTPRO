@@ -3,6 +3,22 @@ import UIKit
 
 final class StartSessionVC: UIViewController {
     
+    var adaptyManager = AdaptyManager()
+    var isSubscribed: Bool = false {
+        didSet {
+            if isSubscribed {
+                let alert = UIAlertController(title: "Success", message: "You're subscribed!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    
+    
     var instruction: InstructionModel? {
         didSet {
             positionTextField.text = instruction?.name
@@ -97,6 +113,7 @@ final class StartSessionVC: UIViewController {
         
         button.addAction(UIAction { [weak self] _ in
             self?.launchSessionButtonTapped()
+            
         }, for: .touchUpInside)
         return button
     }()
@@ -109,8 +126,13 @@ final class StartSessionVC: UIViewController {
         super.viewDidLoad()
         
         instructionTextTextView.delegate = self
+        adaptyManager.viewController = self
         
-    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
+//        adaptyManager.checkAccess { [weak self] status in
+//            self?.isSubscribed = status
+//        }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
             self?.keyboardWillShow(notification: notification)
         }
         
@@ -204,6 +226,16 @@ extension StartSessionVC {
     
     private func launchSessionButtonTapped() {
         
+        guard self.isSubscribed else {
+            let paywallVC = PaywallViewController()
+            paywallVC.products = adaptyManager.products ?? []
+            paywallVC.adaptyManager = self.adaptyManager
+            
+            paywallVC.modalPresentationStyle = .popover  // or .formSheet for iPad
+            self.present(paywallVC, animated: true, completion: nil)
+            return
+        }
+        
         guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
         
         if checkBoxChecked {
@@ -281,3 +313,26 @@ extension StartSessionVC: UITextViewDelegate {
     }
     
 }
+
+extension StartSessionVC: AdaptyManagerDelegateProtocol {
+    
+    func setSubscriptionStatus(_ status: Bool) {
+        self.isSubscribed = status
+    }
+    
+    
+    func handleError(errorTitle: String, errorDescription: String) {
+        let alert = UIAlertController(title: errorTitle, message: errorDescription, preferredStyle: .alert)
+        
+        // 'OK' action
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
+    }
+    
+    
+}
+

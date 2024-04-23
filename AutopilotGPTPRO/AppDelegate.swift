@@ -1,6 +1,7 @@
 
 import UIKit
 import CoreData
+import Adapty
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         
         UINavigationBar.appearance().titleTextAttributes = textAttributes
+        
+        Adapty.activate("public_live_WYY01n3D.ZUfI44hzp0oVAK15wAH6")
+        Adapty.logLevel = .verbose
         
         return true
     }
