@@ -6,7 +6,9 @@ import Adapty
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    static let shared = AppDelegate()
     
+    var isSubscriptionActive: Bool = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -34,6 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Adapty.activate("public_live_WYY01n3D.ZUfI44hzp0oVAK15wAH6")
         Adapty.logLevel = .warn
         
+        AdaptyManager.shared.checkAccess { result in
+            self.isSubscriptionActive = true
+        }
+        
         return true
     }
 
@@ -55,5 +61,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
 
+}
+
+extension AppDelegate: AdaptyDelegate {
+    
+    func didLoadLatestProfile(_ profile: AdaptyProfile) {
+        guard let accessLevel = profile.accessLevels ["monthly"] else {
+            return
+        }
+        self.isSubscriptionActive = accessLevel.isActive
+    }
+    
 }
 

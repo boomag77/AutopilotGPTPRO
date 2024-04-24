@@ -3,22 +3,7 @@ import UIKit
 
 final class StartSessionVC: UIViewController {
     
-    var adaptyManager = AdaptyManager()
-    
-    var isSubscribed: Bool = false {
-        didSet {
-            if isSubscribed {
-                let alert = UIAlertController(title: "Success", message: "You're subscribed!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-                DispatchQueue.main.async { [weak self] in
-                    self?.present(alert, animated: true)
-                }
-            }
-        }
-    }
-    
-    
+    var isSubscribed: Bool = AppDelegate.shared.isSubscriptionActive
     
     var instruction: InstructionModel? {
         didSet {
@@ -127,7 +112,6 @@ final class StartSessionVC: UIViewController {
         super.viewDidLoad()
         
         instructionTextTextView.delegate = self
-        adaptyManager.viewController = self
         
 //        adaptyManager.checkAccess { [weak self] status in
 //            self?.isSubscribed = status
@@ -228,9 +212,6 @@ extension StartSessionVC {
     private func launchSessionButtonTapped() {
         
         guard self.isSubscribed else {
-            let paywallVC = PaywallViewController()
-            paywallVC.products = adaptyManager.products ?? []
-            paywallVC.adaptyManager = self.adaptyManager
             
             DispatchQueue.main.async {
                 self.presentContentViewController()
@@ -344,8 +325,7 @@ extension StartSessionVC: UIViewControllerTransitioningDelegate {
     
     func presentContentViewController() {
         let paywallVC = PaywallViewController()
-        paywallVC.products = adaptyManager.products ?? []
-        paywallVC.adaptyManager = self.adaptyManager
+        paywallVC.products = AdaptyManager.shared.products ?? []
         paywallVC.modalPresentationStyle = .custom
         paywallVC.transitioningDelegate = self
         self.present(paywallVC, animated: true, completion: nil)

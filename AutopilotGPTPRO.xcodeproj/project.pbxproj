@@ -36,6 +36,7 @@
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
 		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
 		A569F9322BD7E10200B3ECD6 /* PurchasePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */; };
+		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
@@ -62,8 +63,8 @@
 		A53E7E2A2BB64C3400EB5311 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		A53E7E2C2BB64D8900EB5311 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
-		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
@@ -76,13 +77,14 @@
 		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
 		A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasePresentationController.swift; sourceTree = "<group>"; };
+		A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewCell.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A58452502BC465CF00D56B6A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
-		A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,13 +120,6 @@
 		A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */ = {
 			isa = PBXGroup;
 			children = (
-				A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */,
-				A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */,
-				A51FA2E52BC5C6E7007042A9 /* Session+CoreDataClass.swift */,
-				A51FA2E62BC5C6E7007042A9 /* Session+CoreDataProperties.swift */,
-				A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */,
-				A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */,
-				A569F92B2BD5F56100B3ECD6 /* Adapty */,
 				A54CDDD12BB7AC1D0032A17C /* View */,
 				A53E7E292BB64BEC00EB5311 /* Model */,
 				A53E7E262BB646DA00EB5311 /* Controller */,
@@ -149,6 +144,7 @@
 				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 				A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */,
 				A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */,
+				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -156,8 +152,10 @@
 		A53E7E292BB64BEC00EB5311 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A569F9382BD8B7E300B3ECD6 /* CoreData Classes */,
 				A573661B2BCE0C6B0083CB04 /* Errors.swift */,
 				A53E7E2A2BB64C3400EB5311 /* DataModels.swift */,
+				A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */,
 				A53E7E2C2BB64D8900EB5311 /* DataManager.swift */,
 				A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */,
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
@@ -170,24 +168,37 @@
 		A54CDDD12BB7AC1D0032A17C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A569F9372BD8B78800B3ECD6 /* TableViewCells */,
 				A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */,
 				A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */,
-				A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */,
 				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
-				A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */,
 				A58452502BC465CF00D56B6A /* CheckBox.swift */,
-				A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		A569F92B2BD5F56100B3ECD6 /* Adapty */ = {
+		A569F9372BD8B78800B3ECD6 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */,
-				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
+				A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */,
+				A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */,
+				A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */,
+				A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */,
 			);
-			path = Adapty;
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		A569F9382BD8B7E300B3ECD6 /* CoreData Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */,
+				A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */,
+				A51FA2E52BC5C6E7007042A9 /* Session+CoreDataClass.swift */,
+				A51FA2E62BC5C6E7007042A9 /* Session+CoreDataProperties.swift */,
+				A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */,
+				A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */,
+			);
+			path = "CoreData Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +310,7 @@
 				A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */,
 				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
+				A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
 				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,
 			);

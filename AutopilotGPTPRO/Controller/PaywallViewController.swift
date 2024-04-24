@@ -5,7 +5,6 @@ import Adapty
 class PaywallViewController: UIViewController {
     
     var products: [AdaptyPaywallProduct] = []
-    weak var adaptyManager: AdaptyManager?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -45,25 +44,26 @@ class PaywallViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupProducts()
+        
+        tableView.register(SubscriptionTableViewCell.self, forCellReuseIdentifier: "SubscriptionCell")
+        
         tableView.dataSource = self
         tableView.reloadData()
         setupUI()
-    }
-    
-    private func setupProducts() {
-        guard let manager = adaptyManager, let products = manager.products else {
-            self.products = []
-            return
-        }
-        self.products = products
     }
     
     private func buyButtonTapped() {
         guard let product = products.first else {
             return
         }
-        adaptyManager?.makePurchase(product: product , from: self)
+        AdaptyManager.shared.makePurchase(product: product) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                self.dismiss(animated: true)
+            } else {
+                self.dismiss(animated: true)
+            }
+        }
     }
     
 //    private func loadProducts() {
@@ -82,8 +82,7 @@ class PaywallViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            buyButton.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
-            buyButton.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
+            buyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
@@ -104,7 +103,9 @@ extension PaywallViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SubscriptionCell", for: indexPath) as! SubscriptionTableViewCell
+        
         let product = products[indexPath.row]
         
         var content = cell.defaultContentConfiguration()

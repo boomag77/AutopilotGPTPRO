@@ -8,12 +8,16 @@ protocol AdaptyManagerDelegate: UIViewController {
     func setSubscriptionStatus(_ status: Bool)
 }
 
+enum AdaptyManagerError: String {
+    case errorFetchingPaywall = "Error fetching paywall"
+    case errorFetchingPaywallProducts = "Error fetching paywall products"
+}
+
 class AdaptyManager {
     
     static let shared = AdaptyManager()
     
     var viewController: AdaptyManagerDelegate?
-    let errorTitle: String = "Adapty Error"
     
     var paywall: AdaptyPaywall?
     var products: [AdaptyPaywallProduct]?
@@ -32,15 +36,14 @@ class AdaptyManager {
                 self?.paywall = paywall
                 self?.loadPaywallProducts()
                 case let .failure(error):
-                self?.throwError(error)
+                //self?.throwError(.errorFetchingPaywall, error.localizedDescription)
                 print("Error fetching paywall: \(error.localizedDescription)")
             }
         }
     }
     
-    private func throwError(_ error: AdaptyError) {
-
-        viewController?.handleError(errorTitle: "Adapty Error", errorDescription: error.localizedDescription)
+    private func throwError(_ error: AdaptyManagerError, _ description: String) {
+        viewController?.handleError(errorTitle: error.rawValue, errorDescription: description)
     }
     
     func loadPaywallProducts() {
@@ -56,20 +59,21 @@ class AdaptyManager {
                 self?.products = products
                 print("Products loaded: \(products.count)")
             case let .failure(error):
-                self?.throwError(error)
-                //print("Error fetching products: \(error.localizedDescription)")
+                //self?.throwError(.errorFetchingPaywallProducts, error.localizedDescription)
+                print("Error fetching products: \(error.localizedDescription)")
             }
         }
     }
     
     func fetchAdditionalPaywallInfo() {
-        Adapty.getPaywall(placementId: "start_session") { [weak self] result in
+        Adapty.getPaywall(placementId: "start_session") { result in
             switch result {
             case let .success(paywall):
                 let headerText = paywall.remoteConfig?["header_text"] as? String
                 print("Header Text: \(headerText ?? "No header text available")")
             case let .failure(error):
-                self?.throwError(error)
+                let errorText = "Error fetching additional paywall info: \(error.localizedDescription)"
+                //self?.throwError(errorText)
                 print("Error fetching additional paywall info: \(error.localizedDescription)")
             }
         }
@@ -79,45 +83,37 @@ class AdaptyManager {
         Adapty.logShowPaywall(paywall)
     }
     
-    func makePurchase(product: AdaptyPaywallProduct, from paywallVC: UIViewController) {
-//        self.viewController?.setSubscriptionStatus(true)
-//        viewController.dismiss(animated: true)
-        Adapty.makePurchase(product: product) { [weak self] result in
+    func makePurchase(product: AdaptyPaywallProduct, completion: @escaping (Error?) -> Void) {
+        
+        Adapty.makePurchase(product: product) { result in
             switch result {
             case let .success(info):
-                if info.profile.accessLevels["premium"]?.isActive ?? false {
+                if let access = info.profile.accessLevels["monthly"]?.isActive {
                     // grant access to premium features
-                    paywallVC.dismiss(animated: false)
-                    self?.viewController?.setSubscriptionStatus(true)
+                    AppDelegate.shared.isSubscriptionActive = access
+                    completion(nil)
                 }
             case let .failure(error):
-                paywallVC.dismiss(animated: false)
-                self?.throwError(error)
-                print("Purchase error: \(error.localizedDescription)")
-                return
+                print("Adapty Manager -> Purchase error: \(error.localizedDescription)")
+                completion(error)
             }
         }
     }
     
     func checkAccess(completion: @escaping (Bool) -> Void) {
         
-        Adapty.getProfile { [weak self] result in
+        Adapty.getProfile { result in
+            
             switch result {
             case let .success(profile):
-                guard let accessLevel = profile.accessLevels["premium"] else {
+                
+                guard let accessLevel = profile.accessLevels["monthly"] else {
                     return
                 }
-                if accessLevel.isActive {
-                    // User has an active "premium" subscription
-                    completion(true)
-                    print("Subscription is valid!")
-                } else {
-                    // User does not have an active "premium" subscription
-                    completion(false)
-                    print("Subscription is not valid.")
-                }
+                completion(accessLevel.isActive ? true : false)
             case let .failure(error):
-                self?.throwError(error)
+//                let errorText = "Error fetching profile: \(error.localizedDescription)"
+//                self?.throwError(errorText)
                 print("Error fetching profile: \(error.localizedDescription)")
             }
         }
