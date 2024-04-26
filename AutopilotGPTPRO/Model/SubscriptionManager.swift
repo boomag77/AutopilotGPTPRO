@@ -1,11 +1,18 @@
 import StoreKit
+import Combine
 
+@MainActor
 class SubscriptionManager {
+    
     static let shared = SubscriptionManager()
-    
     var products: [Product] = []
+    var hasActiveSubscription: Bool = false {
+        didSet {
+            print("Subscrioption Manager hasActive \(hasActiveSubscription)")
+        }
+    }
     
-    init() {
+    private init() {
         fetchAvailableSubscriptions { result in
             switch result {
                 case .success(let products):
@@ -14,6 +21,15 @@ class SubscriptionManager {
                     print(error.localizedDescription)
             }
         }
+        checkForActiveSubscription { result in
+            switch result {
+                case .success(let status):
+                    self.hasActiveSubscription = status
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
+       
     }
 
     // Fetch available subscriptions
@@ -33,6 +49,7 @@ class SubscriptionManager {
             }
         }
     }
+    
     
     func checkForActiveSubscription(completion: @escaping (Result<Bool, Error>) -> Void) {
         
@@ -58,7 +75,7 @@ class SubscriptionManager {
                         completion(.success(false))
                     }
                     
-            case .unverified(let transaction, let verificationError):
+            case .unverified(_, let verificationError):
                 // Handle unverified transactions based
                 // on your business model.
                     completion(.failure(verificationError))
@@ -67,6 +84,9 @@ class SubscriptionManager {
     }
     
     func purchase(_ product: Product, completion: @escaping (Result<Transaction, Error>) -> Void) {
+        
+        
+        
         Task {
             do {
                 let result = try await product.purchase()
@@ -75,20 +95,33 @@ class SubscriptionManager {
                     switch verificationResult {
                     case .verified(let transaction):
                         await transaction.finish()
+                            self.hasActiveSubscription = true
                         completion(.success(transaction))
                     case .unverified(_, let error):
-                            completion(.failure(error))
+                        print("Unverified purchase. Might be jailbroken. Error: \(error.localizedDescription)")
+                        break
                     }
                 case .pending:
                     print("Purchase is pending")
+                    break
                 case .userCancelled:
                     print("User cancelled the purchase")
+                    break
                 @unknown default:
-                    print("Unknown purchase result")
+                    print("Failed to purchase the product!")
+                    break
                 }
             } catch {
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func restorePurchases() async {
+        do {
+            try await AppStore.sync()
+        } catch(let error) {
+            print("Subscription Manager -> Failed restoring purchases \(error.localizedDescription).")
         }
     }
 }

@@ -8,8 +8,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let shared = AppDelegate()
     
-    //var isSubscriptionActive: Bool = false
-
+//    var hasActiveSubscription: Bool = false {
+//        didSet {
+//            print("AppDelegate subscription state - \(hasActiveSubscription)")
+//        }
+//    }
+    
+    //var subscriptionManager = SubscriptionManager()
+    var transactionObserver: TransactionObserver?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -33,10 +40,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().titleTextAttributes = textAttributes
         
-        Adapty.activate("public_live_WYY01n3D.ZUfI44hzp0oVAK15wAH6")
-        Adapty.logLevel = .warn
+        //checkSubscriptionStatus()
         
+        //   ADAPTY STARTING
+//        Adapty.activate("public_live_WYY01n3D.ZUfI44hzp0oVAK15wAH6")
+//        Adapty.logLevel = .warn
+        //   ADAPTY STARTING
+//        self.hasActiveSubscription = subscriptionManager.hasProKey
+//        
+
+        SubscriptionManager.shared.checkForActiveSubscription { result in
+            switch result {
+                case .success(let status):
+                    //self.hasActiveSubscription = status
+                    print(status)
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
         
+        self.transactionObserver = TransactionObserver()
         
         return true
     }
@@ -55,10 +78,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        
+//        transactionObserver = nil
+//    }
+    
+//    private func checkSubscriptionStatus() {
+//        
+//        SubscriptionManager.shared.checkForActiveSubscription { result in
+//            switch result {
+//                case .success(let status):
+//                    self.hasActiveSubscription = status
+//                    print("AppDelegate -> Subscription status is \(status)")
+//                case .failure(let error):
+//                    print("AppDelegate -> Error: Failed to check subscription status: \(error.localizedDescription)")
+//            }
+//        }
+//        
+//    }
+    
     //MARK: CoreData
     
     
 
 }
-
-

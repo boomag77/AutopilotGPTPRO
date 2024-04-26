@@ -4,7 +4,7 @@ import StoreKit
 
 class PaywallViewController: UIViewController {
     
-    var subscriptionManager = SubscriptionManager.shared
+    //var subscriptionManager = SubscriptionManager.shared
     
     var products: [Product] = [] {
         didSet {
@@ -53,19 +53,8 @@ class PaywallViewController: UIViewController {
         tableView.register(SubscriptionTableViewCell.self, forCellReuseIdentifier: "SubscriptionCell")
         
         tableView.dataSource = self
-        SubscriptionManager.shared.fetchAvailableSubscriptions { [unowned self] result in
-            switch result {
-                case .success(let products):
-                    self.products = products
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                    
-                case .failure(let error):
-                    self.products = []
-                    print("Could not fetch products")
-            }
-        }
+        self.products = SubscriptionManager.shared.products
+        
         tableView.reloadData()
         setupUI()
     }
@@ -77,19 +66,14 @@ class PaywallViewController: UIViewController {
         guard let product = products.first else {
             return
         }
-        SubscriptionManager.shared.purchase(product) { [unowned self] result in
+        SubscriptionManager.shared.purchase(product) { [weak self] result in
             switch result {
-                case .success(let transaction):
-                    print("Purchase successful: \(transaction)")
-                    //AppDelegate.isSubscriptionActive = true
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true)
-                    }
-                case .failure(let error):
-                    print("Purchase failed: \(error)")
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true)
-                    }
+                case .success(_):
+                    //AppDelegate.shared.hasActiveSubscription = true
+                    self?.dismiss(animated: true)
+                case .failure(_):
+                    print("Failed complete purchase")
+                    self?.dismiss(animated: true)
             }
         }
     }

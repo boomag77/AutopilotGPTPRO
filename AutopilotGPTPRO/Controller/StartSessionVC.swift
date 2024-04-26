@@ -1,9 +1,9 @@
 
 import UIKit
 
+
+
 final class StartSessionVC: UIViewController {
-    
-    private var isSubscriptionValid: Bool = false
     
     var instruction: InstructionModel? {
         didSet {
@@ -219,45 +219,41 @@ extension StartSessionVC {
     
     
     private func launchSessionButtonTapped() {
+        print("Subscription ststus = \(SubscriptionManager.shared.hasActiveSubscription)")
+//        guard AppDelegate.shared.hasActiveSubscription else {
+//            self.presentContentViewController()
+//            return
+//        }
         
-        
-        
-        SubscriptionManager.shared.checkForActiveSubscription { result in
-            switch result {
-                case .success(let status):
-                    self.isSubscriptionValid = status
-                case .failure(let error):
-                    print(error.localizedDescription)
+        if !(SubscriptionManager.shared.hasActiveSubscription) {
+            print(SubscriptionManager.shared.hasActiveSubscription)
+            self.presentContentViewController()
+            
+        } else {
+            print(SubscriptionManager.shared.hasActiveSubscription)
+            guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
+            
+            if checkBoxChecked {
+                (checkBox as? CheckBox)?.checked.toggle()
+                checkBoxChecked.toggle()
+                saveInstruction()
             }
-        }
-        
-        guard isSubscriptionValid else {
-            DispatchQueue.main.async { [weak self] in
-                self?.presentContentViewController()
-            }
-            return
+            
+            lazy var activeSessionVC = {
+                let controller = CurrentSessionViewController()
+                return controller
+            }()
+            
+            activeSessionVC.instruction = InstructionModel(name: title, text: text)
+            //hide bottom bar
+            activeSessionVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(activeSessionVC, animated: true)
         }
         
             
         
         
-        guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
         
-        if checkBoxChecked {
-            (checkBox as? CheckBox)?.checked.toggle()
-            checkBoxChecked.toggle()
-            saveInstruction()
-        }
-        
-        lazy var activeSessionVC = {
-            let controller = CurrentSessionViewController()
-            return controller
-        }()
-        
-        activeSessionVC.instruction = InstructionModel(name: title, text: text)
-        //hide bottom bar
-        activeSessionVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(activeSessionVC, animated: true)
     }
     
     private func saveInstruction() {

@@ -65,19 +65,19 @@ class AdaptyManager {
         }
     }
     
-    func fetchAdditionalPaywallInfo() {
-        Adapty.getPaywall(placementId: "start_session") { result in
-            switch result {
-            case let .success(paywall):
-                let headerText = paywall.remoteConfig?["header_text"] as? String
-                print("Header Text: \(headerText ?? "No header text available")")
-            case let .failure(error):
-                let errorText = "Error fetching additional paywall info: \(error.localizedDescription)"
-                //self?.throwError(errorText)
-                print("Error fetching additional paywall info: \(error.localizedDescription)")
-            }
-        }
-    }
+//    func fetchAdditionalPaywallInfo() {
+//        Adapty.getPaywall(placementId: "start_session") { result in
+//            switch result {
+//            case let .success(paywall):
+//                let headerText = paywall.remoteConfig?["header_text"] as? String
+//                print("Header Text: \(headerText ?? "No header text available")")
+//            case let .failure(error):
+//                let errorText = "Error fetching additional paywall info: \(error.localizedDescription)"
+//                //self?.throwError(errorText)
+//                print("Error fetching additional paywall info: \(error.localizedDescription)")
+//            }
+//        }
+//    }
     
     private func logShowPaywall(paywall: AdaptyPaywall) {
         Adapty.logShowPaywall(paywall)
