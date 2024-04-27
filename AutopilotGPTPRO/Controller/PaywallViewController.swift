@@ -42,6 +42,16 @@ class PaywallViewController: UIViewController {
         return label
     }()
     
+    private lazy var descriptionTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "and get full access"
+        label.textAlignment = .center
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.textColor = .label.withAlphaComponent(0.85)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var buyButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
@@ -198,8 +208,8 @@ class PaywallViewController: UIViewController {
         NSLayoutConstraint.activate([
                 logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
                 logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                logoImageView.heightAnchor.constraint(equalToConstant: 150),
-                logoImageView.widthAnchor.constraint(equalToConstant: 150),
+                logoImageView.heightAnchor.constraint(equalToConstant: 300),
+                logoImageView.widthAnchor.constraint(equalToConstant: 300),
                 
                 titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
                 titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
