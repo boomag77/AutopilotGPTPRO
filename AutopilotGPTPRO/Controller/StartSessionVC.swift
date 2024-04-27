@@ -227,7 +227,7 @@ extension StartSessionVC {
         
         if !(SubscriptionManager.shared.hasActiveSubscription) {
             print(SubscriptionManager.shared.hasActiveSubscription)
-            self.presentContentViewController()
+            self.presentPaywallViewController()
             
         } else {
             print(SubscriptionManager.shared.hasActiveSubscription)
@@ -338,19 +338,15 @@ extension StartSessionVC: AdaptyManagerDelegate {
     
 }
 
-extension StartSessionVC: UIViewControllerTransitioningDelegate {
+extension StartSessionVC {
     
-    func presentContentViewController() {
+    func presentPaywallViewController() {
+    
         let paywallVC = PaywallViewController()
         
+        paywallVC.modalPresentationStyle = .formSheet
         
-        paywallVC.modalPresentationStyle = .custom
-        paywallVC.transitioningDelegate = self
         self.present(paywallVC, animated: true, completion: nil)
-    }
-    
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return PurchasePresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

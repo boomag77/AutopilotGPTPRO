@@ -1,7 +1,6 @@
 
 import Adapty
 import UIKit
-import AdaptyUI
 
 protocol AdaptyManagerDelegate: UIViewController {
     func handleError(errorTitle: String, errorDescription: String)
@@ -22,7 +21,7 @@ class AdaptyManager {
     var paywall: AdaptyPaywall?
     var products: [AdaptyPaywallProduct]?
     
-    init() {
+    private init() {
         loadPaywall()
         //loadPaywallProducts()
     }

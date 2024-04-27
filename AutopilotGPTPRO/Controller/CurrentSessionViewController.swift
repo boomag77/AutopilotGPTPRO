@@ -65,7 +65,7 @@ final class CurrentSessionViewController: UIViewController {
     }()
     
     private lazy var recButton: UIButton = {
-        let button = SessionControlsButton()
+        let button = RoundButton()
         
         var config = UIButton.Configuration.filled()
         config.title = "REC"
@@ -85,7 +85,7 @@ final class CurrentSessionViewController: UIViewController {
     }()
     
     private lazy var sendButton: UIButton = {
-        let button = SessionControlsButton()
+        let button = RoundButton()
         
         var config = UIButton.Configuration.filled()
         config.image = UIImage(systemName: "checkmark")
@@ -106,7 +106,7 @@ final class CurrentSessionViewController: UIViewController {
     }()
     
     private lazy var resetButton: UIButton = {
-        let button = SessionControlsButton()
+        let button = RoundButton()
         
         var config = UIButton.Configuration.filled()
         config.image = UIImage(systemName: "xmark")

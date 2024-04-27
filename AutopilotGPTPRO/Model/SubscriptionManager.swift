@@ -8,7 +8,7 @@ class SubscriptionManager {
     var products: [Product] = []
     var hasActiveSubscription: Bool = false {
         didSet {
-            print("Subscrioption Manager hasActive \(hasActiveSubscription)")
+            print("Subscription Manager -> Subscription status is \(hasActiveSubscription)")
         }
     }
     
@@ -44,7 +44,7 @@ class SubscriptionManager {
                 self.products = products
                 completion(.success(products))
             } catch {
-                print("Failed ")
+                print("Failed to fetch avaliable products")
                 completion(.failure(error))
             }
         }
@@ -84,8 +84,6 @@ class SubscriptionManager {
     }
     
     func purchase(_ product: Product, completion: @escaping (Result<Transaction, Error>) -> Void) {
-        
-        
         
         Task {
             do {

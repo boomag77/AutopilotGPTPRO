@@ -27,7 +27,7 @@
 		A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */; };
 		A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */; };
 		A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */; };
-		A54CDDDB2BBB742F0032A17C /* SessionControlsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */; };
+		A54CDDDB2BBB742F0032A17C /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDA2BBB742F0032A17C /* RoundButton.swift */; };
 		A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */; };
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
@@ -37,7 +37,6 @@
 		A569F92A2BD5F2F800B3ECD6 /* AdaptyUI in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9292BD5F2F800B3ECD6 /* AdaptyUI */; };
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
 		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
-		A569F9322BD7E10200B3ECD6 /* PurchasePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */; };
 		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
@@ -73,7 +72,7 @@
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
 		A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionViewController.swift; sourceTree = "<group>"; };
-		A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionControlsButton.swift; sourceTree = "<group>"; };
+		A54CDDDA2BBB742F0032A17C /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		A5697F9C2BD0CDB600576836 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
-		A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasePresentationController.swift; sourceTree = "<group>"; };
 		A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewCell.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 				A54CDDD82BBB03440032A17C /* CurrentSessionViewController.swift */,
 				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 				A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */,
-				A569F9312BD7E10200B3ECD6 /* PurchasePresentationController.swift */,
 				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
 			);
 			path = Controller;
@@ -178,7 +175,7 @@
 			children = (
 				A569F9372BD8B78800B3ECD6 /* TableViewCells */,
 				A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */,
-				A54CDDDA2BBB742F0032A17C /* SessionControlsButton.swift */,
+				A54CDDDA2BBB742F0032A17C /* RoundButton.swift */,
 				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 				A58452502BC465CF00D56B6A /* CheckBox.swift */,
 			);
@@ -289,7 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */,
-				A54CDDDB2BBB742F0032A17C /* SessionControlsButton.swift in Sources */,
+				A54CDDDB2BBB742F0032A17C /* RoundButton.swift in Sources */,
 				A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */,
 				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
 				A51FA2E82BC5C6E7007042A9 /* Session+CoreDataProperties.swift in Sources */,
@@ -316,7 +313,6 @@
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
 				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,
-				A569F9322BD7E10200B3ECD6 /* PurchasePresentationController.swift in Sources */,
 				A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */,
 				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,

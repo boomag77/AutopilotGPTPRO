@@ -1,7 +1,7 @@
 
 import UIKit
 
-class SessionControlsButton: UIButton {
+class RoundButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
