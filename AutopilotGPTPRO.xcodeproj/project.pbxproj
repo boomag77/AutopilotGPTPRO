@@ -12,6 +12,7 @@
 		A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */; };
 		A522C3752BC83DC600410EB1 /* StartSessionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522C3742BC83DC600410EB1 /* StartSessionVC.swift */; };
 		A53921362BDA7CEE007204F6 /* TransactionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53921352BDA7CEE007204F6 /* TransactionObserver.swift */; };
+		A539213B2BDFBCEC007204F6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = A539213A2BDFBCEC007204F6 /* Store.swift */; };
 		A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E122BB643AC00EB5311 /* AppDelegate.swift */; };
 		A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */; };
 		A53E7E1A2BB643AC00EB5311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A53E7E182BB643AC00EB5311 /* Main.storyboard */; };
@@ -55,6 +56,9 @@
 		A522C3742BC83DC600410EB1 /* StartSessionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSessionVC.swift; sourceTree = "<group>"; };
 		A53921342BDA02F1007204F6 /* Autopilot.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Autopilot.storekit; sourceTree = "<group>"; };
 		A53921352BDA7CEE007204F6 /* TransactionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionObserver.swift; sourceTree = "<group>"; };
+		A53921392BDFB055007204F6 /* AutopilotGPTPRODebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutopilotGPTPRODebug.entitlements; sourceTree = "<group>"; };
+		A539213A2BDFBCEC007204F6 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		A539213C2BDFEF51007204F6 /* AutopilotGPTPRORelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutopilotGPTPRORelease.entitlements; sourceTree = "<group>"; };
 		A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutopilotGPTPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A53E7E122BB643AC00EB5311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 		A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */ = {
 			isa = PBXGroup;
 			children = (
+				A539213C2BDFEF51007204F6 /* AutopilotGPTPRORelease.entitlements */,
+				A53921392BDFB055007204F6 /* AutopilotGPTPRODebug.entitlements */,
 				A54CDDD12BB7AC1D0032A17C /* View */,
 				A53E7E292BB64BEC00EB5311 /* Model */,
 				A53E7E262BB646DA00EB5311 /* Controller */,
@@ -166,6 +172,7 @@
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
 				A556045B2BD9B74A00BD0486 /* SubscriptionManager.swift */,
 				A53921352BDA7CEE007204F6 /* TransactionObserver.swift */,
+				A539213A2BDFBCEC007204F6 /* Store.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -285,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A539213B2BDFBCEC007204F6 /* Store.swift in Sources */,
 				A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */,
 				A54CDDDB2BBB742F0032A17C /* RoundButton.swift in Sources */,
 				A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */,
@@ -468,6 +476,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRODebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
@@ -489,6 +499,7 @@
 				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -504,6 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRORelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;

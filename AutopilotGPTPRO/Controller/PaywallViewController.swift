@@ -131,12 +131,24 @@ class PaywallViewController: UIViewController {
         let view = UIStackView()
         view.axis = .horizontal
         //view.alignment = .center
-        
+        view.setContentHuggingPriority(.required, for: .vertical)
         view.addArrangedSubview(termsOfUseButton)
         view.addArrangedSubview(privacyPolicyButton)
         view.distribution = .fillEqually
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private lazy var restorePurchasesButton: UIButton = {
+        let button = UIButton()
+        var config = UIButton.Configuration.plain()
+        config.title = "Restore Purchases"
+        config.baseForegroundColor = .label.withAlphaComponent(0.85)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        button.configuration = config
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addAction(restorePurchasesButtonAction(), for: .touchUpInside)
+        return button
     }()
 
     override func viewDidLoad() {
@@ -189,8 +201,8 @@ class PaywallViewController: UIViewController {
             switch result {
                 case .success(_):
                     self?.dismiss(animated: true)
-                case .failure(_):
-                    print("Failed complete purchase")
+                case .failure(let error):
+                    print("Failed complete purchase \(error.localizedDescription)")
                     self?.dismiss(animated: true)
             }
         }
@@ -203,6 +215,7 @@ class PaywallViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(buyButton)
+        view.addSubview(restorePurchasesButton)
         view.addSubview(docsButtonsStack)
 
         NSLayoutConstraint.activate([
@@ -223,12 +236,15 @@ class PaywallViewController: UIViewController {
                 buyButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30),
                 buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
                 buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-                //buyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
                 
                 docsButtonsStack.topAnchor.constraint(equalTo: buyButton.bottomAnchor, constant: 20),
                 docsButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                 docsButtonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-                docsButtonsStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+                
+                restorePurchasesButton.topAnchor.constraint(equalTo: docsButtonsStack.bottomAnchor, constant: 10),
+                restorePurchasesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                restorePurchasesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+                restorePurchasesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
                 
                 
             ])

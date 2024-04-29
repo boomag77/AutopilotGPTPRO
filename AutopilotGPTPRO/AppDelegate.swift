@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //var subscriptionManager = SubscriptionManager()
     var transactionObserver: TransactionObserver?
+    var store = Store()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -59,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        self.transactionObserver = TransactionObserver()
+        //self.transactionObserver = TransactionObserver()
         
         return true
     }
