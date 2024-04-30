@@ -13,20 +13,22 @@ class SubscriptionManager {
     }
     
     private init() {
-        fetchAvailableSubscriptions { result in
-            switch result {
-                case .success(let products):
-                    self.products = products
-                case .failure(let error):
-                    print(error.localizedDescription)
+        Task {
+            fetchAvailableSubscriptions { result in
+                switch result {
+                    case .success(let products):
+                        self.products = products
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                }
             }
-        }
-        checkForActiveSubscription { result in
-            switch result {
-                case .success(let status):
-                    self.hasActiveSubscription = status
-                case .failure(let error):
-                    print(error.localizedDescription)
+            checkForActiveSubscription { result in
+                switch result {
+                    case .success(let status):
+                        self.hasActiveSubscription = status
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                }
             }
         }
        
@@ -119,6 +121,7 @@ class SubscriptionManager {
         do {
             try await AppStore.sync()
         } catch(let error) {
+            ErrorHandler.showAlert(title: "Store Error", message: "Failed restoring purchases \(error.localizedDescription).")
             print("Subscription Manager -> Failed restoring purchases \(error.localizedDescription).")
         }
     }

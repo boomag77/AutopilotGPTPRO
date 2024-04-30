@@ -2,8 +2,12 @@
 import UIKit
 
 
-
 final class StartSessionVC: UIViewController {
+    
+    private let unsubsucribedLaunchButtonTitle: String = "Subscribe to Launch Session"
+    private let subsucribedLaunchButtonTitle: String = "Launch Autopilot Session"
+    private let unsubsucribedLaunchButtonColor: UIColor = UIColor.systemGreen
+    private let subsucribedLaunchButtonColor: UIColor = UIColor.systemBlue
     
     var instruction: InstructionModel? {
         didSet {
@@ -84,8 +88,8 @@ final class StartSessionVC: UIViewController {
         let button = UIButton()
         
         var config = UIButton.Configuration.filled()
-        config.title = "Launch Autopilot Session"
-        config.baseBackgroundColor = UIColor.systemBlue
+        //config.title = "Launch Autopilot Session"
+        //config.baseBackgroundColor = UIColor.systemBlue
         config.baseForegroundColor = .white.withAlphaComponent(0.85)
         config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
@@ -135,13 +139,25 @@ final class StartSessionVC: UIViewController {
         super.viewDidAppear(animated)
         
         positionTextField.delegate = self
-        
+        setupLaunchSessionButton()
         //positionTextField.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupLaunchSessionButton()
+    }
+    
+    private func setupLaunchSessionButton() {
+        if SubscriptionManager.shared.hasActiveSubscription {
+            launchSessionButton.setTitle(subsucribedLaunchButtonTitle, for: .normal)
+            launchSessionButton.configuration?.baseBackgroundColor = subsucribedLaunchButtonColor
+        } else {
+            launchSessionButton.setTitle(unsubsucribedLaunchButtonTitle, for: .normal)
+            launchSessionButton.configuration?.baseBackgroundColor = unsubsucribedLaunchButtonColor
+            //launchSessionButton.backgroundColor = unsubsucribedLaunchButtonColor
+        }
+        view.layoutSubviews()
     }
     
     private func setup() {
@@ -218,7 +234,7 @@ extension StartSessionVC {
     
     
     
-    private func launchSessionButtonTapped() {
+    func launchSessionButtonTapped() {
         print("Subscription ststus = \(SubscriptionManager.shared.hasActiveSubscription)")
 //        guard AppDelegate.shared.hasActiveSubscription else {
 //            self.presentContentViewController()
@@ -226,7 +242,7 @@ extension StartSessionVC {
 //        }
         
         if !(SubscriptionManager.shared.hasActiveSubscription) {
-            print(SubscriptionManager.shared.hasActiveSubscription)
+            //print(SubscriptionManager.shared.hasActiveSubscription)
             self.presentPaywallViewController()
             
         } else {
@@ -343,7 +359,7 @@ extension StartSessionVC {
     func presentPaywallViewController() {
     
         let paywallVC = PaywallViewController()
-        
+        paywallVC.parentController = self
         paywallVC.modalPresentationStyle = .formSheet
         
         self.present(paywallVC, animated: true, completion: nil)

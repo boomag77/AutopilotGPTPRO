@@ -4,6 +4,8 @@ import StoreKit
 
 class PaywallViewController: UIViewController {
     
+    weak var parentController: StartSessionVC?
+    
     //var subscriptionManager = SubscriptionManager.shared
     
     private let termsOfUseURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-user-agreement/"
@@ -200,6 +202,7 @@ class PaywallViewController: UIViewController {
         SubscriptionManager.shared.purchase(product) { [weak self] result in
             switch result {
                 case .success(_):
+                    self?.parentController?.launchSessionButtonTapped()
                     self?.dismiss(animated: true)
                 case .failure(let error):
                     print("Failed complete purchase \(error.localizedDescription)")

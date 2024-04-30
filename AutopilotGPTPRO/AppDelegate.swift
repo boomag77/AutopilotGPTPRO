@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        //self.transactionObserver = TransactionObserver()
+        self.transactionObserver = TransactionObserver()
         
         return true
     }
