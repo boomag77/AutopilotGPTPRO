@@ -29,6 +29,8 @@ public enum SubscriptionTier: Int, Comparable {
 }
 
 class Store: ObservableObject {
+    
+    static let shared = Store()
 
     @Published private(set) var cars: [Product]
     @Published private(set) var fuel: [Product]
@@ -44,7 +46,7 @@ class Store: ObservableObject {
 
     private let productIdToEmoji: [String: String]
 
-    init() {
+    private init() {
         productIdToEmoji = Store.loadProductIdToEmojiData()
 
         //Initialize empty products, and then do a product request asynchronously to fill them in.

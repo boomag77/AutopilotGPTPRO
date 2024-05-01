@@ -331,28 +331,28 @@ extension StartSessionVC: UITextViewDelegate {
     
 }
 
-extension StartSessionVC: AdaptyManagerDelegate {
-    
-    func setSubscriptionStatus(_ status: Bool) {
-        //
-    }
-    
-    
-    
-    func handleError(errorTitle: String, errorDescription: String) {
-        let alert = UIAlertController(title: errorTitle, message: errorDescription, preferredStyle: .alert)
-        
-        // 'OK' action
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-
-
-        DispatchQueue.main.async { [weak self] in
-            self?.present(alert, animated: true)
-        }
-    }
-    
-    
-}
+//extension StartSessionVC: AdaptyManagerDelegate {
+//    
+//    func setSubscriptionStatus(_ status: Bool) {
+//        //
+//    }
+//    
+//    
+//    
+//    func handleError(errorTitle: String, errorDescription: String) {
+//        let alert = UIAlertController(title: errorTitle, message: errorDescription, preferredStyle: .alert)
+//        
+//        // 'OK' action
+//        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//
+//
+//        DispatchQueue.main.async { [weak self] in
+//            self?.present(alert, animated: true)
+//        }
+//    }
+//    
+//    
+//}
 
 extension StartSessionVC {
     

@@ -71,7 +71,9 @@ final class DataManager {
             do {
                 try context.save()
             } catch {
-                print("Error while saving context to container \(error)")
+                ErrorHandler.showAlert(title: "DataManager Error",
+                                       message: "Error while saving context to container \(error.localizedDescription)")
+                //print("Error while saving context to container \(error)")
             }
         }
     }
@@ -90,7 +92,9 @@ extension DataManager {
                 return true
             }
         } catch let error as NSError {
-            print("could not fetch instructions \(error)")
+            ErrorHandler.showAlert(title: "DataManager Error",
+                                   message: "Could not fetch instructions \(error.localizedDescription)")
+            //print("could not fetch instructions \(error.localizedDescription)")
         }
         return false
     }
@@ -105,7 +109,9 @@ extension DataManager {
                 list.append(InstructionModel(name: instruction.name, text: instruction.text))
             }
         } catch let error as NSError {
-            print("could not fetch instructions \(error)")
+            ErrorHandler.showAlert(title: "DataManager Error",
+                                   message: "Could not fetch instructions \(error.localizedDescription)")
+            //print("Could not fetch instructions \(error.localizedDescription)")
         }
         return list
     }
@@ -128,7 +134,9 @@ extension DataManager {
             let instruction = try container.viewContext.fetch(request).first
             return instruction
         } catch {
-            print("Fetch instruction with name: \(name) failed \(error)")
+            ErrorHandler.showAlert(title: "DataManager Error",
+                                   message: "Fetch instruction with name: \(name) failed \(error.localizedDescription)")
+            //print("Fetch instruction with name: \(name) failed \(error.localizedDescription)")
         }
         return nil
     }
@@ -176,7 +184,9 @@ extension DataManager {
                 completion()
             }
         } catch let error as NSError {
-            print ("Error while deleting the object \(instruction.name): \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error",
+                                   message: "Error while deleting the object \(instruction.name): \(error.localizedDescription), \(error.userInfo)")
+            //print ("Error while deleting the object \(instruction.name): \(error.localizedDescription), \(error.userInfo)")
         }
         
         
@@ -192,7 +202,8 @@ extension DataManager {
         if let instructions = try? container.viewContext.fetch(request) {
             return !instructions.isEmpty
         } else {
-            print("Could not fetch instruction with name \(instruction.name)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch instruction with name \(instruction.name)")
+            //print("Could not fetch instruction with name \(instruction.name)")
         }
         return true
     }
@@ -212,7 +223,8 @@ extension DataManager {
     func getMessages(forSessionID sessionID: Int) -> [MessageModel] {
         
         guard let session = getSession(id: sessionID) else {
-            print("Session not found")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Session not found")
+            //print("Session not found")
             return []
         }
         
@@ -233,7 +245,8 @@ extension DataManager {
     func registerNewMessage(message: MessageModel, in sessionID: Int) {
         
         guard let session = getSession(id: sessionID) else {
-            print("Session not found")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Session not found")
+            //print("Session not found")
             return
         }
         let newMessage = Message(context: container.viewContext)
@@ -261,7 +274,8 @@ extension DataManager {
             let count = result.first as? Int ?? 0
             return count
         } catch let error as NSError {
-            print("Could not fetch sessions count: \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch sessions count: \(error), \(error.userInfo)")
+            //print("Could not fetch sessions count: \(error), \(error.userInfo)")
             return 0
         }
     }
@@ -275,7 +289,8 @@ extension DataManager {
             let sessions = try container.viewContext.fetch(request)
             return sessions.first
         } catch let error as NSError {
-            print("Could not fetch session: \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch session: \(error), \(error.userInfo)")
+            //print("Could not fetch session: \(error), \(error.userInfo)")
             return nil
         }
     }
@@ -307,7 +322,8 @@ extension DataManager {
             }
             updateIDs()
         } catch {
-            print("Fetching session with ID: \(id) failed \(error)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Fetching session with ID: \(id) failed \(error)")
+            //print("Fetching session with ID: \(id) failed \(error)")
         }
         saveContext()
         if let completion = completion {
@@ -333,7 +349,8 @@ extension DataManager {
             }
             return sessionModels
         } catch let error as NSError {
-            print("Could not fetch sessions: \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch sessions: \(error), \(error.userInfo)")
+            //print("Could not fetch sessions: \(error), \(error.userInfo)")
         }
         return []
     }
@@ -350,7 +367,8 @@ extension DataManager {
                 return lastSession.id + 1
             }
         } catch let error as NSError {
-            print("Could not fetch sessions: \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch sessions: \(error), \(error.userInfo)")
+            //print("Could not fetch sessions: \(error), \(error.userInfo)")
         }
         return 1
     }
@@ -364,7 +382,8 @@ extension DataManager {
                 session.id = Int64(index + 1)
             }
         } catch let error as NSError {
-            print("Could not fetch sessions: \(error), \(error.userInfo)")
+            ErrorHandler.showAlert(title: "DataManager Error", message: "Could not fetch sessions: \(error), \(error.userInfo)")
+            //print("Could not fetch sessions: \(error), \(error.userInfo)")
         }
     }
     

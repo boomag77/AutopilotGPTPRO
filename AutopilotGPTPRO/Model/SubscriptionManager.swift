@@ -46,7 +46,8 @@ class SubscriptionManager {
                 self.products = products
                 completion(.success(products))
             } catch {
-                print("Failed to fetch avaliable products")
+                ErrorHandler.showAlert(title: "SubscriptionManager Error", message: "Failed to fetch avaliable products")
+                //print("Failed to fetch avaliable products")
                 completion(.failure(error))
             }
         }
@@ -121,8 +122,9 @@ class SubscriptionManager {
         do {
             try await AppStore.sync()
         } catch(let error) {
-            ErrorHandler.showAlert(title: "Store Error", message: "Failed restoring purchases \(error.localizedDescription).")
-            print("Subscription Manager -> Failed restoring purchases \(error.localizedDescription).")
+            ErrorHandler.showAlert(title: "SubscriptionManager Error",
+                                   message: "Failed restoring purchases \(error.localizedDescription).")
+            //print("Subscription Manager -> Failed restoring purchases \(error.localizedDescription).")
         }
     }
 }

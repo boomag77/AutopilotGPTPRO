@@ -103,7 +103,7 @@ actor RequestHandler {
         
         listenForMessages()
         
-        print("connecting to server")
+        //print("connecting to server")
         
     }
     
@@ -128,7 +128,7 @@ actor RequestHandler {
         let reason = "Normal disconnect".data(using: .utf8)
         webSocketTask?.cancel(with: .normalClosure, reason: reason)
         webSocketTask = nil
-        print("Disconnected from server")
+        //print("Disconnected from server")
     }
     
     func sendRecordedAudioData(_ audioData: Data) {
@@ -146,10 +146,12 @@ actor RequestHandler {
         
         webSocketTask?.send(message) { error in
             if let error = error {
-                print("Failed to send audio data: \(error.localizedDescription)")
+                ErrorHandler.showAlert(title: "RequestHandler Error",
+                                       message: "Failed to send audio data: \(error.localizedDescription)")
+                //print("Failed to send audio data: \(error.localizedDescription)")
             } else {
                 
-                print("Audio data sent successfully")
+                //print("Audio data sent successfully")
             }
         }
         
@@ -167,7 +169,8 @@ actor RequestHandler {
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
               let jsonString = String(data: jsonData, encoding: .utf8) else {
-            print("Failed to serialize JSON")
+            ErrorHandler.showAlert(title: "RequestHandler Error", message: "Failed to serialize JSON")
+            //print("Failed to serialize JSON")
             return
         }
         
@@ -176,10 +179,11 @@ actor RequestHandler {
         webSocketTask?.send(message) { error in
             
             if let error = error {
-                
-                print("Failed to send instruction text as JSON: \(error.localizedDescription)")
+                ErrorHandler.showAlert(title: "RequestHandler Error",
+                                       message: "Failed to send instruction text as JSON: \(error.localizedDescription)")
+                //print("Failed to send instruction text as JSON: \(error.localizedDescription)")
             } else {
-                print("Instruction text sent as JSON successfully")
+                //print("Instruction text sent as JSON successfully")
             }
         }
         
@@ -192,7 +196,7 @@ actor RequestHandler {
     private func listenForMessages() {
         
         if !shouldContinueReceivingMessages {
-                print("Stopped listening for messages.")
+                //print("Stopped listening for messages.")
                 return  // Stop recursion
             }
         

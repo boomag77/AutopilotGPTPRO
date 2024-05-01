@@ -2,21 +2,10 @@
 import Adapty
 import UIKit
 
-protocol AdaptyManagerDelegate: UIViewController {
-    func handleError(errorTitle: String, errorDescription: String)
-    func setSubscriptionStatus(_ status: Bool)
-}
-
-enum AdaptyManagerError: String {
-    case errorFetchingPaywall = "Error fetching paywall"
-    case errorFetchingPaywallProducts = "Error fetching paywall products"
-}
-
 class AdaptyManager {
     
     static let shared = AdaptyManager()
     
-    var viewController: AdaptyManagerDelegate?
     
     var paywall: AdaptyPaywall?
     var products: [AdaptyPaywallProduct]?
@@ -36,13 +25,11 @@ class AdaptyManager {
                 self?.loadPaywallProducts()
                 case let .failure(error):
                 //self?.throwError(.errorFetchingPaywall, error.localizedDescription)
-                print("Error fetching paywall: \(error.localizedDescription)")
+                ErrorHandler.showAlert(title: "AdaptyManager Error",
+                                    message: "func loadPaywall: Error fetching paywall: \(error.localizedDescription)")
+                //print("Error fetching paywall: \(error.localizedDescription)")
             }
         }
-    }
-    
-    private func throwError(_ error: AdaptyManagerError, _ description: String) {
-        viewController?.handleError(errorTitle: error.rawValue, errorDescription: description)
     }
     
     func loadPaywallProducts() {
@@ -58,8 +45,9 @@ class AdaptyManager {
                 self?.products = products
                 print("Products loaded: \(products.count)")
             case let .failure(error):
-                //self?.throwError(.errorFetchingPaywallProducts, error.localizedDescription)
-                print("Error fetching products: \(error.localizedDescription)")
+                    ErrorHandler.showAlert(title: "AdaptyManager Error",
+                                           message: "func loadPaywallProducts: Error fetching products: \(error.localizedDescription)")
+                //print("Error fetching products: \(error.localizedDescription)")
             }
         }
     }
@@ -113,7 +101,8 @@ class AdaptyManager {
             case let .failure(error):
 //                let errorText = "Error fetching profile: \(error.localizedDescription)"
 //                self?.throwError(errorText)
-                print("Error fetching profile: \(error.localizedDescription)")
+                    ErrorHandler.showAlert(title: "AdaptyManager Error", message: "func checkAccess: Error fetching profile: \(error.localizedDescription)")
+                //print("Error fetching profile: \(error.localizedDescription)")
             }
         }
     }
