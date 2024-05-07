@@ -33,6 +33,10 @@ class SubscriptionManager {
         }
        
     }
+    
+    deinit {
+        print("SubscriptionManager deinitialized")
+    }
 
     // Fetch available subscriptions
     func fetchAvailableSubscriptions(completion: @escaping (Result<[Product], Error>) -> Void) {
@@ -53,7 +57,7 @@ class SubscriptionManager {
         }
     }
     
-    
+    @MainActor
     func checkForActiveSubscription(completion: @escaping (Result<Bool, Error>) -> Void) {
         
         Task {
@@ -113,11 +117,13 @@ class SubscriptionManager {
                     break
                 }
             } catch {
+                
                 completion(.failure(error))
             }
         }
     }
     
+    @MainActor
     func restorePurchases() async {
         do {
             try await AppStore.sync()

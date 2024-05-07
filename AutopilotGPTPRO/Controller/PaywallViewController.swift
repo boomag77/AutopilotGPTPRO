@@ -205,8 +205,12 @@ class PaywallViewController: UIViewController {
                     self?.parentController?.launchSessionButtonTapped()
                     self?.dismiss(animated: true)
                 case .failure(let error):
+                    
                     print("Failed complete purchase \(error.localizedDescription)")
-                    self?.dismiss(animated: true)
+                    //self?.dismiss(animated: true)
+                    ErrorHandler.showAlert(title: "SubscriptionManager Error", message: error.localizedDescription) {
+                        self?.dismiss(animated: true)
+                    }
             }
         }
     }
