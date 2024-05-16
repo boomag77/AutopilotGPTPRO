@@ -97,6 +97,10 @@
       ]
     }
   ],
+  "subscriptionOffersKeyPair" : {
+    "id" : "A4C993CF",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgAMhmYoEFBqqy36d3K0GbBDDNmxHNXSc1O9kzgDJV486gCgYIKoZIzj0DAQehRANCAARpGqhSX8iKE7TYxhcU/QqcStlGEWQdII9lJw4MTI/cJ3hdtn05+68neQRTEhpzIgYMb1nQhDuzEZOXgkRCEAdL"
+  },
   "version" : {
     "major" : 3,
     "minor" : 0
