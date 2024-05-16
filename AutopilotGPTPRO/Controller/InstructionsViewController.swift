@@ -98,7 +98,9 @@ final class InstructionsViewController: UIViewController {
     
     private func fetchData() {
         instructions = DataManager.shared.getAllInstructions()
-        tableView.reloadData()
+        Task {
+            tableView.reloadData()
+        }
     }
     
     private func addNewButtonTapped() {

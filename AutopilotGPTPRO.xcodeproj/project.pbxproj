@@ -24,6 +24,7 @@
 		A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */; };
 		A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */; };
 		A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */; };
+		A54C6E252BF5AD770047DA75 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54C6E242BF5AD770047DA75 /* StoreKit.framework */; };
 		A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */; };
 		A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */; };
 		A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */; };
@@ -35,7 +36,6 @@
 		A556045C2BD9B74A00BD0486 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556045B2BD9B74A00BD0486 /* SubscriptionManager.swift */; };
 		A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5697F9C2BD0CDB600576836 /* JSONParser.swift */; };
 		A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9262BD5F2C100B3ECD6 /* Adapty */; };
-		A569F92A2BD5F2F800B3ECD6 /* AdaptyUI in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9292BD5F2F800B3ECD6 /* AdaptyUI */; };
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
 		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
 		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
@@ -72,6 +72,7 @@
 		A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
 		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A54C6E242BF5AD770047DA75 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
@@ -100,8 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A54C6E252BF5AD770047DA75 /* StoreKit.framework in Frameworks */,
 				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
-				A569F92A2BD5F2F800B3ECD6 /* AdaptyUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +114,7 @@
 			children = (
 				A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */,
 				A53E7E102BB643AC00EB5311 /* Products */,
+				A54C6E232BF5AD770047DA75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +179,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A54C6E232BF5AD770047DA75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A54C6E242BF5AD770047DA75 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A54CDDD12BB7AC1D0032A17C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,7 +241,6 @@
 			name = AutopilotGPTPRO;
 			packageProductDependencies = (
 				A569F9262BD5F2C100B3ECD6 /* Adapty */,
-				A569F9292BD5F2F800B3ECD6 /* AdaptyUI */,
 			);
 			productName = AutopilotGPTPRO;
 			productReference = A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */;
@@ -263,7 +272,6 @@
 			mainGroup = A53E7E062BB643AC00EB5311;
 			packageReferences = (
 				A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
-				A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */,
 			);
 			productRefGroup = A53E7E102BB643AC00EB5311 /* Products */;
 			projectDirPath = "";
@@ -479,12 +487,12 @@
 				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRODebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "GPT Autopilot for Interview";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_CFBundleDisplayName = "Interview AI-Buddy";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -517,12 +525,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRORelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "GPT Autopilot for Interview";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_CFBundleDisplayName = "Interview AI-Buddy";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to record audio notes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -579,14 +587,6 @@
 				minimumVersion = 2.10.3;
 			};
 		};
-		A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adaptyteam/AdaptyUI-iOS.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.5;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -594,11 +594,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
 			productName = Adapty;
-		};
-		A569F9292BD5F2F800B3ECD6 /* AdaptyUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A569F9282BD5F2F800B3ECD6 /* XCRemoteSwiftPackageReference "AdaptyUI-iOS" */;
-			productName = AdaptyUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
     
     //var subscriptionManager = SubscriptionManager()
-    var transactionObserver: TransactionObserver?
+    //var transactionObserver: TransactionObserver?
     //var store = Store()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -44,23 +44,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //checkSubscriptionStatus()
         
         //   ADAPTY STARTING
-        Adapty.activate("public_live_WYY01n3D.ZUfI44hzp0oVAK15wAH6")
-        //Adapty.logLevel = .warn
+        
+        Adapty.activate("public_live_eitcXPrT.V7zWesNyCbnYWxtbU4E6")
+        Adapty.logLevel = .verbose
         //   ADAPTY STARTING
 //        self.hasActiveSubscription = subscriptionManager.hasProKey
 //        
 
-        SubscriptionManager.shared.checkForActiveSubscription { result in
-            switch result {
-                case .success(let status):
-                    //self.hasActiveSubscription = status
-                    print(status)
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
-        
-        self.transactionObserver = TransactionObserver()
+//        SubscriptionManager.shared.checkForActiveSubscription { result in
+//            switch result {
+//                case .success(let status):
+//                    //self.hasActiveSubscription = status
+//                    print(status)
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//            }
+//        }
+//        
+//        self.transactionObserver = TransactionObserver()
         
         
         return true
@@ -80,10 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-//    func applicationWillTerminate(_ application: UIApplication) {
-//        
-//        transactionObserver = nil
-//    }
+    func applicationWillTerminate(_ application: UIApplication) {
+        
+        //transactionObserver = nil
+    }
     
 //    private func checkSubscriptionStatus() {
 //        

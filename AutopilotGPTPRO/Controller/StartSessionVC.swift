@@ -16,6 +16,8 @@ final class StartSessionVC: UIViewController {
         }
     }
     
+    private var isActiveSubscription: Bool = true
+    
     private var checkBoxChecked: Bool = false {
         didSet {
             if checkBoxChecked {
@@ -108,9 +110,9 @@ final class StartSessionVC: UIViewController {
         return button
     }()
     
-//    deinit {
-//        print("StartSessionVC is being deinitialized")
-//    }
+    deinit {
+        print("StartSessionVC is being deinitialized")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,7 +151,7 @@ final class StartSessionVC: UIViewController {
     }
     
     private func setupLaunchSessionButton() {
-        if SubscriptionManager.shared.hasActiveSubscription {
+        if self.isActiveSubscription {
             launchSessionButton.setTitle(subsucribedLaunchButtonTitle, for: .normal)
             launchSessionButton.configuration?.baseBackgroundColor = subsucribedLaunchButtonColor
         } else {
@@ -235,18 +237,17 @@ extension StartSessionVC {
     
     
     func launchSessionButtonTapped() {
-        print("Subscription ststus = \(SubscriptionManager.shared.hasActiveSubscription)")
+        //print("Subscription ststus = \(SubscriptionManager.shared.hasActiveSubscription)")
 //        guard AppDelegate.shared.hasActiveSubscription else {
 //            self.presentContentViewController()
 //            return
 //        }
         
-        if !(SubscriptionManager.shared.hasActiveSubscription) {
+        if !self.isActiveSubscription {
             //print(SubscriptionManager.shared.hasActiveSubscription)
             self.presentPaywallViewController()
             
         } else {
-            print(SubscriptionManager.shared.hasActiveSubscription)
             guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
             
             if checkBoxChecked {
