@@ -1,5 +1,5 @@
 {
-  "identifier" : "BF1033A5",
+  "identifier" : "D83E5E1C",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -7,10 +7,10 @@
 
   ],
   "settings" : {
-    "_applicationInternalID" : "6499041732",
+    "_applicationInternalID" : "6502836558",
     "_developerTeamID" : "88V8QK8BFT",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 735707892.66635597,
+    "_lastSynchronizedDate" : 737702899.81511295,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -63,11 +63,11 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "21480073",
+      "id" : "21489196",
       "localizations" : [
 
       ],
-      "name" : "Subscriptions",
+      "name" : "Full access",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -78,29 +78,25 @@
           ],
           "displayPrice" : "19.99",
           "familyShareable" : false,
-          "groupNumber" : 2,
-          "internalID" : "6499238500",
+          "groupNumber" : 1,
+          "internalID" : "6502837259",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Get access for one month",
-              "displayName" : "Monthly access Pass",
+              "description" : "Monthly access to all features",
+              "displayName" : "Monthly Full Access",
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.autopilot.monthly.access",
+          "productID" : "com.interview.ai.buddy.monthly",
           "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Monthly access",
-          "subscriptionGroupID" : "21480073",
+          "referenceName" : "Monthly Full Access",
+          "subscriptionGroupID" : "21489196",
           "type" : "RecurringSubscription"
         }
       ]
     }
   ],
-  "subscriptionOffersKeyPair" : {
-    "id" : "A4C993CF",
-    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgAMhmYoEFBqqy36d3K0GbBDDNmxHNXSc1O9kzgDJV486gCgYIKoZIzj0DAQehRANCAARpGqhSX8iKE7TYxhcU/QqcStlGEWQdII9lJw4MTI/cJ3hdtn05+68neQRTEhpzIgYMb1nQhDuzEZOXgkRCEAdL"
-  },
   "version" : {
     "major" : 3,
     "minor" : 0

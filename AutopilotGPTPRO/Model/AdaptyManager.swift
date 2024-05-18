@@ -4,19 +4,19 @@ import UIKit
 
 class AdaptyManager {
     
-    static let shared = AdaptyManager()
-    
     
     var paywall: AdaptyPaywall?
     var products: [AdaptyPaywallProduct]?
     
-    private init() {
+    init() {
+        //Adapty.activate("public_live_eitcXPrT.V7zWesNyCbnYWxtbU4E6")
+        Adapty.delegate = self
         loadPaywall()
-        //loadPaywallProducts()
     }
     
     
     func loadPaywall() {
+        
         Adapty.getPaywall(placementId: "start_session", locale: "en") { [weak self] result in
             switch result {
                 case let .success(paywall):
@@ -24,10 +24,8 @@ class AdaptyManager {
                 self?.paywall = paywall
                 self?.loadPaywallProducts()
                 case let .failure(error):
-                //self?.throwError(.errorFetchingPaywall, error.localizedDescription)
                 ErrorHandler.showAlert(title: "AdaptyManager Error",
                                     message: "func loadPaywall: Error fetching paywall: \(error.localizedDescription)")
-                //print("Error fetching paywall: \(error.localizedDescription)")
             }
         }
     }
@@ -44,40 +42,26 @@ class AdaptyManager {
             case let .success(products):
                 self?.products = products
                 print("Products loaded: \(products.count)")
+                print("Products: \(products)")
             case let .failure(error):
                     ErrorHandler.showAlert(title: "AdaptyManager Error",
                                            message: "func loadPaywallProducts: Error fetching products: \(error.localizedDescription)")
-                //print("Error fetching products: \(error.localizedDescription)")
             }
         }
     }
-    
-//    func fetchAdditionalPaywallInfo() {
-//        Adapty.getPaywall(placementId: "start_session") { result in
-//            switch result {
-//            case let .success(paywall):
-//                let headerText = paywall.remoteConfig?["header_text"] as? String
-//                print("Header Text: \(headerText ?? "No header text available")")
-//            case let .failure(error):
-//                let errorText = "Error fetching additional paywall info: \(error.localizedDescription)"
-//                //self?.throwError(errorText)
-//                print("Error fetching additional paywall info: \(error.localizedDescription)")
-//            }
-//        }
-//    }
     
     private func logShowPaywall(paywall: AdaptyPaywall) {
         Adapty.logShowPaywall(paywall)
     }
     
-//    func makePurchase(product: AdaptyPaywallProduct, completion: @escaping (Error?) -> Void) {
+//    func makePurchase(product: AdaptyPaywallProduct, completion: @escaping (Result<Error>?) -> Void) {
 //        
 //        Adapty.makePurchase(product: product) { result in
 //            switch result {
 //            case let .success(info):
 //                if let access = info.profile.accessLevels["monthly"]?.isActive {
 //                    // grant access to premium features
-//                    AppDelegate.isSubscriptionActive = access
+//                    //AppDelegate.isSubscriptionActive = access
 //                    completion(nil)
 //                }
 //            case let .failure(error):
@@ -105,5 +89,25 @@ class AdaptyManager {
                 //print("Error fetching profile: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func restorePurchases() {
+//        Adapty.restorePurchases { [weak self] result in
+//            switch result {
+//                case let .success(profile):
+//                    if info.profile.accessLevels["YOUR_ACCESS_LEVEL"]?.isActive ?? false {
+//                        // successful access restore
+//                    }
+//                case let .failure(error):
+//                    // handle the error
+//            }
+//        }
+    }
+}
+
+extension AdaptyManager: AdaptyDelegate {
+    func didLoadLatestProfile(_ profile: AdaptyProfile) {
+        // handle any changes to subscription state
+        print("Delegate - \(profile)")
     }
 }

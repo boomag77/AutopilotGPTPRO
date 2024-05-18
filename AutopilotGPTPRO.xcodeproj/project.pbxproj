@@ -11,8 +11,6 @@
 		A51FA2E82BC5C6E7007042A9 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51FA2E62BC5C6E7007042A9 /* Session+CoreDataProperties.swift */; };
 		A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */; };
 		A522C3752BC83DC600410EB1 /* StartSessionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522C3742BC83DC600410EB1 /* StartSessionVC.swift */; };
-		A53921362BDA7CEE007204F6 /* TransactionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53921352BDA7CEE007204F6 /* TransactionObserver.swift */; };
-		A539213B2BDFBCEC007204F6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = A539213A2BDFBCEC007204F6 /* Store.swift */; };
 		A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E122BB643AC00EB5311 /* AppDelegate.swift */; };
 		A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */; };
 		A53E7E1A2BB643AC00EB5311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A53E7E182BB643AC00EB5311 /* Main.storyboard */; };
@@ -24,7 +22,11 @@
 		A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */; };
 		A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */; };
 		A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */; };
-		A54C6E252BF5AD770047DA75 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54C6E242BF5AD770047DA75 /* StoreKit.framework */; };
+		A54C6E282BF5C7080047DA75 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A54C6E272BF5C7080047DA75 /* RevenueCat */; };
+		A54C6E2A2BF5C7080047DA75 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = A54C6E292BF5C7080047DA75 /* RevenueCatUI */; };
+		A54C6E2C2BF5C72C0047DA75 /* RevenueCatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */; };
+		A54C6E302BF865F60047DA75 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E2F2BF865F60047DA75 /* AppConstants.swift */; };
+		A54C6E322BF866780047DA75 /* PurchasesObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E312BF866780047DA75 /* PurchasesObserver.swift */; };
 		A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */; };
 		A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */; };
 		A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */; };
@@ -33,7 +35,6 @@
 		A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */; };
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
-		A556045C2BD9B74A00BD0486 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556045B2BD9B74A00BD0486 /* SubscriptionManager.swift */; };
 		A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5697F9C2BD0CDB600576836 /* JSONParser.swift */; };
 		A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9262BD5F2C100B3ECD6 /* Adapty */; };
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
@@ -54,11 +55,6 @@
 		A51FA2E62BC5C6E7007042A9 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionMessagesVC.swift; sourceTree = "<group>"; };
 		A522C3742BC83DC600410EB1 /* StartSessionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSessionVC.swift; sourceTree = "<group>"; };
-		A53921342BDA02F1007204F6 /* Autopilot.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Autopilot.storekit; sourceTree = "<group>"; };
-		A53921352BDA7CEE007204F6 /* TransactionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionObserver.swift; sourceTree = "<group>"; };
-		A53921392BDFB055007204F6 /* AutopilotGPTPRODebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutopilotGPTPRODebug.entitlements; sourceTree = "<group>"; };
-		A539213A2BDFBCEC007204F6 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		A539213C2BDFEF51007204F6 /* AutopilotGPTPRORelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutopilotGPTPRORelease.entitlements; sourceTree = "<group>"; };
 		A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutopilotGPTPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A53E7E122BB643AC00EB5311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A53E7E142BB643AC00EB5311 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +68,10 @@
 		A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
 		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		A54C6E242BF5AD770047DA75 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevenueCatManager.swift; sourceTree = "<group>"; };
+		A54C6E2F2BF865F60047DA75 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		A54C6E312BF866780047DA75 /* PurchasesObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesObserver.swift; sourceTree = "<group>"; };
+		A54C6E332BF873F10047DA75 /* BuddyStoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = BuddyStoreKitConfiguration.storekit; sourceTree = "<group>"; };
 		A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSessionsViewController.swift; sourceTree = "<group>"; };
 		A54CDDD22BB7BE140032A17C /* ScreenTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleLabel.swift; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
-		A556045B2BD9B74A00BD0486 /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 		A5697F9C2BD0CDB600576836 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
@@ -101,8 +99,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54C6E252BF5AD770047DA75 /* StoreKit.framework in Frameworks */,
+				A54C6E2A2BF5C7080047DA75 /* RevenueCatUI in Frameworks */,
 				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
+				A54C6E282BF5C7080047DA75 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,8 +128,7 @@
 		A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */ = {
 			isa = PBXGroup;
 			children = (
-				A539213C2BDFEF51007204F6 /* AutopilotGPTPRORelease.entitlements */,
-				A53921392BDFB055007204F6 /* AutopilotGPTPRODebug.entitlements */,
+				A54C6E2D2BF865710047DA75 /* IAP */,
 				A54CDDD12BB7AC1D0032A17C /* View */,
 				A53E7E292BB64BEC00EB5311 /* Model */,
 				A53E7E262BB646DA00EB5311 /* Controller */,
@@ -141,7 +139,7 @@
 				A53E7E1D2BB643AF00EB5311 /* LaunchScreen.storyboard */,
 				A53E7E202BB643AF00EB5311 /* Info.plist */,
 				A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */,
-				A53921342BDA02F1007204F6 /* Autopilot.storekit */,
+				A54C6E332BF873F10047DA75 /* BuddyStoreKitConfiguration.storekit */,
 			);
 			path = AutopilotGPTPRO;
 			sourceTree = "<group>";
@@ -172,9 +170,7 @@
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
 				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
-				A556045B2BD9B74A00BD0486 /* SubscriptionManager.swift */,
-				A53921352BDA7CEE007204F6 /* TransactionObserver.swift */,
-				A539213A2BDFBCEC007204F6 /* Store.swift */,
+				A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,9 +178,25 @@
 		A54C6E232BF5AD770047DA75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A54C6E242BF5AD770047DA75 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A54C6E2D2BF865710047DA75 /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				A54C6E2E2BF865880047DA75 /* Helpers */,
+				A54C6E312BF866780047DA75 /* PurchasesObserver.swift */,
+			);
+			path = IAP;
+			sourceTree = "<group>";
+		};
+		A54C6E2E2BF865880047DA75 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A54C6E2F2BF865F60047DA75 /* AppConstants.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		A54CDDD12BB7AC1D0032A17C /* View */ = {
@@ -241,6 +253,8 @@
 			name = AutopilotGPTPRO;
 			packageProductDependencies = (
 				A569F9262BD5F2C100B3ECD6 /* Adapty */,
+				A54C6E272BF5C7080047DA75 /* RevenueCat */,
+				A54C6E292BF5C7080047DA75 /* RevenueCatUI */,
 			);
 			productName = AutopilotGPTPRO;
 			productReference = A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */;
@@ -272,6 +286,7 @@
 			mainGroup = A53E7E062BB643AC00EB5311;
 			packageReferences = (
 				A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
+				A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			productRefGroup = A53E7E102BB643AC00EB5311 /* Products */;
 			projectDirPath = "";
@@ -300,8 +315,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A539213B2BDFBCEC007204F6 /* Store.swift in Sources */,
 				A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */,
+				A54C6E302BF865F60047DA75 /* AppConstants.swift in Sources */,
 				A54CDDDB2BBB742F0032A17C /* RoundButton.swift in Sources */,
 				A54CDDD92BBB03440032A17C /* CurrentSessionViewController.swift in Sources */,
 				A53E7E2D2BB64D8900EB5311 /* DataManager.swift in Sources */,
@@ -313,22 +328,22 @@
 				A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */,
 				A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */,
 				A53E7E2B2BB64C3400EB5311 /* DataModels.swift in Sources */,
-				A556045C2BD9B74A00BD0486 /* SubscriptionManager.swift in Sources */,
 				A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */,
 				A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */,
-				A53921362BDA7CEE007204F6 /* TransactionObserver.swift in Sources */,
 				A522C3752BC83DC600410EB1 /* StartSessionVC.swift in Sources */,
 				A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */,
 				A51FA2E72BC5C6E7007042A9 /* Session+CoreDataClass.swift in Sources */,
 				A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */,
 				A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */,
 				A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */,
+				A54C6E2C2BF5C72C0047DA75 /* RevenueCatManager.swift in Sources */,
 				A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */,
 				A5988B2E2BBF438D0026D7A6 /* SessionTableViewCell.swift in Sources */,
 				A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */,
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
 				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,
+				A54C6E322BF866780047DA75 /* PurchasesObserver.swift in Sources */,
 				A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */,
 				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
@@ -484,7 +499,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRODebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
@@ -505,7 +519,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
+				PRODUCT_BUNDLE_IDENTIFIER = com.interview.ai.buddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -523,7 +537,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRORelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
@@ -543,8 +557,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.02;
-				PRODUCT_BUNDLE_IDENTIFIER = "-8V8QK8BFT.AutopilotGPTPRO";
+				PRODUCT_BUNDLE_IDENTIFIER = com.interview.ai.buddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -579,6 +594,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.41.2;
+			};
+		};
 		A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS.git";
@@ -590,6 +613,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A54C6E272BF5C7080047DA75 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		A54C6E292BF5C7080047DA75 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
 		A569F9262BD5F2C100B3ECD6 /* Adapty */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;

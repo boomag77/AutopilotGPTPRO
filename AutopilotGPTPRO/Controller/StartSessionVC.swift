@@ -16,7 +16,7 @@ final class StartSessionVC: UIViewController {
         }
     }
     
-    private var isActiveSubscription: Bool = true
+    private var isActiveSubscription: Bool = false
     
     private var checkBoxChecked: Bool = false {
         didSet {

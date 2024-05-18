@@ -11,7 +11,7 @@ class SubscriptionTableViewCell: UITableViewCell {
     
     var price: String? {
         didSet {
-            descriptionLabel.text = "Get full access for just \(price!) per month"
+            descriptionLabel.text = "Get full access for \(price!) per month"
         }
     }
     

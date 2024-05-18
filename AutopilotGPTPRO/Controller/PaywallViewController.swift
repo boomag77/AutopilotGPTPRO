@@ -1,6 +1,7 @@
 
 import UIKit
 import StoreKit
+import Adapty
 
 class PaywallViewController: UIViewController {
     
@@ -11,7 +12,7 @@ class PaywallViewController: UIViewController {
     private let termsOfUseURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-user-agreement/"
     private let privacyPolicyURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-privacy-policy/"
     
-    var products: [Product] = [] {
+    var products: [AdaptyPaywallProduct] = [] {
         didSet {
             tableView.reloadData()
             DispatchQueue.main.async { [weak self] in
@@ -166,7 +167,7 @@ class PaywallViewController: UIViewController {
         setupUI()
         
         DispatchQueue.main.async { [weak self] in
-            self?.products = SubscriptionManager.shared.products
+            self?.products = PurchasesObserver.shared.products!
         }
     }
     
@@ -199,18 +200,14 @@ class PaywallViewController: UIViewController {
         guard let product = products.first else {
             return
         }
-        SubscriptionManager.shared.purchase(product) { [weak self] result in
-            switch result {
-                case .success(_):
-                    self?.parentController?.launchSessionButtonTapped()
-                    self?.dismiss(animated: true)
-                case .failure(let error):
-                    
-                    print("Failed complete purchase \(error.localizedDescription)")
-                    //self?.dismiss(animated: true)
-                    ErrorHandler.showAlert(title: "SubscriptionManager Error", message: error.localizedDescription) {
-                        self?.dismiss(animated: true)
-                    }
+        
+        
+        
+        PurchasesObserver.shared.makePurchase(product) { error in
+            if let error = error {
+                print(error.description)
+            } else {
+                print("Purchased successfully")
             }
         }
     }
@@ -287,7 +284,13 @@ class PaywallViewController: UIViewController {
     private func restorePurchasesButtonAction() -> UIAction {
         let action = UIAction { _ in
             Task {
-                await SubscriptionManager.shared.restorePurchases()
+                PurchasesObserver.shared.restore() { error in
+                    if let error = error {
+                        print(error.description)
+                    } else {
+                        print("Restored successfully")
+                    }
+                }
             }
         }
         return action
@@ -307,8 +310,8 @@ extension PaywallViewController: UITableViewDataSource {
         
         let product = products[indexPath.row]
         
-        cell.title = product.displayName
-        cell.price = product.displayPrice
+        cell.title = product.paywallName
+        cell.price = product.localizedPrice
         
         
         

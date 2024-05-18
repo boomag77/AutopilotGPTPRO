@@ -2,6 +2,7 @@
 import UIKit
 import CoreData
 import Adapty
+import RevenueCat
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,28 +42,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().titleTextAttributes = textAttributes
         
-        //checkSubscriptionStatus()
-        
-        //   ADAPTY STARTING
-        
-        Adapty.activate("public_live_eitcXPrT.V7zWesNyCbnYWxtbU4E6")
-        Adapty.logLevel = .verbose
-        //   ADAPTY STARTING
-//        self.hasActiveSubscription = subscriptionManager.hasProKey
-//        
+        Adapty.delegate = PurchasesObserver.shared
+        //Adapty.logLevel = .verbose
+        Adapty.activate(AppConstants.adaptyApiKey) { _ in
+            PurchasesObserver.shared.loadInitialProfileData()
+            PurchasesObserver.shared.loadInitialPaywallData()
+        }
 
-//        SubscriptionManager.shared.checkForActiveSubscription { result in
-//            switch result {
-//                case .success(let status):
-//                    //self.hasActiveSubscription = status
-//                    print(status)
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//            }
-//        }
-//        
-//        self.transactionObserver = TransactionObserver()
+        // in case you have / want to use fallback paywalls
+        if let urlPath = Bundle.main.url(forResource: "fallback_paywalls", withExtension: "json"),
+           let paywallsData = try? Data(contentsOf: urlPath) {
+            Adapty.setFallbackPaywalls(paywallsData) { _ in
+                // handle error
+            }
+        }
         
+//        Purchases.logLevel = .debug
+//        Purchases.configure(withAPIKey: "appl_GLyIGdafTzOJPZJrBMHJxyPOJrP")
         
         return true
     }
