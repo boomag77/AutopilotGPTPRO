@@ -49,9 +49,6 @@
             ReferencedContainer = "container:AutopilotGPTPRO.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <StoreKitConfigurationFileReference
-         identifier = "../../AutopilotGPTPRO/BuddyStoreKitConfiguration.storekit">
-      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

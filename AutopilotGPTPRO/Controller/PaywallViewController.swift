@@ -201,13 +201,16 @@ class PaywallViewController: UIViewController {
             return
         }
         
-        
-        
-        PurchasesObserver.shared.makePurchase(product) { error in
-            if let error = error {
-                print(error.description)
-            } else {
-                print("Purchased successfully")
+        PurchasesObserver.shared.makePurchase(product) { [weak self] result in
+            switch result {
+                case .success(let profile):
+                    
+                    if let isActive = profile.subscriptions[AppConstants.monthlySubscriptonId]?.isActive, isActive {
+                        self?.dismiss(animated: true)
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
         }
     }
@@ -223,35 +226,35 @@ class PaywallViewController: UIViewController {
         view.addSubview(docsButtonsStack)
 
         NSLayoutConstraint.activate([
-                logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-                logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                logoImageView.heightAnchor.constraint(equalToConstant: 300),
-                logoImageView.widthAnchor.constraint(equalToConstant: 300),
-                
-                titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
-                titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                
-                tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-                
-                
-                
-                buyButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30),
-                buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-                
-                docsButtonsStack.topAnchor.constraint(equalTo: buyButton.bottomAnchor, constant: 20),
-                docsButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                docsButtonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-                
-                restorePurchasesButton.topAnchor.constraint(equalTo: docsButtonsStack.bottomAnchor, constant: 10),
-                restorePurchasesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                restorePurchasesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-                restorePurchasesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
-                
-                
-            ])
+            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.heightAnchor.constraint(equalToConstant: 300),
+            logoImageView.widthAnchor.constraint(equalToConstant: 300),
+            
+            titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
+            
+            
+            buyButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30),
+            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
+            docsButtonsStack.topAnchor.constraint(equalTo: buyButton.bottomAnchor, constant: 20),
+            docsButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            docsButtonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            restorePurchasesButton.topAnchor.constraint(equalTo: docsButtonsStack.bottomAnchor, constant: 10),
+            restorePurchasesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            restorePurchasesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            restorePurchasesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            
+            
+        ])
     }
     
     private func updateTableViewHeight() {
@@ -275,7 +278,7 @@ class PaywallViewController: UIViewController {
             } else {
                 // Handle the error if the URL couldn't be opened
                 print("Cannot open URL")
-                self.handleError(title: "Error", description: "Cannot open URL with GPT Autopilot for Interview \(stringURL)")
+                self.handleError(title: "Error", description: "Cannot open URL with Interview AI-Buddy \(stringURL)")
             }
         }
     }
@@ -284,11 +287,12 @@ class PaywallViewController: UIViewController {
     private func restorePurchasesButtonAction() -> UIAction {
         let action = UIAction { _ in
             Task {
-                PurchasesObserver.shared.restore() { error in
+                PurchasesObserver.shared.restore() { [weak self] error in
                     if let error = error {
                         print(error.description)
                     } else {
-                        print("Restored successfully")
+                        //self?.parentController?.setupLaunchSessionButton()
+                        self?.dismiss(animated: true)
                     }
                 }
             }
@@ -312,8 +316,6 @@ extension PaywallViewController: UITableViewDataSource {
         
         cell.title = product.paywallName
         cell.price = product.localizedPrice
-        
-        
         
         return cell
     }

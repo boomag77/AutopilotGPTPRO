@@ -1,13 +1,19 @@
 
 import UIKit
-
+import Combine
 
 final class StartSessionVC: UIViewController {
     
     private let unsubsucribedLaunchButtonTitle: String = "Subscribe to Launch Session"
     private let subsucribedLaunchButtonTitle: String = "Launch Autopilot Session"
-    private let unsubsucribedLaunchButtonColor: UIColor = UIColor.systemGreen
+    private let unsubsucribedLaunchButtonColor: UIColor = UIColor(red: 40/255.0,
+                                                                  green: 0/255.0,
+                                                                  blue: 215/255.0,
+                                                                  alpha: 1.0)
     private let subsucribedLaunchButtonColor: UIColor = UIColor.systemBlue
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
     
     var instruction: InstructionModel? {
         didSet {
@@ -16,7 +22,6 @@ final class StartSessionVC: UIViewController {
         }
     }
     
-    private var isActiveSubscription: Bool = false
     
     private var checkBoxChecked: Bool = false {
         didSet {
@@ -116,12 +121,19 @@ final class StartSessionVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        purchasesObserver.loadInitialProfileData()
+//        purchasesObserver.loadInitialPaywallData()
         
         instructionTextTextView.delegate = self
         
-//        adaptyManager.checkAccess { [weak self] status in
-//            self?.isSubscribed = status
-//        }
+        PurchasesObserver.shared.$subscriptionIsActive
+            .receive(on: RunLoop.main)
+            .sink { [weak self] subscriptionStatus in
+                self?.setupLaunchSessionButton(with: subscriptionStatus)
+                
+                
+            }
+            .store(in: &cancellables)
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
             self?.keyboardWillShow(notification: notification)
@@ -141,17 +153,17 @@ final class StartSessionVC: UIViewController {
         super.viewDidAppear(animated)
         
         positionTextField.delegate = self
-        setupLaunchSessionButton()
+        //setupLaunchSessionButton()
         //positionTextField.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLaunchSessionButton()
+        //setupLaunchSessionButton()
     }
     
-    private func setupLaunchSessionButton() {
-        if self.isActiveSubscription {
+    func setupLaunchSessionButton(with subscriptionState: Bool) {
+        if subscriptionState {
             launchSessionButton.setTitle(subsucribedLaunchButtonTitle, for: .normal)
             launchSessionButton.configuration?.baseBackgroundColor = subsucribedLaunchButtonColor
         } else {
@@ -237,18 +249,14 @@ extension StartSessionVC {
     
     
     func launchSessionButtonTapped() {
-        //print("Subscription ststus = \(SubscriptionManager.shared.hasActiveSubscription)")
-//        guard AppDelegate.shared.hasActiveSubscription else {
-//            self.presentContentViewController()
-//            return
-//        }
         
-        if !self.isActiveSubscription {
+        if !PurchasesObserver.shared.subscriptionIsActive {
             //print(SubscriptionManager.shared.hasActiveSubscription)
             self.presentPaywallViewController()
             
         } else {
-            guard let title = positionTextField.text, let text = instructionTextTextView.text else { return }
+            guard let title = positionTextField.text, 
+                    let text = instructionTextTextView.text else { return }
             
             if checkBoxChecked {
                 (checkBox as? CheckBox)?.checked.toggle()

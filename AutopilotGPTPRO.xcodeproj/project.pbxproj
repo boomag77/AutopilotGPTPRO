@@ -22,9 +22,6 @@
 		A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E2E2BB6587B00EB5311 /* Storage.xcdatamodeld */; };
 		A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */; };
 		A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */; };
-		A54C6E282BF5C7080047DA75 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A54C6E272BF5C7080047DA75 /* RevenueCat */; };
-		A54C6E2A2BF5C7080047DA75 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = A54C6E292BF5C7080047DA75 /* RevenueCatUI */; };
-		A54C6E2C2BF5C72C0047DA75 /* RevenueCatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */; };
 		A54C6E302BF865F60047DA75 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E2F2BF865F60047DA75 /* AppConstants.swift */; };
 		A54C6E322BF866780047DA75 /* PurchasesObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C6E312BF866780047DA75 /* PurchasesObserver.swift */; };
 		A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDCB2BB7A89A0032A17C /* TabBarController.swift */; };
@@ -68,7 +65,6 @@
 		A53E7E2F2BB6587B00EB5311 /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
 		A53E7E352BB65EDC00EB5311 /* Instruction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A53E7E362BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Instruction+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Instruction+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevenueCatManager.swift; sourceTree = "<group>"; };
 		A54C6E2F2BF865F60047DA75 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		A54C6E312BF866780047DA75 /* PurchasesObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesObserver.swift; sourceTree = "<group>"; };
 		A54C6E332BF873F10047DA75 /* BuddyStoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = BuddyStoreKitConfiguration.storekit; sourceTree = "<group>"; };
@@ -99,9 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54C6E2A2BF5C7080047DA75 /* RevenueCatUI in Frameworks */,
 				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
-				A54C6E282BF5C7080047DA75 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +164,6 @@
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
 				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
-				A54C6E2B2BF5C72C0047DA75 /* RevenueCatManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -253,8 +246,6 @@
 			name = AutopilotGPTPRO;
 			packageProductDependencies = (
 				A569F9262BD5F2C100B3ECD6 /* Adapty */,
-				A54C6E272BF5C7080047DA75 /* RevenueCat */,
-				A54C6E292BF5C7080047DA75 /* RevenueCatUI */,
 			);
 			productName = AutopilotGPTPRO;
 			productReference = A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */;
@@ -286,7 +277,6 @@
 			mainGroup = A53E7E062BB643AC00EB5311;
 			packageReferences = (
 				A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
-				A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			productRefGroup = A53E7E102BB643AC00EB5311 /* Products */;
 			projectDirPath = "";
@@ -336,7 +326,6 @@
 				A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */,
 				A53E7E382BB65EDC00EB5311 /* Instruction+CoreDataProperties.swift in Sources */,
 				A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */,
-				A54C6E2C2BF5C72C0047DA75 /* RevenueCatManager.swift in Sources */,
 				A53E7E372BB65EDC00EB5311 /* Instruction+CoreDataClass.swift in Sources */,
 				A5988B2E2BBF438D0026D7A6 /* SessionTableViewCell.swift in Sources */,
 				A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */,
@@ -594,14 +583,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.41.2;
-			};
-		};
 		A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS.git";
@@ -613,16 +594,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A54C6E272BF5C7080047DA75 /* RevenueCat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCat;
-		};
-		A54C6E292BF5C7080047DA75 /* RevenueCatUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A54C6E262BF5C7080047DA75 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCatUI;
-		};
 		A569F9262BD5F2C100B3ECD6 /* Adapty */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;

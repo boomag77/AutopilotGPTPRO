@@ -2,22 +2,11 @@
 import UIKit
 import CoreData
 import Adapty
-import RevenueCat
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let shared = AppDelegate()
-    
-//    var hasActiveSubscription: Bool = false {
-//        didSet {
-//            print("AppDelegate subscription state - \(hasActiveSubscription)")
-//        }
-//    }
-    
-    //var subscriptionManager = SubscriptionManager()
-    //var transactionObserver: TransactionObserver?
-    //var store = Store()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -50,15 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // in case you have / want to use fallback paywalls
-        if let urlPath = Bundle.main.url(forResource: "fallback_paywalls", withExtension: "json"),
-           let paywallsData = try? Data(contentsOf: urlPath) {
-            Adapty.setFallbackPaywalls(paywallsData) { _ in
-                // handle error
-            }
-        }
+//        if let urlPath = Bundle.main.url(forResource: "fallback_paywalls", withExtension: "json"),
+//           let paywallsData = try? Data(contentsOf: urlPath) {
+//            Adapty.setFallbackPaywalls(paywallsData) { _ in
+//                // handle error
+//            }
+//        }
         
-//        Purchases.logLevel = .debug
-//        Purchases.configure(withAPIKey: "appl_GLyIGdafTzOJPZJrBMHJxyPOJrP")
         
         return true
     }
@@ -79,22 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         
-        //transactionObserver = nil
     }
     
-//    private func checkSubscriptionStatus() {
-//        
-//        SubscriptionManager.shared.checkForActiveSubscription { result in
-//            switch result {
-//                case .success(let status):
-//                    self.hasActiveSubscription = status
-//                    print("AppDelegate -> Subscription status is \(status)")
-//                case .failure(let error):
-//                    print("AppDelegate -> Error: Failed to check subscription status: \(error.localizedDescription)")
-//            }
-//        }
-//        
-//    }
     
     //MARK: CoreData
     
