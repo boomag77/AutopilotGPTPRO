@@ -12,4 +12,9 @@ struct AppConstants {
                                            blue: 215/255.0,
                                            alpha: 1.0)
     }
+    
+    struct Links {
+        static let termsOfUseURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-user-agreement/"
+        static let privacyPolicyURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-privacy-policy/"
+    }
 }

@@ -41,6 +41,7 @@
 		A57338212BFCE0C600DACC54 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */; };
 		A57338232BFCE2CA00DACC54 /* OnboardingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */; };
 		A57338252BFCE33D00DACC54 /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338242BFCE33D00DACC54 /* AnalyzeViewController.swift */; };
+		A57338272BFD3DE200DACC54 /* PaywallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338262BFD3DE200DACC54 /* PaywallViewModel.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
@@ -88,6 +89,7 @@
 		A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTableViewCell.swift; sourceTree = "<group>"; };
 		A57338242BFCE33D00DACC54 /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
+		A57338262BFD3DE200DACC54 /* PaywallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewModel.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
 				A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */,
+				A57338262BFD3DE200DACC54 /* PaywallViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				A51FA2E82BC5C6E7007042A9 /* Session+CoreDataProperties.swift in Sources */,
 				A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */,
 				A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */,
+				A57338272BFD3DE200DACC54 /* PaywallViewModel.swift in Sources */,
 				A57338232BFCE2CA00DACC54 /* OnboardingTableViewCell.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,
 				A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */,

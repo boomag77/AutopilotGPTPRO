@@ -11,8 +11,8 @@ class PaywallViewController: UIViewController {
     private let imageNames = ["pw_image1", "pw_image2", "pw_image3", "pw_image4", "pw_image5", "pw_image6"]
     private var currentImageIndex = 0
     
-    private let termsOfUseURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-user-agreement/"
-    private let privacyPolicyURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-privacy-policy/"
+    private let termsOfUseURL: String = AppConstants.Links.termsOfUseURL
+    private let privacyPolicyURL: String = AppConstants.Links.privacyPolicyURL
     
     var products: [AdaptyPaywallProduct] = [] {
         didSet {
