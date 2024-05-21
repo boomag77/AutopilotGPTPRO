@@ -29,7 +29,7 @@ class OnboardingViewModel {
             case .russian:
                 questionSet = russianQuestions
         }
-        self.currentQuestionIndex = 0
+        self.currentQuestionIndex = 0 
     }
     
     func getQuestion() -> Question? {
@@ -90,7 +90,7 @@ class OnboardingViewModel {
                  answers: ["PC / Laptop",
                            "Smartphone",
                            "Tablet",
-                           "Other (please specify)"]
+                           "Other"]
                 ),
         Question(title: "How would you rate your communication skills in the workplace?",
                  answers: ["High",
@@ -132,7 +132,7 @@ class OnboardingViewModel {
                            "Appium",
                            "Postman",
                            "SoapUI",
-                           "Any others (please specify)"]
+                           "Any others"]
                 ),
         Question(title: "What types of testing have you conducted in projects?",
                  answers: ["Functional",
@@ -141,7 +141,7 @@ class OnboardingViewModel {
                            "Performance",
                            "UI/UX",
                            "Security",
-                           "Others (please specify)"]
+                           "Others"]
                 )
     ]
     private let spanishQuestions: [Question] = []

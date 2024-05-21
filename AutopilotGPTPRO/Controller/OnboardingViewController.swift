@@ -150,6 +150,8 @@ class OnboardingViewController: UIViewController {
         
         guard let nextQuestion = viewModel.getQuestion() else {
             self.progressBar.setProgress(1.0, animated: true)
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: "completedOnboarding")
             self.showAnalyzeVC()
 //            let alert = UIAlertController(title: "Message", message: "That's it!", preferredStyle: .alert)
 //            let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in

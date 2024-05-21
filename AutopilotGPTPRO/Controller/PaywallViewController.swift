@@ -5,7 +5,7 @@ import Adapty
 
 class PaywallViewController: UIViewController {
     
-    weak var parentController: StartSessionVC?
+    weak var parentController: UIViewController!
     
     private var timer: Timer?
     private let imageNames = ["pw_image1", "pw_image2", "pw_image3", "pw_image4", "pw_image5", "pw_image6"]
@@ -230,6 +230,13 @@ class PaywallViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopSlideShow()
+//        parentController.modalPresentationStyle = .fullScreen
+//        self.present(parentController, animated: true)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
     
     
@@ -244,7 +251,7 @@ class PaywallViewController: UIViewController {
     @objc private func showNextImageWithFade() {
         currentImageIndex = (currentImageIndex + 1) % imageNames.count
         let nextImage = UIImage(named: imageNames[currentImageIndex])
-        view.layoutIfNeeded()
+        
         UIView.transition(with: imageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
@@ -253,6 +260,7 @@ class PaywallViewController: UIViewController {
                             },
                           completion: nil
         )
+        view.layoutIfNeeded()
     }
     
     

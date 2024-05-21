@@ -7,7 +7,14 @@ class AnalyzeViewController: UIViewController {
         print("AnalyzeVC has been dismissed successfully.")
     }
     
-    private var actIndicator: UIActivityIndicatorView!
+    //private var actIndicator: UIActivityIndicatorView!
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView.init(style: .medium)
+        indicator.color = .label
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     private lazy var startButton: UIButton = {
         let button = UIButton()
@@ -28,19 +35,34 @@ class AnalyzeViewController: UIViewController {
         
         return button
     }()
+    
+    private lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = "Analyzing received data"
+        label.textColor = .label
+        label.backgroundColor = .systemBackground
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         
-        actIndicator.startAnimating()
+        activityIndicator.startAnimating()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            self?.actIndicator.stopAnimating()
-            self?.actIndicator.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.activityIndicator.stopAnimating()
+            self?.activityIndicator.isHidden = true
             
             // Add start button
-            self?.setupStartButton()
+            //self?.setupStartButton()
+            let tabBarController = TabBarController()
+            let paywallViewController = PaywallViewController()
+            tabBarController.modalPresentationStyle = .fullScreen
+            self?.present(tabBarController, animated: true) { [unowned tabBarController] in
+                tabBarController.present(paywallViewController, animated: false)
+            }
             
         }
         
@@ -49,12 +71,22 @@ class AnalyzeViewController: UIViewController {
     
     func setupUI() {
         
-        view.backgroundColor = .black
-        self.actIndicator = UIActivityIndicatorView.init(style: .medium)
-        self.actIndicator.center = self.view.center
-        actIndicator.color = .white
-        self.view.addSubview(self.actIndicator)
+        view.backgroundColor = .systemBackground
         
+//        self.activityIndicator = UIActivityIndicatorView.init(style: .medium)
+//        self.activityIndicator.center = self.view.center
+        //actIndicator.color = .label
+        view.addSubview(activityIndicator)
+        view.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 10),
+            label.heightAnchor.constraint(equalToConstant: 20)
+        ])
         
         
     }
