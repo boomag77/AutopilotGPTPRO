@@ -5,12 +5,13 @@ import Combine
 final class StartSessionVC: UIViewController {
     
     private let unsubsucribedLaunchButtonTitle: String = "Subscribe to Launch Session"
-    private let subsucribedLaunchButtonTitle: String = "Launch Autopilot Session"
+    private let subsucribedLaunchButtonTitle: String = "\u{1F680} Launch Autopilot Session"
     private let unsubsucribedLaunchButtonColor: UIColor = UIColor(red: 40/255.0,
                                                                   green: 0/255.0,
                                                                   blue: 215/255.0,
                                                                   alpha: 1.0)
-    private let subsucribedLaunchButtonColor: UIColor = UIColor.systemBlue
+    
+    private let subsucribedLaunchButtonColor: UIColor = UIColor.green
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -143,7 +144,7 @@ final class StartSessionVC: UIViewController {
             self?.keyboardWillHide(notification: notification)
         }
         
-        self.title = "Start Session"
+        //self.title = "Start Session"
         view.backgroundColor = .systemGray6
         setup()
         // Do any additional setup after loading the view.

@@ -11,7 +11,7 @@ class SubscriptionTableViewCell: UITableViewCell {
     
     var price: String? {
         didSet {
-            descriptionLabel.text = "Get full access for \(price!) per month"
+            descriptionLabel.text = "Full access for only \(price!)/month"
         }
     }
     
@@ -19,6 +19,7 @@ class SubscriptionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.font = UIFont.preferredFont(forTextStyle: .headline)
+        //label.font = boldTitleFont()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -31,6 +32,18 @@ class SubscriptionTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var selectedMark: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "checkmark.circle.fill")
+        //vimageView.layer.borderWidth = 0.5
+        //imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.5).cgColor
+        imageView.tintColor = AppConstants.Color.bloombergBlue
+        imageView.backgroundColor = .systemBackground
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -38,6 +51,11 @@ class SubscriptionTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        selectedMark.layer.cornerRadius = selectedMark.bounds.size.height / 2
     }
     
     private func setupViews() {
@@ -48,10 +66,18 @@ class SubscriptionTableViewCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.label.withAlphaComponent(0.85).cgColor
+        contentView.layer.borderColor = AppConstants.Color.bloombergBlue.cgColor
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         setupConstraints()
+        
+        contentView.addSubview(selectedMark)
+        NSLayoutConstraint.activate([
+            selectedMark.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            selectedMark.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            selectedMark.heightAnchor.constraint(equalToConstant: 20),
+            selectedMark.widthAnchor.constraint(equalToConstant: 20)
+        ])
     }
     
     private func setupConstraints() {
@@ -66,4 +92,6 @@ class SubscriptionTableViewCell: UITableViewCell {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
+    
+    
 }

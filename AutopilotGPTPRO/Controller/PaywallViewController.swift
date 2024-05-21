@@ -7,7 +7,9 @@ class PaywallViewController: UIViewController {
     
     weak var parentController: StartSessionVC?
     
-    //var subscriptionManager = SubscriptionManager.shared
+    private var timer: Timer?
+    private let imageNames = ["pw_image1", "pw_image2", "pw_image3", "pw_image4", "pw_image5", "pw_image6"]
+    private var currentImageIndex = 0
     
     private let termsOfUseURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-user-agreement/"
     private let privacyPolicyURL: String = "https://www.leoteor.com/app-s-legal-gpt-autopilot-privacy-policy/"
@@ -17,30 +19,53 @@ class PaywallViewController: UIViewController {
             tableView.reloadData()
             DispatchQueue.main.async { [weak self] in
                 self?.updateTableViewHeight()
+                self?.view.layoutIfNeeded()
             }
+            if let price = products.first?.localizedPrice {
+                buyButton.configuration?.title = "Subscribe for \(price)/month"
+            }
+            
         }
     }
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemGray6
+        //tableView.isScrollEnabled = false
+        tableView.isUserInteractionEnabled = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
-    private lazy var logoImageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "logo")
+        imageView.image = UIImage(named: "pw_image1")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    private let gradientLayer: CAGradientLayer = {
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [
+                UIColor.clear.cgColor,
+                UIColor.systemGray6.cgColor
+            ]
+            gradientLayer.locations = [0, 1.0]
+            return gradientLayer
+        }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Subscribe Now"
+        label.numberOfLines = 0
+        label.text = "Master Your interview, Master Your Life"
+        label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
-        label.textColor = .label.withAlphaComponent(0.85)
+        //label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.font = boldTitleFont()
+        label.textColor = .label.withAlphaComponent(0.7)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -60,9 +85,12 @@ class PaywallViewController: UIViewController {
         var config = UIButton.Configuration.filled()
         
         config.title = "Subscribe"
-        config.baseBackgroundColor = UIColor.systemBlue
+        config.baseBackgroundColor = UIColor(red: 40/255.0,
+                                             green: 0/255.0,
+                                             blue: 215/255.0,
+                                             alpha: 1.0)
         config.baseForegroundColor = UIColor.white.withAlphaComponent(0.85)
-        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
         config.cornerStyle = .large
         button.configuration = config
         
@@ -82,11 +110,12 @@ class PaywallViewController: UIViewController {
         let button = RoundButton()
         var config = UIButton.Configuration.filled()
         config.image = UIImage(systemName: "xmark")
-        config.baseBackgroundColor = .systemBackground
-        config.baseForegroundColor = .white.withAlphaComponent(0.85)
+        //config.imagePadding = 4
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        config.baseBackgroundColor = .systemBackground.withAlphaComponent(0.3)
+        config.baseForegroundColor = .label.withAlphaComponent(0.85)
         button.configuration = config
         button.clipsToBounds = true
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
@@ -163,34 +192,67 @@ class PaywallViewController: UIViewController {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100 // Provide a reasonable estimate
-
-        setupUI()
-        
         DispatchQueue.main.async { [weak self] in
             self?.products = PurchasesObserver.shared.products!
         }
+        setupUI()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
-        updateTableViewHeight()
+        //updateTableViewHeight()
+        startSlideShow()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateTableViewHeight()
+        //updateTableViewHeight()
+        gradientLayer.frame = imageView.bounds
+        if gradientLayer.superlayer == nil {
+            imageView.layer.addSublayer(gradientLayer)
+        }
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        let size = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        if size.height != preferredContentSize.height {
-            preferredContentSize = size  // Dynamically adjust the size of the modal
-        }
+//        let size = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+//        if size.height != preferredContentSize.height {
+//            preferredContentSize = size  // Dynamically adjust the size of the modal
+//        }
         
-        preferredContentSize.height = 400
+        //preferredContentSize.height = 400
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopSlideShow()
+    }
+    
+    
+    private func startSlideShow() {
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(showNextImageWithFade), userInfo: nil, repeats: true)
+    }
+    
+    private func stopSlideShow() {
+        timer?.invalidate()
+    }
+    
+    @objc private func showNextImageWithFade() {
+        currentImageIndex = (currentImageIndex + 1) % imageNames.count
+        let nextImage = UIImage(named: imageNames[currentImageIndex])
+        view.layoutIfNeeded()
+        UIView.transition(with: imageView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                                self.imageView.image = nextImage
+                            },
+                          completion: nil
+        )
     }
     
     
@@ -216,45 +278,64 @@ class PaywallViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .systemGray6
         
-        view.addSubview(logoImageView)
-        view.addSubview(titleLabel)
+        view.backgroundColor = .systemGray6
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        
+        view.addSubview(imageView)
         view.addSubview(tableView)
         view.addSubview(buyButton)
         view.addSubview(restorePurchasesButton)
         view.addSubview(docsButtonsStack)
 
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.heightAnchor.constraint(equalToConstant: 300),
-            logoImageView.widthAnchor.constraint(equalToConstant: 300),
             
-            titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            
-            
-            
-            buyButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30),
-            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            
-            docsButtonsStack.topAnchor.constraint(equalTo: buyButton.bottomAnchor, constant: 20),
             docsButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             docsButtonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            docsButtonsStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            restorePurchasesButton.topAnchor.constraint(equalTo: docsButtonsStack.bottomAnchor, constant: 10),
             restorePurchasesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             restorePurchasesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            restorePurchasesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            restorePurchasesButton.bottomAnchor.constraint(equalTo: docsButtonsStack.topAnchor, constant: -10),
             
+            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            buyButton.bottomAnchor.constraint(equalTo: restorePurchasesButton.topAnchor, constant: -10),
+            
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -10),
+            
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: -10),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            imageView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -10)
             
         ])
+        view.addSubview(closeButon)
+        NSLayoutConstraint.activate([
+            closeButon.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            closeButon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            closeButon.heightAnchor.constraint(equalToConstant: 40),
+            closeButon.widthAnchor.constraint(equalToConstant: 40)
+        ])
+        view.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            titleLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10)
+        ])
+        
+    }
+    
+    private func boldTitleFont() -> UIFont {
+        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
+        if let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold) {
+            return UIFont(descriptor: boldFontDescriptor, size: 0)
+        } else {
+            return UIFont.preferredFont(forTextStyle: .title1)
+        }
     }
     
     private func updateTableViewHeight() {
