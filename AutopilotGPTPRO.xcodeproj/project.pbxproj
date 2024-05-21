@@ -37,6 +37,7 @@
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
 		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
 		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
+		A573381F2BFCE04900DACC54 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
@@ -80,6 +81,7 @@
 		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
 		A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewCell.swift; sourceTree = "<group>"; };
+		A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 				A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */,
 				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
+				A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
 				A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */,
+				A573381F2BFCE04900DACC54 /* OnboardingViewController.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
 				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,
 			);
