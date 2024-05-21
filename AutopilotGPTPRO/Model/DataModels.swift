@@ -31,3 +31,11 @@ struct MessageModel: Hashable {
     var sender: MessageSender
     var text: String
 }
+
+
+enum Language {
+    case english
+    case spanish
+    case french
+    case russian
+}
