@@ -15,7 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let tabBarController = TabBarController()
         tabBarController.view.backgroundColor = .red
-        window.rootViewController = tabBarController
+        
+        //let completedOnboarding = UserDefaults.standard.bool(forKey: "completedOnboarding")
+        let completedOnboarding = false // for test purpose only
+        if completedOnboarding {
+            window.rootViewController = tabBarController
+        } else {
+            window.rootViewController = OnboardingViewController()
+        }
         window.makeKeyAndVisible()
         self.window = window
     }
