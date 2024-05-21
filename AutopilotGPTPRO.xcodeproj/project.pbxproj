@@ -39,6 +39,7 @@
 		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
 		A573381F2BFCE04900DACC54 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */; };
 		A57338212BFCE0C600DACC54 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */; };
+		A57338232BFCE2CA00DACC54 /* OnboardingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
 		A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366192BCE0BED0083CB04 /* ErrorHandler.swift */; };
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
@@ -84,6 +85,7 @@
 		A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewCell.swift; sourceTree = "<group>"; };
 		A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTableViewCell.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
 		A57366192BCE0BED0083CB04 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */,
 				A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */,
 				A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */,
+				A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				A51FA2E82BC5C6E7007042A9 /* Session+CoreDataProperties.swift in Sources */,
 				A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */,
 				A573661A2BCE0BED0083CB04 /* ErrorHandler.swift in Sources */,
+				A57338232BFCE2CA00DACC54 /* OnboardingTableViewCell.swift in Sources */,
 				A53E7E282BB6470300EB5311 /* InstructionsViewController.swift in Sources */,
 				A51FA2EA2BC63766007042A9 /* SavedSessionMessagesVC.swift in Sources */,
 				A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */,
