@@ -17,10 +17,18 @@ class PaywallViewController: UIViewController {
     var products: [AdaptyPaywallProduct] = [] {
         didSet {
             tableView.reloadData()
-            DispatchQueue.main.async { [weak self] in
-                self?.updateTableViewHeight()
-                self?.view.layoutIfNeeded()
-            }
+            self.setupUI()
+            self.updateTableViewHeight()
+            view.layoutIfNeeded()
+            self.startSlideShow()
+            
+//            DispatchQueue.main.async { [weak self] in
+//                self?.setupUI()
+//                //self?.updateTableViewHeight()
+//                //self?.setupImageView()
+//                self?.startSlideShow()
+//                //self?.view.layoutIfNeeded()
+//            }
             if let price = products.first?.localizedPrice {
                 buyButton.configuration?.title = "Subscribe for \(price)/month"
             }
@@ -192,24 +200,25 @@ class PaywallViewController: UIViewController {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100 // Provide a reasonable estimate
-        DispatchQueue.main.async { [weak self] in
-            self?.products = PurchasesObserver.shared.products!
-        }
-        setupUI()
+//        DispatchQueue.main.async { [weak self] in
+//            self?.products = PurchasesObserver.shared.products!
+//        }
+        self.products = PurchasesObserver.shared.products!
+        //setupUI()
         
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+        //tableView.reloadData()
         //updateTableViewHeight()
-        startSlideShow()
+        //startSlideShow()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //updateTableViewHeight()
+        updateTableViewHeight()
         gradientLayer.frame = imageView.bounds
         if gradientLayer.superlayer == nil {
             imageView.layer.addSublayer(gradientLayer)
@@ -260,7 +269,7 @@ class PaywallViewController: UIViewController {
                             },
                           completion: nil
         )
-        view.layoutIfNeeded()
+        //view.layoutIfNeeded()
     }
     
     
@@ -313,13 +322,22 @@ class PaywallViewController: UIViewController {
             
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -10),
+            tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -10)
             
+            
+            
+        ])
+        setupImageView()
+        
+    }
+    
+    private func setupImageView() {
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: -10),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             imageView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -10)
-            
         ])
         view.addSubview(closeButon)
         NSLayoutConstraint.activate([
@@ -334,7 +352,6 @@ class PaywallViewController: UIViewController {
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             titleLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10)
         ])
-        
     }
     
     private func boldTitleFont() -> UIFont {

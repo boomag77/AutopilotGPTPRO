@@ -29,7 +29,7 @@ class OnboardingViewModel {
             case .russian:
                 questionSet = russianQuestions
         }
-        self.currentQuestionIndex = 0 
+        self.currentQuestionIndex = 14
     }
     
     func getQuestion() -> Question? {

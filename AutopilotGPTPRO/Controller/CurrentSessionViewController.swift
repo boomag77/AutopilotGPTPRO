@@ -177,8 +177,8 @@ final class CurrentSessionViewController: UIViewController {
             navigationController?.setViewControllers(navigationStack, animated: true)
         }
         
-        let instructionMessage = MessageModel(date: Date(), sender: .user, text: instruction!.text)
-        sessionMessages.append(instructionMessage)
+//        let instructionMessage = MessageModel(date: Date(), sender: .user, text: instruction!.text)
+//        sessionMessages.append(instructionMessage)
         
         
     }
