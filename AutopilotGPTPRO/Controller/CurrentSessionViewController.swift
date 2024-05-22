@@ -89,7 +89,7 @@ final class CurrentSessionViewController: UIViewController {
         
         var config = UIButton.Configuration.filled()
         config.image = UIImage(systemName: "checkmark")
-        config.baseBackgroundColor = .systemGreen
+        config.baseBackgroundColor = AppConstants.Color.customGreen
         config.baseForegroundColor = .white.withAlphaComponent(0.85)
         button.configuration = config
         button.clipsToBounds = true

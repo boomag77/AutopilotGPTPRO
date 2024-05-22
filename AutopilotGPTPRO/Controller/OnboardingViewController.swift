@@ -44,7 +44,7 @@ class OnboardingViewController: UIViewController {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.title = "Continue"
-        config.baseBackgroundColor = UIColor.systemBlue
+        config.baseBackgroundColor = AppConstants.Color.bloombergBlue
         config.baseForegroundColor = .white.withAlphaComponent(0.85)
         config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
@@ -62,7 +62,7 @@ class OnboardingViewController: UIViewController {
     
     private lazy var progressBar: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .default)
-        view.tintColor = .systemBlue
+        view.tintColor = AppConstants.Color.bloombergBlue
         view.trackTintColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

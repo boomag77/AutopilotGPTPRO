@@ -16,8 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = TabBarController()
         tabBarController.view.backgroundColor = .red
         
-        //let completedOnboarding = UserDefaults.standard.bool(forKey: "completedOnboarding")
-        let completedOnboarding = false // for test purpose only
+        let completedOnboarding = UserDefaults.standard.bool(forKey: "completedOnboarding")
+        //let completedOnboarding = false // for test purpose only
         if completedOnboarding {
             window.rootViewController = tabBarController
         } else {
