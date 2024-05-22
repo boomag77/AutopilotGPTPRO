@@ -6,12 +6,9 @@ final class StartSessionVC: UIViewController {
     
     private let unsubsucribedLaunchButtonTitle: String = "Subscribe to Launch Session"
     private let subsucribedLaunchButtonTitle: String = "\u{1F680} Launch Autopilot Session"
-    private let unsubsucribedLaunchButtonColor: UIColor = UIColor(red: 40/255.0,
-                                                                  green: 0/255.0,
-                                                                  blue: 215/255.0,
-                                                                  alpha: 1.0)
+    private let unsubsucribedLaunchButtonColor: UIColor = AppConstants.Color.bloombergBlue
     
-    private let subsucribedLaunchButtonColor: UIColor = UIColor.green
+    private let subsucribedLaunchButtonColor: UIColor = AppConstants.Color.customGreen
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -30,7 +27,7 @@ final class StartSessionVC: UIViewController {
                 (checkBox as? CheckBox)?.checked = true
                 var config = launchSessionButton.configuration
                 config?.title = "Save and Launch Session"
-                config?.baseBackgroundColor = UIColor.systemBlue
+                config?.baseBackgroundColor = AppConstants.Color.bloombergBlue
                 config?.baseForegroundColor = .white.withAlphaComponent(0.85)
                 config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
                 config?.cornerStyle = .large
@@ -41,7 +38,7 @@ final class StartSessionVC: UIViewController {
                 (checkBox as? CheckBox)?.checked = false
                 var config = launchSessionButton.configuration
                 config?.title = "Launch Autopilot Session"
-                config?.baseBackgroundColor = UIColor.systemBlue
+                config?.baseBackgroundColor = AppConstants.Color.bloombergBlue
                 config?.baseForegroundColor = .white.withAlphaComponent(0.85)
                 config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
                 config?.cornerStyle = .large

@@ -67,6 +67,7 @@ class SubscriptionTableViewCell: UITableViewCell {
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = AppConstants.Color.bloombergBlue.cgColor
+        
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         setupConstraints()
@@ -89,7 +90,7 @@ class SubscriptionTableViewCell: UITableViewCell {
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
         ])
     }
     
