@@ -46,7 +46,7 @@ class PaywallViewController: UIViewController {
             UIColor.clear.cgColor,
             UIColor.systemGray6.cgColor
         ]
-        gradientLayer.locations = [0, 1.0]
+        gradientLayer.locations = [0, 0.8]
         return gradientLayer
     }()
     
@@ -76,11 +76,8 @@ class PaywallViewController: UIViewController {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.title = "Subscribe"
-        config.baseBackgroundColor = UIColor(red: 40/255.0,
-                                             green: 0/255.0,
-                                             blue: 215/255.0,
-                                             alpha: 1.0)
-        config.baseForegroundColor = UIColor.white.withAlphaComponent(0.85)
+        config.baseBackgroundColor = AppConstants.Color.bloombergBlue
+        config.baseForegroundColor = UIColor.white
         config.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
         config.cornerStyle = .large
         button.configuration = config
@@ -269,9 +266,18 @@ class PaywallViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -30)
         ])
+        setupTitleView()
         setupCloseButton()
     }
     
+    private func setupTitleView() {
+        view.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            titleLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -30)
+        ])
+    }
     
     private func setupImageView() {
         view.addSubview(imageView)

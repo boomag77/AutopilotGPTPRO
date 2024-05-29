@@ -17,7 +17,7 @@ final class TabBarController: UITabBarController {
     private func setup() {
         
         tabBar.backgroundColor = .systemBackground
-        tabBar.tintColor = AppConstants.Color.bloombergBlue
+        tabBar.tintColor = AppConstants.Color.bloombergBlue.withAlphaComponent(0.85)
         
         let instructionsVC = InstructionsViewController()
         instructionsVC.tabBarItem = UITabBarItem(title: "Instructions",

@@ -68,9 +68,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    
-    //MARK: CoreData
-    
-    
-
 }

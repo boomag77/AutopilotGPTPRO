@@ -29,7 +29,7 @@ class OnboardingViewModel {
             case .russian:
                 questionSet = russianQuestions
         }
-        self.currentQuestionIndex = 0
+        self.currentQuestionIndex = 14
     }
     
     func getQuestion() -> Question? {
@@ -63,10 +63,10 @@ class OnboardingViewModel {
                             "Non-binary / Other"]
                 ),
         Question(title: "What income level is comfortable for you in your current role?",
-                 answers: ["Less than $500 per month",
-                           "$500 - $1000 per month",
-                           "$1000 - $2000 per month",
-                           "Over $2000 per month"]
+                 answers: ["Less than $1000 per month",
+                           "$1001 - $2000 per month",
+                           "$2001 - $5000 per month",
+                           "Over $5001 per month"]
                 ),
         Question(title: "How many years have you been developing in the QA field?",
                  answers: ["Less than 1 year",

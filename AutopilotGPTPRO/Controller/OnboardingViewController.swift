@@ -45,7 +45,7 @@ class OnboardingViewController: UIViewController {
         var config = UIButton.Configuration.filled()
         config.title = "Continue"
         config.baseBackgroundColor = AppConstants.Color.bloombergBlue
-        config.baseForegroundColor = .white.withAlphaComponent(0.85)
+        config.baseForegroundColor = .white
         config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
         button.configuration = config

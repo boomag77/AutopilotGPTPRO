@@ -28,7 +28,7 @@ final class StartSessionVC: UIViewController {
                 var config = launchSessionButton.configuration
                 config?.title = "Save and Launch Session"
                 config?.baseBackgroundColor = AppConstants.Color.bloombergBlue
-                config?.baseForegroundColor = .white.withAlphaComponent(0.85)
+                config?.baseForegroundColor = .white
                 config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
                 config?.cornerStyle = .large
                 config?.titleAlignment = .center
@@ -39,7 +39,7 @@ final class StartSessionVC: UIViewController {
                 var config = launchSessionButton.configuration
                 config?.title = "Launch Autopilot Session"
                 config?.baseBackgroundColor = AppConstants.Color.bloombergBlue
-                config?.baseForegroundColor = .white.withAlphaComponent(0.85)
+                config?.baseForegroundColor = .white
                 config?.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
                 config?.cornerStyle = .large
                 config?.titleAlignment = .center
@@ -95,7 +95,7 @@ final class StartSessionVC: UIViewController {
         var config = UIButton.Configuration.filled()
         //config.title = "Launch Autopilot Session"
         //config.baseBackgroundColor = UIColor.systemBlue
-        config.baseForegroundColor = .white.withAlphaComponent(0.85)
+        config.baseForegroundColor = .white
         config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
         config.titleAlignment = .center
