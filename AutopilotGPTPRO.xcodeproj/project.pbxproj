@@ -46,6 +46,7 @@
 		A573661C2BCE0C6B0083CB04 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573661B2BCE0C6B0083CB04 /* Errors.swift */; };
 		A58452512BC465CF00D56B6A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452502BC465CF00D56B6A /* CheckBox.swift */; };
 		A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */; };
+		A5878DC62C074F3E00777894 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5878DC52C074F3E00777894 /* StoreKit.framework */; };
 		A5988B292BBE4C280026D7A6 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */; };
 		A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */; };
 		A5988B2E2BBF438D0026D7A6 /* SessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */; };
@@ -93,6 +94,8 @@
 		A573661B2BCE0C6B0083CB04 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A58452502BC465CF00D56B6A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		A58452522BC4ABEB00D56B6A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		A5878DC22C074D9B00777894 /* AutopilotGPTPRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutopilotGPTPRO.entitlements; sourceTree = "<group>"; };
+		A5878DC52C074F3E00777894 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A5988B252BBE4C270026D7A6 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A5988B262BBE4C280026D7A6 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "AutopilotGPTPRO/Model/CoreData Classes/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A5988B2D2BBF438D0026D7A6 /* SessionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableViewCell.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
+				A5878DC62C074F3E00777894 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +134,7 @@
 		A53E7E112BB643AC00EB5311 /* AutopilotGPTPRO */ = {
 			isa = PBXGroup;
 			children = (
+				A5878DC22C074D9B00777894 /* AutopilotGPTPRO.entitlements */,
 				A54C6E2D2BF865710047DA75 /* IAP */,
 				A54CDDD12BB7AC1D0032A17C /* View */,
 				A53E7E292BB64BEC00EB5311 /* Model */,
@@ -182,6 +187,7 @@
 		A54C6E232BF5AD770047DA75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5878DC52C074F3E00777894 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -504,9 +510,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
@@ -542,9 +549,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AutopilotGPTPRO/AutopilotGPTPRO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 88V8QK8BFT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AutopilotGPTPRO/Info.plist;
