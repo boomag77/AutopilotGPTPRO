@@ -29,6 +29,7 @@ class OnboardingTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black.withAlphaComponent(0.85)
+        label.font = UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -47,6 +48,7 @@ class OnboardingTableViewCell: UITableViewCell {
     private lazy var cellView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 245/255, green: 250/255, blue: 255/255, alpha: 1.0)
+        
         //UIColor(red: 245, green: 250, blue: 255, alpha: 1.0)
         view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -70,8 +72,14 @@ class OnboardingTableViewCell: UITableViewCell {
     
     private func setup() {
         
-        contentView.backgroundColor = .systemBackground
-    
+        //contentView.backgroundColor = .systemBackground
+        if traitCollection.userInterfaceStyle == .light {
+            // Light mode
+            contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 242/255, alpha: 1.0)
+        } else {
+            // Dark mode or unspecified
+            contentView.backgroundColor = UIColor.systemGray6
+        }
         contentView.addSubview(cellView)
         setupCellView()
     }

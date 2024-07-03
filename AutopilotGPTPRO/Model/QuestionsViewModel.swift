@@ -11,7 +11,7 @@ protocol OnboardingViewModelDelegate: UIViewController {
     func resetProgress()
 }
 
-class OnboardingViewModel {
+class QuestionsViewModel {
     
     private var questionSet: [Question]
     private var currentQuestionIndex: Int
@@ -33,11 +33,15 @@ class OnboardingViewModel {
     }
     
     func getQuestion() -> Question? {
+        
         guard currentQuestionIndex < questionSet.count else {
             return nil
         }
+        //print("Current question: \(currentQuestionIndex)")
         //let progress = Float(currentQuestionIndex) / Float(questionSet.count)
-        delegate?.updateProgress(to: currentQuestionIndex, of: questionSet.count)
+        if currentQuestionIndex > 0 {
+            delegate?.updateProgress(to: currentQuestionIndex, of: questionSet.count)
+        }
         let question = questionSet[currentQuestionIndex]
         currentQuestionIndex += 1
         return question

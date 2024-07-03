@@ -148,7 +148,8 @@ extension InstructionsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedInstruction = self.instructions[indexPath.row]
-        
+        AmplitudeManager.shared.track(eventType: "Instructions_Screen-Instruction-Pressed",
+                                      properties: ["instruction_name": selectedInstruction.name])
         showStartSessionVC(selectedInstruction)
         
     }

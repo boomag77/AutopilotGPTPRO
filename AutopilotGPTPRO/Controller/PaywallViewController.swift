@@ -2,9 +2,18 @@ import UIKit
 import StoreKit
 import Adapty
 
+enum CallSource: String {
+    case onboarding = "Onboarding"
+    case launchButton = "Launch button"
+}
+
 class PaywallViewController: UIViewController {
+    
+    let viewModel = PaywallViewModel()
 
     weak var parentController: UIViewController!
+    
+    var callSource: CallSource?
     
     private var timer: Timer?
     private let imageNames = ["pw_image2", "pw_image3", "pw_image5", "pw_image6"]
@@ -12,7 +21,7 @@ class PaywallViewController: UIViewController {
     
     private let termsOfUseURL: String = AppConstants.Links.termsOfUseURL
     private let privacyPolicyURL: String = AppConstants.Links.privacyPolicyURL
-    
+        
     var products: [AdaptyPaywallProduct] = [] {
         didSet {
             // Defer UI updates to when the view is added to the window
@@ -22,13 +31,13 @@ class PaywallViewController: UIViewController {
         }
     }
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.isUserInteractionEnabled = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
+//    private lazy var tableView: UITableView = {
+//        let tableView = UITableView()
+//        tableView.backgroundColor = .clear
+//        tableView.isUserInteractionEnabled = false
+//        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        return tableView
+//    }()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -74,15 +83,21 @@ class PaywallViewController: UIViewController {
     
     private lazy var buyButton: UIButton = {
         let button = UIButton()
+        
+        
         var config = UIButton.Configuration.filled()
-        config.title = "Subscribe"
+        config.title = "Subscribe\nSecond line"
+        
+        
         config.baseBackgroundColor = AppConstants.Color.bloombergBlue
         config.baseForegroundColor = UIColor.white
-        config.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
         config.cornerStyle = .large
         button.configuration = config
+        
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.titleLabel?.textAlignment = .center
         button.clipsToBounds = true
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentHuggingPriority(.required, for: .vertical)
@@ -104,6 +119,7 @@ class PaywallViewController: UIViewController {
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [weak self] _ in
+            AmplitudeManager.shared.track(eventType: "Subscription_Screen-Button_Close-Pressed")
             self?.dismiss(animated: true)
         }, for: .touchUpInside)
         return button
@@ -117,7 +133,7 @@ class PaywallViewController: UIViewController {
             .font: UIFont.preferredFont(forTextStyle: .callout)
         ]
         config.attributedTitle = AttributedString("Terms of Use", attributes: AttributeContainer(attributes))
-        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20)
         button.configuration = config
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [unowned self] _ in
@@ -134,7 +150,7 @@ class PaywallViewController: UIViewController {
             .font: UIFont.preferredFont(forTextStyle: .callout)
         ]
         config.attributedTitle = AttributedString("Privacy policy", attributes: AttributeContainer(attributes))
-        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20)
         button.configuration = config
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [unowned self] _ in
@@ -159,25 +175,46 @@ class PaywallViewController: UIViewController {
         var config = UIButton.Configuration.plain()
         config.title = "Restore Purchases"
         config.baseForegroundColor = .label.withAlphaComponent(0.85)
-        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20)
         button.configuration = config
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(restorePurchasesButtonAction(), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var reviewsScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .clear
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isPagingEnabled = true
+        scrollView.decelerationRate = .normal
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private lazy var reviewsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 15
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.register(SubscriptionTableViewCell.self, forCellReuseIdentifier: "SubscriptionCell")
-        tableView.dataSource = self
+        self.presentationController?.delegate = self
+//        tableView.register(SubscriptionTableViewCell.self, forCellReuseIdentifier: "SubscriptionCell")
+//        tableView.dataSource = self
         
         self.products = PurchasesObserver.shared.products!
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateTableViewHeight()
+        
+        AmplitudeManager.shared.track(eventType: "Subscription_Screen-Showed", properties: ["call_source": self.callSource!.rawValue])
+        //updateTableViewHeight()
     }
     
     override func viewDidLayoutSubviews() {
@@ -190,6 +227,7 @@ class PaywallViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         stopSlideShow()
     }
     
@@ -216,10 +254,11 @@ class PaywallViewController: UIViewController {
     }
     
     private func buyButtonTapped() {
+        
         guard let product = products.first else {
             return
         }
-        
+        AmplitudeManager.shared.track(eventType: "Subscription-Button_Buy-Pressed")
         PurchasesObserver.shared.makePurchase(product) { [weak self] result in
             switch result {
                 case .success(let profile):
@@ -234,15 +273,15 @@ class PaywallViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemGray6
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 20
         view.clipsToBounds = true
         
         view.addSubview(imageView)
         view.addSubview(docsButtonsStack)
         view.addSubview(restorePurchasesButton)
         view.addSubview(buyButton)
-        
-        view.addSubview(tableView)
+        view.addSubview(reviewsScrollView)
+        //view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
             docsButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
@@ -253,29 +292,75 @@ class PaywallViewController: UIViewController {
             restorePurchasesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             restorePurchasesButton.bottomAnchor.constraint(equalTo: docsButtonsStack.topAnchor, constant: -10),
             
-            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            buyButton.bottomAnchor.constraint(equalTo: restorePurchasesButton.topAnchor, constant: -10),
+            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            buyButton.bottomAnchor.constraint(equalTo: restorePurchasesButton.topAnchor, constant: -20),
+            
+            
             
             imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: -10),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             //imageView.bottomAnchor.constraint(equalTo: buyButton.topAnchor),
             
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -30)
+//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+//            tableView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -30)
         ])
         setupTitleView()
         setupCloseButton()
+        setupReviewsScrollView()
     }
+    
+    private func setupReviewsScrollView() {
+        
+        NSLayoutConstraint.activate([
+            reviewsScrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            reviewsScrollView.bottomAnchor.constraint(equalTo: buyButton.topAnchor, constant: -10),
+            reviewsScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            reviewsScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            //reviewsScrollView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        
+        
+        reviewsScrollView.addSubview(reviewsStackView)
+        reviewsStackView.backgroundColor = .systemGray6
+        NSLayoutConstraint.activate([
+            reviewsStackView.topAnchor.constraint(greaterThanOrEqualTo: reviewsScrollView.contentLayoutGuide.topAnchor, constant: 10),
+            reviewsStackView.leadingAnchor.constraint(equalTo: reviewsScrollView.contentLayoutGuide.leadingAnchor),
+            reviewsStackView.trailingAnchor.constraint(equalTo: reviewsScrollView.contentLayoutGuide.trailingAnchor),
+            reviewsStackView.bottomAnchor.constraint(lessThanOrEqualTo: reviewsScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
+            reviewsStackView.centerYAnchor.constraint(equalTo: reviewsScrollView.centerYAnchor)
+            //reviewsStackView.widthAnchor.constraint(equalTo: reviewsScrollView.frameLayoutGuide.widthAnchor)
+            //reviewsStackView.heightAnchor.constraint(equalTo: reviewsScrollView.heightAnchor)
+        ])
+        
+        for review in viewModel.reviews {
+            let reviewView = ReviewView(review)
+            reviewsStackView.addArrangedSubview(reviewView)
+            NSLayoutConstraint.activate([
+                reviewView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6), // Adjust the width as needed
+                reviewView.heightAnchor.constraint(equalTo: reviewView.widthAnchor, multiplier: 0.6)
+            ])
+            reviewView.layoutIfNeeded()
+        }
+        
+        
+        
+        
+    }
+    
+    
     
     private func setupTitleView() {
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            titleLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -30)
+            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30)
+            //titleLabel.bottomAnchor.constraint(equalTo: reviewsScrollView.topAnchor, constant: -30)
+            //titleLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -30)
         ])
     }
     
@@ -317,22 +402,22 @@ class PaywallViewController: UIViewController {
         }
     }
     
-    private func updateTableViewHeight() {
-        guard tableView.window != nil else {
-            return
-        }
-
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        
-        var totalHeight: CGFloat = 0.0
-        for cell in tableView.visibleCells {
-            totalHeight += cell.frame.height
-        }
-        
-        tableView.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
-        view.layoutIfNeeded()
-    }
+//    private func updateTableViewHeight() {
+//        guard tableView.window != nil else {
+//            return
+//        }
+//
+//        tableView.reloadData()
+//        tableView.layoutIfNeeded()
+//        
+//        var totalHeight: CGFloat = 0.0
+//        for cell in tableView.visibleCells {
+//            totalHeight += cell.frame.height
+//        }
+//        
+//        tableView.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
+//        view.layoutIfNeeded()
+//    }
     
     private func openLink(stringURL: String) {
         if let url = URL(string: stringURL) {
@@ -361,14 +446,43 @@ class PaywallViewController: UIViewController {
     }
     
     private func updateUI() {
-        tableView.reloadData()
+        //tableView.reloadData()
         setupUI()
         startSlideShow()
         if let price = products.first?.localizedPrice {
-            buyButton.configuration?.title = "Subscribe for \(price)/month"
+            
+            let firstLine: String = "Subscribe for \(price)/month"
+            let secondLine: String = "and get Monthly Full Access"
+            
+            //buyButton.configuration?.title = "Subscribe for \(price)/month"
+            
+            let title = "\(firstLine)\n\(secondLine)"
+            let attributedTitle = NSMutableAttributedString(string: title)
+            
+            // Define attributes for the first line
+            let firstLineAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize),
+                //.font: UIFont.systemFont(ofSize: 18, weight: .bold),
+                .foregroundColor: UIColor.white
+            ]
+            
+            // Define attributes for the second line
+            let secondLineAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.preferredFont(forTextStyle: .footnote),
+                //.font: UIFont.systemFont(ofSize: 14, weight: .regular),
+                .foregroundColor: UIColor.white
+            ]
+            
+            // Apply attributes to the first line
+            attributedTitle.addAttributes(firstLineAttributes, range: NSRange(location: 0, length: firstLine.count))
+            
+            // Apply attributes to the second line
+            attributedTitle.addAttributes(secondLineAttributes, range: NSRange(location: firstLine.count+1, length: secondLine.count))
+            
+            buyButton.setAttributedTitle(attributedTitle, for: .normal)
         }
         view.layoutIfNeeded()
-        updateTableViewHeight()
+        //updateTableViewHeight()
     }
 }
 
@@ -398,5 +512,12 @@ extension PaywallViewController {
         DispatchQueue.main.async {
             self.present(alert, animated: true)
         }
+    }
+}
+
+extension PaywallViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+            // Return false to prevent dismissal
+        return false
     }
 }

@@ -2,6 +2,7 @@
 import UIKit
 import CoreData
 import Adapty
+import AmplitudeSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +38,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PurchasesObserver.shared.loadInitialProfileData()
             PurchasesObserver.shared.loadInitialPaywallData()
         }
+        
+        AmplitudeManager.shared.track(eventType: "App started")
+        
+        
+        
+
+                
+        
+        
 
         // in case you have / want to use fallback paywalls
 //        if let urlPath = Bundle.main.url(forResource: "fallback_paywalls", withExtension: "json"),

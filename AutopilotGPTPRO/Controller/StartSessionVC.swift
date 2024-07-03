@@ -367,6 +367,7 @@ extension StartSessionVC {
     
         let paywallVC = PaywallViewController()
         paywallVC.parentController = self
+        paywallVC.callSource = .launchButton
         paywallVC.modalPresentationStyle = .formSheet
         
         self.present(paywallVC, animated: true, completion: nil)

@@ -32,13 +32,24 @@
 		A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */; };
 		A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */; };
 		A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CDDE22BBCFD750032A17C /* WaveformView.swift */; };
+		A5596F6D2C1F633A004476FF /* StartOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F6C2C1F633A004476FF /* StartOnboardingViewController.swift */; };
+		A5596F6F2C1F651E004476FF /* OnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F6E2C1F651E004476FF /* OnboardingButton.swift */; };
+		A5596F712C1F6AD3004476FF /* IntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F702C1F6AD3004476FF /* IntroductionViewModel.swift */; };
+		A5596F732C1FCD1E004476FF /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F722C1FCD1E004476FF /* IntroductionViewController.swift */; };
+		A5596F752C2321E3004476FF /* VerticalDottedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F742C2321E3004476FF /* VerticalDottedProgressView.swift */; };
+		A5596F792C2526DE004476FF /* StepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F782C2526DE004476FF /* StepView.swift */; };
+		A5596F7B2C253271004476FF /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F7A2C253271004476FF /* DottedLineView.swift */; };
+		A5596F7D2C28F44C004476FF /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F7C2C28F44C004476FF /* ReviewView.swift */; };
+		A5596F7F2C2905B2004476FF /* PaywallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F7E2C2905B2004476FF /* PaywallViewModel.swift */; };
+		A5596F822C2E4B6A004476FF /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A5596F812C2E4B6A004476FF /* AmplitudeSwift */; };
+		A5596F862C33A2E0004476FF /* AmplitudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5596F852C33A2E0004476FF /* AmplitudeManager.swift */; };
 		A5697F9D2BD0CDB600576836 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5697F9C2BD0CDB600576836 /* JSONParser.swift */; };
 		A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = A569F9262BD5F2C100B3ECD6 /* Adapty */; };
 		A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */; };
 		A569F92F2BD60A8800B3ECD6 /* PaywallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */; };
 		A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */; };
-		A573381F2BFCE04900DACC54 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */; };
-		A57338212BFCE0C600DACC54 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */; };
+		A573381F2BFCE04900DACC54 /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A573381E2BFCE04900DACC54 /* QuestionsViewController.swift */; };
+		A57338212BFCE0C600DACC54 /* QuestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338202BFCE0C600DACC54 /* QuestionsViewModel.swift */; };
 		A57338232BFCE2CA00DACC54 /* OnboardingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */; };
 		A57338252BFCE33D00DACC54 /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57338242BFCE33D00DACC54 /* AnalyzeViewController.swift */; };
 		A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */; };
@@ -81,12 +92,22 @@
 		A54CDDDE2BBB9BED0032A17C /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A54CDDE02BBC26E40032A17C /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		A54CDDE22BBCFD750032A17C /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		A5596F6C2C1F633A004476FF /* StartOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOnboardingViewController.swift; sourceTree = "<group>"; };
+		A5596F6E2C1F651E004476FF /* OnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButton.swift; sourceTree = "<group>"; };
+		A5596F702C1F6AD3004476FF /* IntroductionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionViewModel.swift; sourceTree = "<group>"; };
+		A5596F722C1FCD1E004476FF /* IntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionViewController.swift; sourceTree = "<group>"; };
+		A5596F742C2321E3004476FF /* VerticalDottedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDottedProgressView.swift; sourceTree = "<group>"; };
+		A5596F782C2526DE004476FF /* StepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepView.swift; sourceTree = "<group>"; };
+		A5596F7A2C253271004476FF /* DottedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedLineView.swift; sourceTree = "<group>"; };
+		A5596F7C2C28F44C004476FF /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		A5596F7E2C2905B2004476FF /* PaywallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewModel.swift; sourceTree = "<group>"; };
+		A5596F852C33A2E0004476FF /* AmplitudeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeManager.swift; sourceTree = "<group>"; };
 		A5697F9C2BD0CDB600576836 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		A569F92C2BD5FFDF00B3ECD6 /* AdaptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallViewController.swift; sourceTree = "<group>"; };
 		A569F9352BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewCell.swift; sourceTree = "<group>"; };
-		A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		A573381E2BFCE04900DACC54 /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
+		A57338202BFCE0C600DACC54 /* QuestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewModel.swift; sourceTree = "<group>"; };
 		A57338222BFCE2CA00DACC54 /* OnboardingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTableViewCell.swift; sourceTree = "<group>"; };
 		A57338242BFCE33D00DACC54 /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5596F822C2E4B6A004476FF /* AmplitudeSwift in Frameworks */,
 				A569F9272BD5F2C100B3ECD6 /* Adapty in Frameworks */,
 				A5878DC62C074F3E00777894 /* StoreKit.framework in Frameworks */,
 			);
@@ -161,7 +183,9 @@
 				A54CDDCD2BB7ABDF0032A17C /* SavedSessionsViewController.swift */,
 				A51FA2E92BC63766007042A9 /* SavedSessionMessagesVC.swift */,
 				A569F92E2BD60A8800B3ECD6 /* PaywallViewController.swift */,
-				A573381E2BFCE04900DACC54 /* OnboardingViewController.swift */,
+				A5596F6C2C1F633A004476FF /* StartOnboardingViewController.swift */,
+				A5596F722C1FCD1E004476FF /* IntroductionViewController.swift */,
+				A573381E2BFCE04900DACC54 /* QuestionsViewController.swift */,
 				A57338242BFCE33D00DACC54 /* AnalyzeViewController.swift */,
 			);
 			path = Controller;
@@ -179,7 +203,10 @@
 				A57366042BCCBF7C0083CB04 /* WebSocketDelegate.swift */,
 				A57366192BCE0BED0083CB04 /* ErrorHandler.swift */,
 				A5697F9C2BD0CDB600576836 /* JSONParser.swift */,
-				A57338202BFCE0C600DACC54 /* OnboardingViewModel.swift */,
+				A5596F702C1F6AD3004476FF /* IntroductionViewModel.swift */,
+				A57338202BFCE0C600DACC54 /* QuestionsViewModel.swift */,
+				A5596F7E2C2905B2004476FF /* PaywallViewModel.swift */,
+				A5596F852C33A2E0004476FF /* AmplitudeManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,6 +244,11 @@
 				A54CDDDA2BBB742F0032A17C /* RoundButton.swift */,
 				A54CDDE22BBCFD750032A17C /* WaveformView.swift */,
 				A58452502BC465CF00D56B6A /* CheckBox.swift */,
+				A5596F6E2C1F651E004476FF /* OnboardingButton.swift */,
+				A5596F742C2321E3004476FF /* VerticalDottedProgressView.swift */,
+				A5596F782C2526DE004476FF /* StepView.swift */,
+				A5596F7A2C253271004476FF /* DottedLineView.swift */,
+				A5596F7C2C28F44C004476FF /* ReviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -264,6 +296,7 @@
 			name = AutopilotGPTPRO;
 			packageProductDependencies = (
 				A569F9262BD5F2C100B3ECD6 /* Adapty */,
+				A5596F812C2E4B6A004476FF /* AmplitudeSwift */,
 			);
 			productName = AutopilotGPTPRO;
 			productReference = A53E7E0F2BB643AC00EB5311 /* AutopilotGPTPRO.app */;
@@ -295,6 +328,7 @@
 			mainGroup = A53E7E062BB643AC00EB5311;
 			packageReferences = (
 				A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
+				A5596F802C2E4B6A004476FF /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
 			);
 			productRefGroup = A53E7E102BB643AC00EB5311 /* Products */;
 			projectDirPath = "";
@@ -323,6 +357,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5596F7F2C2905B2004476FF /* PaywallViewModel.swift in Sources */,
+				A5596F792C2526DE004476FF /* StepView.swift in Sources */,
+				A5596F712C1F6AD3004476FF /* IntroductionViewModel.swift in Sources */,
+				A5596F6F2C1F651E004476FF /* OnboardingButton.swift in Sources */,
 				A54CDDDF2BBB9BED0032A17C /* RequestHandler.swift in Sources */,
 				A54C6E302BF865F60047DA75 /* AppConstants.swift in Sources */,
 				A54CDDDB2BBB742F0032A17C /* RoundButton.swift in Sources */,
@@ -340,6 +378,7 @@
 				A54CDDE12BBC26E40032A17C /* InstructionTableViewCell.swift in Sources */,
 				A54CDDCC2BB7A89A0032A17C /* TabBarController.swift in Sources */,
 				A522C3752BC83DC600410EB1 /* StartSessionVC.swift in Sources */,
+				A5596F752C2321E3004476FF /* VerticalDottedProgressView.swift in Sources */,
 				A53E7E302BB6587B00EB5311 /* Storage.xcdatamodeld in Sources */,
 				A51FA2E72BC5C6E7007042A9 /* Session+CoreDataClass.swift in Sources */,
 				A54CDDCE2BB7ABDF0032A17C /* SavedSessionsViewController.swift in Sources */,
@@ -351,14 +390,19 @@
 				A53E7E132BB643AC00EB5311 /* AppDelegate.swift in Sources */,
 				A5988B2A2BBE4C280026D7A6 /* Message+CoreDataProperties.swift in Sources */,
 				A58452532BC4ABEB00D56B6A /* MessageTableViewCell.swift in Sources */,
+				A5596F862C33A2E0004476FF /* AmplitudeManager.swift in Sources */,
+				A5596F6D2C1F633A004476FF /* StartOnboardingViewController.swift in Sources */,
 				A54C6E322BF866780047DA75 /* PurchasesObserver.swift in Sources */,
+				A5596F7D2C28F44C004476FF /* ReviewView.swift in Sources */,
 				A57338252BFCE33D00DACC54 /* AnalyzeViewController.swift in Sources */,
 				A57366052BCCBF7C0083CB04 /* WebSocketDelegate.swift in Sources */,
+				A5596F732C1FCD1E004476FF /* IntroductionViewController.swift in Sources */,
 				A569F92D2BD5FFDF00B3ECD6 /* AdaptyManager.swift in Sources */,
 				A53E7E152BB643AC00EB5311 /* SceneDelegate.swift in Sources */,
-				A57338212BFCE0C600DACC54 /* OnboardingViewModel.swift in Sources */,
+				A57338212BFCE0C600DACC54 /* QuestionsViewModel.swift in Sources */,
 				A569F9362BD8B78000B3ECD6 /* SubscriptionTableViewCell.swift in Sources */,
-				A573381F2BFCE04900DACC54 /* OnboardingViewController.swift in Sources */,
+				A573381F2BFCE04900DACC54 /* QuestionsViewController.swift in Sources */,
+				A5596F7B2C253271004476FF /* DottedLineView.swift in Sources */,
 				A54CDDD32BB7BE140032A17C /* ScreenTitleLabel.swift in Sources */,
 				A54CDDE32BBCFD750032A17C /* WaveformView.swift in Sources */,
 			);
@@ -607,6 +651,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A5596F802C2E4B6A004476FF /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-Swift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS.git";
@@ -618,6 +670,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A5596F812C2E4B6A004476FF /* AmplitudeSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5596F802C2E4B6A004476FF /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
+			productName = AmplitudeSwift;
+		};
 		A569F9262BD5F2C100B3ECD6 /* Adapty */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A569F9252BD5F2C100B3ECD6 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;

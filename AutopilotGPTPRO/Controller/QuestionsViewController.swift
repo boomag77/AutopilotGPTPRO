@@ -1,23 +1,27 @@
 
 
 import UIKit
-import SpriteKit
+//import SpriteKit
 
-class OnboardingViewController: UIViewController {
+class QuestionsViewController: UIViewController {
     
-    let viewModel = OnboardingViewModel(lang: .english)
+    let viewModel = QuestionsViewModel(lang: .english)
+    
+    private var continueButtonTracked: Bool = false
     
     private var questionIndex: Int = 0
     private var currentQuestion: Question?
     private var animationTriggered = false
     private var answerSelected: Bool = false
+    private var markers: [UIView] = []
     
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .label
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        //label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.font = UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .title1).pointSize)
         label.text = currentQuestion?.title
         label.setContentHuggingPriority(.required, for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +30,14 @@ class OnboardingViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemBackground
+        //tableView.backgroundColor = .systemBackground
+        if traitCollection.userInterfaceStyle == .light {
+            // Light mode
+            tableView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 242/255, alpha: 1.0)
+        } else {
+            // Dark mode or unspecified
+            tableView.backgroundColor = UIColor.systemGray6
+        }
         tableView.separatorStyle = .none
         tableView.setContentHuggingPriority(.required, for: .vertical)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,19 +51,9 @@ class OnboardingViewController: UIViewController {
         return view
     }()
     
-    private lazy var continueButton: UIButton = {
-        let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.title = "Continue"
-        config.baseBackgroundColor = AppConstants.Color.bloombergBlue
-        config.baseForegroundColor = .white
-        config.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20)
-        config.cornerStyle = .large
-        button.configuration = config
-        
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        button.titleLabel?.adjustsFontForContentSizeCategory = true
-        button.clipsToBounds = true
+    private lazy var onboardingButton: UIButton = {
+        let button = OnboardingButton()
+        button.title = "Continue"
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction { [weak self] _ in
             self?.continueButtonTapped()
@@ -61,9 +62,10 @@ class OnboardingViewController: UIViewController {
     }()
     
     private lazy var progressBar: UIProgressView = {
-        let view = UIProgressView(progressViewStyle: .default)
+        let view = UIProgressView(progressViewStyle: .bar)
+        
         view.tintColor = AppConstants.Color.bloombergBlue
-        view.trackTintColor = .lightGray
+        view.trackTintColor = .systemGray4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -77,38 +79,34 @@ class OnboardingViewController: UIViewController {
         tableView.delegate = self
         tableView.register(OnboardingTableViewCell.self, forCellReuseIdentifier: "AnswerCell")
             
-        setup()
+        configureQuestionsView()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //setTableViewInsets()
-        //print("Total height of visible cells: \(totalHeight)")
-//        if !animationTriggered {
-//            animateTableViewCells()
-//            animationTriggered = true
-//        }
-        //animateTableViewCells()
+        AmplitudeManager.shared.track(eventType: "Onboarding-Question1-Showed")
         showQuestion()
+        
     }
     
-//    private func setTableViewInsets() {
-//        var totalHeight: CGFloat = 0
-//        for cell in tableView.visibleCells {
-//            totalHeight += cell.bounds.height
-//        }
-//        let remainigSpace = tableView.bounds.height - totalHeight
-//        let verticalInset = max(0, remainigSpace/2)
-//        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-//    }
     
-    
-    private func setup() {
-        view.backgroundColor = .systemBackground
+    private func configureQuestionsView() {
+        
+        //view.backgroundColor = .systemBackground
+        
+        if traitCollection.userInterfaceStyle == .light {
+            // Light mode
+            view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 242/255, alpha: 1.0)
+        } else {
+            // Dark mode or unspecified
+            view.backgroundColor = UIColor.systemGray6
+        }
+
+        
         view.addSubview(progressBar)
         view.addSubview(questionLabel)
-        view.addSubview(continueButton)
+        view.addSubview(onboardingButton)
         view.addSubview(tableView)
         //answersView.addSubview(tableView)
         updateConstraints()
@@ -120,28 +118,59 @@ class OnboardingViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             progressBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 39),
+            progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -39),
+            progressBar.heightAnchor.constraint(equalToConstant: 4),
             
             
-            questionLabel.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 20),
+            questionLabel.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 30),
             questionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             questionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             
-            continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
+            onboardingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            onboardingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            onboardingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
             
             tableView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 30),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            tableView.bottomAnchor.constraint(greaterThanOrEqualTo: continueButton.topAnchor, constant: -padding)
+            tableView.bottomAnchor.constraint(greaterThanOrEqualTo: onboardingButton.topAnchor, constant: -padding)
         ])
+        setupMilestonesMarkers()
+    }
+    
+    private func setupMilestonesMarkers() {
+        view.layoutIfNeeded()
+        let progressWidth: CGFloat = progressBar.frame.width
+        let spacing = progressWidth / CGFloat(AppConstants.milestonesCount - 1)
+        
+        for i in 0..<AppConstants.milestonesCount {
+            let marker = UIView()
+            //marker.backgroundColor = i == 0 ? AppConstants.Color.bloombergBlue : .systemGray4
+            marker.backgroundColor = .systemGray4
+            marker.layer.cornerRadius = AppConstants.milestoneMarkerDiameter / 2
+            marker.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(marker)
+            
+            NSLayoutConstraint.activate([
+                marker.centerXAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: CGFloat(i) * CGFloat(spacing)),
+                marker.centerYAnchor.constraint(equalTo: progressBar.centerYAnchor),
+                marker.widthAnchor.constraint(equalToConstant: AppConstants.milestoneMarkerDiameter),
+                marker.heightAnchor.constraint(equalToConstant: AppConstants.milestoneMarkerDiameter)
+            ])
+            
+            markers.append(marker)
+        }
     }
     
     private func continueButtonTapped() {
         guard self.answerSelected else {
             return
+        }
+        if !self.continueButtonTracked {
+            AmplitudeManager.shared.track(eventType: "Onboading-Question1-Button_Continue-Pressed")
+            self.continueButtonTracked = true
         }
         showQuestion()
     }
@@ -150,6 +179,7 @@ class OnboardingViewController: UIViewController {
         
         guard let nextQuestion = viewModel.getQuestion() else {
             self.progressBar.setProgress(1.0, animated: true)
+            self.updateProgress(to: 1, of: 1)
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: "completedOnboarding")
             self.showAnalyzeVC()
@@ -207,7 +237,7 @@ class OnboardingViewController: UIViewController {
     
 }
 
-extension OnboardingViewController: UITableViewDataSource {
+extension QuestionsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentQuestion?.answers.count ?? 0
@@ -224,7 +254,7 @@ extension OnboardingViewController: UITableViewDataSource {
     }
 }
 
-extension OnboardingViewController: UITableViewDelegate {
+extension QuestionsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -247,7 +277,7 @@ extension OnboardingViewController: UITableViewDelegate {
     }
 }
 
-extension OnboardingViewController: OnboardingViewModelDelegate {
+extension QuestionsViewController: OnboardingViewModelDelegate {
     
     func resetProgress() {
         progressBar.setProgress(0, animated: false)
@@ -255,16 +285,51 @@ extension OnboardingViewController: OnboardingViewModelDelegate {
     
     
     func updateProgress(to step: Int, of steps: Int) {
+        guard steps > 0 else { return }
         
-        let stepSize = 1.0 / Float(steps-1)
-        let progress = Float(step) * stepSize
+        let stepSize = 1.00 / Float(steps)
+        //print("Step size: \(stepSize)")
+        let newProgress = self.progressBar.progress + stepSize
+        //print("Progress: \(newProgress)")
         
         Task { [weak self] in
-            //let currentProgress = self?.progressBar.progress ?? 0
-            while self?.progressBar.progress ?? 0 < progress {
-                try await Task.sleep(nanoseconds: 100_000_000) // Simulate delay (100ms)
-                self?.progressBar.setProgress((self?.progressBar.progress ?? 0) + 0.01, animated: true)
+            
+            guard let self = self else { return }
+            
+            UIView.animate(withDuration: 0.5) {
+                self.progressBar.setProgress(newProgress, animated: true)
+                
+                // Update markers
+                let progressX = self.progressBar.frame.origin.x + self.progressBar.frame.width * CGFloat(newProgress)
+                
+                for marker in self.markers {
+                    if progressX >= marker.frame.origin.x {
+                        marker.backgroundColor = AppConstants.Color.bloombergBlue
+                    } else {
+                        marker.backgroundColor = .systemGray4
+                    }
+                }
             }
+            
+//            while self.progressBar.progress < newProgress {
+//                try await Task.sleep(nanoseconds: 100_000_000) // delay (100ms)
+//                
+//                // Update progress bar
+//                //let currentProgress: Float = (self.progressBar.progress) + stepSize
+//                
+//                self.progressBar.setProgress(newProgress, animated: true)
+//                
+//                // Update markers
+//                let progressX = self.progressBar.frame.origin.x + progressBar.frame.width * CGFloat(newProgress)
+//                
+//                for marker in self.markers {
+//                    if progressX >= marker.frame.origin.x {
+//                        marker.backgroundColor = AppConstants.Color.bloombergBlue
+//                    } else {
+//                        marker.backgroundColor = .systemGray4
+//                    }
+//                }
+//            }
         }
     }
 }
