@@ -10,15 +10,15 @@ final class AmplitudeManager {
     private init() {
         
         let configuration = Configuration(
-            apiKey: AppConstants.amplitudeAPIKey,
-            logLevel: .WARN, // Enable logging
-            callback: { (event: BaseEvent, code: Int, message: String) -> Void in
-                print("eventcallback: \(event.eventType), code: \(code), message: \(message)")
-                if let props = event.eventProperties {
-                    print(props)
-                }
-                
-            }
+            apiKey: AppConstants.amplitudeAPIKey
+            //logLevel: .WARN, // Enable logging
+//            callback: { (event: BaseEvent, code: Int, message: String) -> Void in
+//                print("eventcallback: \(event.eventType), code: \(code), message: \(message)")
+//                if let props = event.eventProperties {
+//                    print(props)
+//                }
+//                
+//            }
         )
         self.amplitude = Amplitude(configuration: configuration)
     }

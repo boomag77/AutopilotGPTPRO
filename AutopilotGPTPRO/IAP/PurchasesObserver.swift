@@ -63,6 +63,10 @@ class PurchasesObserver: ObservableObject {
             loadPaywallProducts()
         }
     }
+    
+    private init() {
+        
+    }
 
     func loadInitialProfileData() {
         Adapty.getProfile { [weak self] result in
